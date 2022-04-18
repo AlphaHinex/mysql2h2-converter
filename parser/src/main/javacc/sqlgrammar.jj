@@ -613,7 +613,7 @@ ColumnType ColumnType():
       | tk = <DATE>
       | tk = <TIME>
       | tk = <TIMESTAMP>
-      | tk = <DATETIME>
+      | tk = <DATETIME> ["(" length = IntValue() ")"]
       | tk = <CHAR> "(" length = IntValue() ")" [tk4 = <BINARY>] [tk5 = <ASCII>] [tk6 = <UNICODE>] [<CHARACTER> <SET> charsetName = Identifier()] [<COLLATE> collationName = Identifier()]
       | tk = <VARCHAR> "(" length = IntValue() ")" [tk4 = <BINARY>] [<CHARACTER> <SET> charsetName = Identifier()] [<COLLATE> collationName = Identifier()]
       | tk = <TINYBLOB>
