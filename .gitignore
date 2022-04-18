@@ -10,7 +10,7 @@
 /.pydevproject
 /.idea
 /*.iml
-/.DS_Store
+.DS_Store
 /*-baidu.xml
 /log
 .idea
