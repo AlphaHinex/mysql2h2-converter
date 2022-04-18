@@ -453,7 +453,9 @@ CreateTableOption CreateTableOption():
         tk1 = <S_IDENTIFIER>
       | tk1 = <K_DEFAULT>
       | tk1 = <COMMENT>
-      | tk1=<AUTO_INCREMENT>
+      | tk1 = <AUTO_INCREMENT>
+      | tk1 = <CHARACTER> <SET>
+      | tk1 = <COLLATE>
     )
     ["=" (
              tk2 = <S_IDENTIFIER>
