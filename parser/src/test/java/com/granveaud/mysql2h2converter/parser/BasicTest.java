@@ -1,5 +1,6 @@
 package com.granveaud.mysql2h2converter.parser;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.granveaud.mysql2h2converter.SQLParserManager;
@@ -61,17 +62,25 @@ public class BasicTest {
                 "t1 int(10) NOT NULL AUTO_INCREMENT," +
                 "t2 int(10) NOT NULL," +
                 "t3 varchar(55) DEFAULT ''," +
+                "t4 datetime DEFAULT ''," +
+                "t5 datetime(0) DEFAULT ''," +
                 "PRIMARY KEY (t1)," +
                 "UNIQUE KEY u1 (t1,t2)," +
                 "KEY k1 (t2)," +
                 "CONSTRAINT c1 FOREIGN KEY (t2) REFERENCES test2 (t2) ON DELETE CASCADE" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8";
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         assertStatementEquals(str);
+
+        str = "CREATE TABLE test (t1 int(10)) ENGINE=InnoDB CHARACTER SET=utf8mb4";
+        assertStatementEquals(str, "CREATE TABLE test (t1 int(10)) ENGINE=InnoDB CHARACTER=utf8mb4");
     }
 
     @Test
     public void testAlterTable() throws Exception {
         String str = "ALTER TABLE test ADD CONSTRAINT c1 FOREIGN KEY (f1) REFERENCES test2 (t2)";
+        assertStatementEquals(str);
+
+        str = "ALTER TABLE test MODIFY c1 VARCHAR(255) NULL;";
         assertStatementEquals(str);
     }
 
@@ -101,4 +110,11 @@ public class BasicTest {
         str = "INSERT INTO t1 VALUES (\"this is a test test2 \\\" \\t\\n \\\" test3 \\'\",\"test4\",\"this is a test '' test5 \\' '' \\' test6 \\\\\",\"test7\")";
         assertStatementEquals(str);
     }
+
+    @Test
+    public void testSetNames() throws ParseException {
+        String str = "SET NAMES utf8mb4";
+        assertStatementEquals(str, "SET NAMES=utf8mb4");
+    }
+
 }
