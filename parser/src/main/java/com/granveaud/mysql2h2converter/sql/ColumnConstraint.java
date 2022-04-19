@@ -14,19 +14,34 @@ import java.util.List;
   | [CONSTRAINT [symbol]] FOREIGN KEY
         [index_name] (index_col_name,...) [reference_definition]
   | CHECK (expr)
-
+  | [COLUMN] column_definition [FIRST | AFTER col_name]
  */
 public class ColumnConstraint {
     private boolean constraint;
     private String constraintName;
-    private String type; // PRIMARY KEY, KEY, INDEX, UNIQUE [INDEX], [FULLTEXT|SPATIAL] INDEX, FOREIGN KEY, CHECK
+
+    /**
+     * PRIMARY KEY, KEY, INDEX, UNIQUE [INDEX], [FULLTEXT|SPATIAL] INDEX, FOREIGN KEY, CHECK
+     * COLUMN
+     */
+    private String type;
+
     private List<ColumnName> indexColumnNames;
     private String indexType;
     private String indexName;
     private ColumnReference columnReference;
     private ExpressionValue checkExpr;
 
-    public ColumnConstraint(boolean constraint, String constraintName, String type, List<ColumnName> indexColumnNames, String indexType, String indexName, ColumnReference columnReference, ExpressionValue checkExpr) {
+    private ColumnDefinition columnDefinition;
+
+    private String modifyType;
+
+    private ColumnName afterColumn;
+
+    public ColumnConstraint(boolean constraint, String constraintName, String type,
+                            List<ColumnName> indexColumnNames, String indexType, String indexName,
+                            ColumnReference columnReference, ExpressionValue checkExpr,
+                            ColumnDefinition columnDefinition, String modifyType, ColumnName afterColumn) {
         this.constraint = constraint;
         this.constraintName = constraintName;
         this.type = type;
@@ -35,6 +50,9 @@ public class ColumnConstraint {
         this.indexName = indexName;
         this.columnReference = columnReference;
         this.checkExpr = checkExpr;
+        this.columnDefinition = columnDefinition;
+        this.modifyType = modifyType;
+        this.afterColumn = afterColumn;
     }
 
     public String getType() {
@@ -66,7 +84,9 @@ public class ColumnConstraint {
                 (indexType != null ? " USING " + indexType : "") +
                 (indexColumnNames != null ? " (" + joinList(indexColumnNames, ",") + ")" : "") +
                 (columnReference != null ? " " + columnReference : "") +
-                (checkExpr != null ? " " + checkExpr : "");
-
+                (checkExpr != null ? " " + checkExpr : "") +
+                (columnDefinition != null ? " " + columnDefinition : "") +
+                (modifyType != null ? " " + modifyType : "") +
+                (afterColumn != null ? " " + afterColumn : "");
     }
 }

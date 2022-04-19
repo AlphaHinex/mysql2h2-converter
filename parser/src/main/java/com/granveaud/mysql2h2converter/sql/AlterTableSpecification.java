@@ -12,6 +12,7 @@ alter_specification:
         | ADD [CONSTRAINT [symbol]]
         FOREIGN KEY [index_name] (index_col_name,...)
         [reference_definition]
+        | MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]
 
         TODO:
         ADD [COLUMN] column_definition [FIRST | AFTER col_name ]
@@ -20,7 +21,6 @@ alter_specification:
         | ALTER [COLUMN] col_name {SET DEFAULT literal | DROP DEFAULT}
         | CHANGE [COLUMN] old_col_name column_definition
         [FIRST|AFTER col_name]
-        | MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]
         | DROP [COLUMN] col_name
         | DROP PRIMARY KEY
         | DROP INDEX index_name
@@ -47,11 +47,16 @@ ColumnConstraint:
   | [CONSTRAINT [symbol]] FOREIGN KEY
         [index_name] (index_col_name,...) [reference_definition]
   | CHECK (expr)
-
+  | [COLUMN] column_definition [FIRST | AFTER col_name]
  */
 // TODO: support remaining ALTER TABLE commands
 public class AlterTableSpecification {
-    private String operation; // ADD
+
+    /**
+     * ADD, MODIFY
+     */
+    private String operation;
+
     private ColumnConstraint constraint;
 
     public AlterTableSpecification(String operation, ColumnConstraint constraint) {

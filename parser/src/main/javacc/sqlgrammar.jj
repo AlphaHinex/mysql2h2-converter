@@ -120,6 +120,10 @@ TOKEN:
 |   <COLLATE: "COLLATE">
 |   <ALTER: "ALTER">
 |   <ADD: "ADD">
+|   <MODIFY: "MODIFY">
+|   <COLUMN: "COLUMN">
+|   <FIRST: "FIRST">
+|   <AFTER: "AFTER">
 |   <LOCK: "LOCK">
 |   <TABLES: "TABLES">
 |   <AS: "AS">
@@ -363,6 +367,7 @@ alter_specification:
         | ADD [CONSTRAINT [symbol]]
         FOREIGN KEY [index_name] (index_col_name,...)
         [reference_definition]
+        | MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]
 */
 AlterTableSpecification AlterTableSpecification():
 {
@@ -371,7 +376,8 @@ AlterTableSpecification AlterTableSpecification():
 }
 {
     (
-        tk = <ADD> constraint = ColumnConstraint()
+          tk = <ADD> constraint = ColumnConstraint()
+        | tk = <MODIFY> constraint = ColumnConstraint()
     )
     {
         return new AlterTableSpecification(tk.image, constraint);
@@ -684,23 +690,26 @@ String ReferenceOption():
 
 /*
   | [CONSTRAINT [symbol]] PRIMARY KEY [index_type] (index_col_name,...)
-  | KEY [index_name] [index_type] (index_col_name,...)
-  | INDEX [index_name] [index_type] (index_col_name,...)
   | [CONSTRAINT [symbol]] UNIQUE [INDEX]
         [index_name] [index_type] (index_col_name,...)
-  | [FULLTEXT|SPATIAL] [INDEX] [index_name] (index_col_name,...)
   | [CONSTRAINT [symbol]] FOREIGN KEY
         [index_name] (index_col_name,...) [reference_definition]
+  | KEY [index_name] [index_type] (index_col_name,...)
+  | INDEX [index_name] [index_type] (index_col_name,...)
+  | [FULLTEXT|SPATIAL] [INDEX] [index_name] (index_col_name,...)
   | CHECK (expr)
+  | [COLUMN] column_definition [FIRST | AFTER col_name]
  */
 ColumnConstraint ColumnConstraint():
 {
-    Token tk = null, tk2 = null, tk3 = null, tk4 = null;
+    Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null;
     String constraintName = null;
     String indexName = null;
     List<ColumnName> indexColumnNames = null;
     ColumnReference reference = null;
     ExpressionValue checkExpr = null;
+    ColumnDefinition columnDefinition = null;
+    ColumnName afterColumn = null;
 }
 {
     (
@@ -714,10 +723,12 @@ ColumnConstraint ColumnConstraint():
         | tk2 = <INDEX> [indexName = DbObjectName()] [<USING> tk4 = <S_IDENTIFIER>] "(" indexColumnNames = ColumnNames() ")" [<USING> tk4 = <S_IDENTIFIER>]
         | (tk2 = <FULLTEXT> | tk2 = <SPATIAL>) [tk3 = <INDEX>] [indexName = DbObjectName()] "(" indexColumnNames = ColumnNames() ")"
         | tk2 = <CHECK> "(" checkExpr = ExpressionValue() ")"
+        | [tk2 = <COLUMN>] columnDefinition = ColumnDefinition() [tk5 = <FIRST> | tk5 = <AFTER> afterColumn = ColumnName()]
     )
     {
         return new ColumnConstraint(tk != null, constraintName, (tk2 != null ? tk2.image : "") + (tk3 != null ? " " + tk3.image : ""),
-                indexColumnNames, (tk4 != null ? tk4.image : null), indexName, reference, checkExpr);
+                indexColumnNames, (tk4 != null ? tk4.image : null), indexName, reference, checkExpr,
+                columnDefinition, (tk5 != null ? tk5.image : ""), afterColumn);
     }
 }
 
