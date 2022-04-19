@@ -134,6 +134,11 @@ TOKEN:
 |   <START: "START">
 |   <TRANSACTION: "TRANSACTION">
 |   <COMMIT: "COMMIT">
+|   <FROM: "FROM">
+|   <WHERE: "WHERE">
+|   <AND: "AND">
+|   <OR: "OR">
+|   <EQUALS: "=">
 }
 
 TOKEN:
@@ -231,6 +236,7 @@ SqlStatement Statement():
       |  st = AlterStatement()
       |  st = DropStatement()
       |  st = InsertStatement()
+      |  st = DeleteStatement()
       |  st = LockTablesStatement()
       |  st = UnlockTablesStatement()
       |  st = StartTransactionStatement()
@@ -304,6 +310,90 @@ SqlStatement InsertStatement():
     {
         return new InsertStatement(tk != null, tk2 != null, tk3 != null, tk4 != null, tk5 != null, tableName,
             columnNames, valueLists, assignments, onDuplicateKeyUpdateAssignments);
+    }
+}
+
+/*
+DELETE FROM tbl_name
+    [WHERE where_condition]
+ */
+SqlStatement DeleteStatement():
+{
+    String tableName;
+    WhereClause whereClause = null;
+}
+{
+    (
+        <DELETE> <FROM> tableName = DbObjectName()
+        [<WHERE> whereClause = WhereClause()]
+    )
+    {
+        return new DeleteStatement(tableName, whereClause);
+    }
+}
+
+/*
+WHERE <boolean term> ( OR <boolean term> )*
+ */
+WhereClause WhereClause():
+{
+    BooleanTerm booleanTerm = null;
+    List<BooleanTerm> booleanTerms = new ArrayList<BooleanTerm>();
+}
+{
+    (
+        booleanTerm = BooleanTerm() { booleanTerms.add(booleanTerm); }
+        (
+            <OR> booleanTerm = BooleanTerm() { booleanTerms.add(booleanTerm); }
+        )*
+    )
+    {
+        return new WhereClause(booleanTerms);
+    }
+}
+
+BooleanTerm BooleanTerm():
+{
+    BooleanFactor booleanFactor = null;
+    List<BooleanFactor> booleanFactors = new ArrayList<BooleanFactor>();
+}
+{
+    (
+        booleanFactor = BooleanFactor() { booleanFactors.add(booleanFactor); }
+        (
+            <AND> booleanFactor = BooleanFactor() { booleanFactors.add(booleanFactor); }
+        )*
+    )
+    {
+        return new BooleanTerm(booleanFactors);
+    }
+}
+
+BooleanFactor BooleanFactor():
+{
+    Token tk = null;
+    BooleanPrimary booleanPrimary = null;
+}
+{
+    (
+        [tk = <NOT>] booleanPrimary = BooleanPrimary()
+    )
+    {
+        return new BooleanFactor(tk != null, booleanPrimary);
+    }
+}
+
+BooleanPrimary BooleanPrimary():
+{
+    String columnName;
+    Value value;
+}
+{
+    (
+        columnName = DbObjectName() <EQUALS> value = Value()
+    )
+    {
+        return new BooleanPrimary(columnName, value);
     }
 }
 

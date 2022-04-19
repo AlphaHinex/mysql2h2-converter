@@ -213,29 +213,39 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int COMMIT = 106;
   /** RegularExpression Id. */
-  int S_IDENTIFIER = 107;
+  int FROM = 107;
   /** RegularExpression Id. */
-  int S_QUOTED_IDENTIFIER = 108;
+  int WHERE = 108;
   /** RegularExpression Id. */
-  int S_LETTER = 109;
+  int AND = 109;
   /** RegularExpression Id. */
-  int S_DIGIT = 110;
+  int OR = 110;
   /** RegularExpression Id. */
-  int S_SPECIAL_CHARS = 111;
+  int EQUALS = 111;
   /** RegularExpression Id. */
-  int S_INTEGER = 112;
+  int S_IDENTIFIER = 112;
   /** RegularExpression Id. */
-  int S_DOUBLE = 113;
+  int S_QUOTED_IDENTIFIER = 113;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT1 = 114;
+  int S_LETTER = 114;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT2 = 115;
+  int S_DIGIT = 115;
   /** RegularExpression Id. */
-  int S_HEX_DIGIT = 116;
+  int S_SPECIAL_CHARS = 116;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT1 = 117;
+  int S_INTEGER = 117;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT2 = 118;
+  int S_DOUBLE = 118;
+  /** RegularExpression Id. */
+  int S_BINARY_FORMAT1 = 119;
+  /** RegularExpression Id. */
+  int S_BINARY_FORMAT2 = 120;
+  /** RegularExpression Id. */
+  int S_HEX_DIGIT = 121;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT1 = 122;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT2 = 123;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -349,6 +359,11 @@ public interface SQLParserConstants {
     "\"START\"",
     "\"TRANSACTION\"",
     "\"COMMIT\"",
+    "\"FROM\"",
+    "\"WHERE\"",
+    "\"AND\"",
+    "\"OR\"",
+    "\"=\"",
     "<S_IDENTIFIER>",
     "<S_QUOTED_IDENTIFIER>",
     "<S_LETTER>",
@@ -366,7 +381,6 @@ public interface SQLParserConstants {
     "\";\"",
     "\"(\"",
     "\")\"",
-    "\"=\"",
     "\",\"",
     "\"?\"",
   };

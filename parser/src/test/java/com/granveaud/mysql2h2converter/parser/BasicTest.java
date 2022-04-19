@@ -131,6 +131,9 @@ public class BasicTest {
         String str = "DELETE FROM test";
         assertStatementEquals(str);
 
+        str = "DELETE FROM test WHERE t1=1";
+        assertStatementEquals(str);
+
         str = "DELETE FROM test WHERE t1=1 AND t2=2";
         assertStatementEquals(str);
 
