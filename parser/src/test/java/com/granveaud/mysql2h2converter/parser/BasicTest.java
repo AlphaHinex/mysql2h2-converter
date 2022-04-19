@@ -80,7 +80,7 @@ public class BasicTest {
         String str = "ALTER TABLE test ADD CONSTRAINT c1 FOREIGN KEY (f1) REFERENCES test2 (t2)";
         assertStatementEquals(str);
 
-        str = "ALTER TABLE test MODIFY c1 VARCHAR(255) NULL;";
+        str = "ALTER TABLE test MODIFY c1 VARCHAR(255) NULL";
         assertStatementEquals(str);
     }
 

@@ -185,49 +185,57 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int ADD = 92;
   /** RegularExpression Id. */
-  int LOCK = 93;
+  int MODIFY = 93;
   /** RegularExpression Id. */
-  int TABLES = 94;
+  int COLUMN = 94;
   /** RegularExpression Id. */
-  int AS = 95;
+  int FIRST = 95;
   /** RegularExpression Id. */
-  int READ = 96;
+  int AFTER = 96;
   /** RegularExpression Id. */
-  int LOCAL = 97;
+  int LOCK = 97;
   /** RegularExpression Id. */
-  int WRITE = 98;
+  int TABLES = 98;
   /** RegularExpression Id. */
-  int UNLOCK = 99;
+  int AS = 99;
   /** RegularExpression Id. */
-  int START = 100;
+  int READ = 100;
   /** RegularExpression Id. */
-  int TRANSACTION = 101;
+  int LOCAL = 101;
   /** RegularExpression Id. */
-  int COMMIT = 102;
+  int WRITE = 102;
   /** RegularExpression Id. */
-  int S_IDENTIFIER = 103;
+  int UNLOCK = 103;
   /** RegularExpression Id. */
-  int S_QUOTED_IDENTIFIER = 104;
+  int START = 104;
   /** RegularExpression Id. */
-  int S_LETTER = 105;
+  int TRANSACTION = 105;
   /** RegularExpression Id. */
-  int S_DIGIT = 106;
+  int COMMIT = 106;
   /** RegularExpression Id. */
-  int S_SPECIAL_CHARS = 107;
+  int S_IDENTIFIER = 107;
   /** RegularExpression Id. */
-  int S_INTEGER = 108;
+  int S_QUOTED_IDENTIFIER = 108;
   /** RegularExpression Id. */
-  int S_DOUBLE = 109;
+  int S_LETTER = 109;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT1 = 110;
+  int S_DIGIT = 110;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT2 = 111;
+  int S_SPECIAL_CHARS = 111;
   /** RegularExpression Id. */
-  int S_HEX_DIGIT = 112;
+  int S_INTEGER = 112;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT1 = 113;
+  int S_DOUBLE = 113;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT2 = 114;
+  int S_BINARY_FORMAT1 = 114;
+  /** RegularExpression Id. */
+  int S_BINARY_FORMAT2 = 115;
+  /** RegularExpression Id. */
+  int S_HEX_DIGIT = 116;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT1 = 117;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT2 = 118;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -327,6 +335,10 @@ public interface SQLParserConstants {
     "\"COLLATE\"",
     "\"ALTER\"",
     "\"ADD\"",
+    "\"MODIFY\"",
+    "\"COLUMN\"",
+    "\"FIRST\"",
+    "\"AFTER\"",
     "\"LOCK\"",
     "\"TABLES\"",
     "\"AS\"",

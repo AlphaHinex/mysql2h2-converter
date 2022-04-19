@@ -86,7 +86,7 @@ public class ColumnConstraint {
                 (columnReference != null ? " " + columnReference : "") +
                 (checkExpr != null ? " " + checkExpr : "") +
                 (columnDefinition != null ? " " + columnDefinition : "") +
-                (modifyType != null ? " " + modifyType : "") +
+                modifyType +
                 (afterColumn != null ? " " + afterColumn : "");
     }
 }
