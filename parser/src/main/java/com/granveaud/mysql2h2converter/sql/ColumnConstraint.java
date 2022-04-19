@@ -85,8 +85,8 @@ public class ColumnConstraint {
                 (indexColumnNames != null ? " (" + joinList(indexColumnNames, ",") + ")" : "") +
                 (columnReference != null ? " " + columnReference : "") +
                 (checkExpr != null ? " " + checkExpr : "") +
-                (columnDefinition != null ? " " + columnDefinition : "") +
-                modifyType +
+                (columnDefinition != null ? (type != null && type.length() > 0 ? " " : "") + columnDefinition : "") +
+                (modifyType != null && modifyType.length() > 0 ? " " + modifyType : "") +
                 (afterColumn != null ? " " + afterColumn : "");
     }
 }
