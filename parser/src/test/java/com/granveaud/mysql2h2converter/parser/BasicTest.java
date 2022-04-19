@@ -126,4 +126,16 @@ public class BasicTest {
         assertStatementEquals(str, "SET NAMES=utf8mb4");
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        String str = "DELETE FROM test";
+        assertStatementEquals(str);
+
+        str = "DELETE FROM test WHERE t1=1 AND t2=2";
+        assertStatementEquals(str);
+
+        str = "DELETE FROM test WHERE t1=1 OR t2=2";
+        assertStatementEquals(str);
+    }
+
 }
