@@ -134,10 +134,16 @@ public class BasicTest {
         str = "DELETE FROM test WHERE t1=1";
         assertStatementEquals(str);
 
-        str = "DELETE FROM test WHERE t1=1 AND t2=2";
+        str = "DELETE FROM test WHERE t1=1 AND t2='2'";
         assertStatementEquals(str);
 
         str = "DELETE FROM test WHERE t1=1 OR t2=2";
+        assertStatementEquals(str);
+    }
+
+    @Test
+    public void testUpdate() throws ParseException {
+        String str = "UPDATE test SET t1=1,t2='test',t3=5.0 WHERE AND t4='1'";
         assertStatementEquals(str);
     }
 
