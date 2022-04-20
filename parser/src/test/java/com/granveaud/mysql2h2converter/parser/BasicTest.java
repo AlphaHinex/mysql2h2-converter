@@ -134,10 +134,10 @@ public class BasicTest {
         str = "DELETE FROM test WHERE t1=1";
         assertStatementEquals(str);
 
-        str = "DELETE FROM test WHERE t1=1 AND t2='abc'";
+        str = "DELETE FROM test WHERE t1='abc' AND t2=1";
         assertStatementEquals(str);
 
-        str = "DELETE FROM test WHERE t1=1 OR t2=\"2\"";
+        str = "DELETE FROM test WHERE t1=\"2\" OR t2=1";
         assertStatementEquals(str);
     }
 
