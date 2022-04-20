@@ -236,6 +236,7 @@ SqlStatement Statement():
       |  st = AlterStatement()
       |  st = DropStatement()
       |  st = InsertStatement()
+      |  st = UpdateStatement()
       |  st = DeleteStatement()
       |  st = LockTablesStatement()
       |  st = UnlockTablesStatement()
@@ -310,6 +311,28 @@ SqlStatement InsertStatement():
     {
         return new InsertStatement(tk != null, tk2 != null, tk3 != null, tk4 != null, tk5 != null, tableName,
             columnNames, valueLists, assignments, onDuplicateKeyUpdateAssignments);
+    }
+}
+
+/*
+UPDATE [LOW_PRIORITY] [IGNORE] table_references
+    SET assignment_list
+    [WHERE where_condition]
+ */
+SqlStatement UpdateStatement():
+{
+    String tableName;
+    List<Assignment> assignments = null;
+    WhereClause whereClause = null;
+}
+{
+    (
+        <UPDATE> tableName = DbObjectName()
+        <SET> assignments = Assignments()
+        [<WHERE> whereClause = WhereClause()]
+    )
+    {
+        return new UpdateStatement(tableName, assignments, whereClause);
     }
 }
 

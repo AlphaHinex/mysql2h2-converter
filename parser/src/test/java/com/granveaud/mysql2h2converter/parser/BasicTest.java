@@ -143,7 +143,7 @@ public class BasicTest {
 
     @Test
     public void testUpdate() throws ParseException {
-        String str = "UPDATE test SET t1=1,t2='test',t3=5.0 WHERE AND t4='1'";
+        String str = "UPDATE test SET t1=1,t2='test',t3=5.0 WHERE t4=1";
         assertStatementEquals(str);
     }
 
