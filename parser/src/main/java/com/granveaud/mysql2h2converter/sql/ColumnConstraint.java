@@ -81,8 +81,8 @@ public class ColumnConstraint {
                 (constraintName != null ? constraintName + " " : "") +
                 type +
                 (indexName != null ? " " + indexName : "") +
-                (indexType != null ? " USING " + indexType : "") +
                 (indexColumnNames != null ? " (" + joinList(indexColumnNames, ",") + ")" : "") +
+                (indexType != null ? " USING " + indexType : "") +
                 (columnReference != null ? " " + columnReference : "") +
                 (checkExpr != null ? " " + checkExpr : "") +
                 (columnDefinition != null ? (type != null && type.length() > 0 ? " " : "") + columnDefinition : "") +

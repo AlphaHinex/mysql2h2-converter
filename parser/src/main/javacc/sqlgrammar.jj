@@ -829,7 +829,7 @@ ColumnConstraint ColumnConstraint():
         [tk=<CONSTRAINT> [constraintName=DbObjectName()]]
             (
                 tk2=<PRIMARY> tk3 = <KEY> [<USING> tk4 = <S_IDENTIFIER>] "(" indexColumnNames=ColumnNames() ")" [<USING> tk4 = <S_IDENTIFIER>]
-              | tk2=<UNIQUE> [tk3 = <KEY>] [indexName = DbObjectName()] [<USING> tk4 = <S_IDENTIFIER>] "(" indexColumnNames = ColumnNames() ")" [<USING> tk4 = <S_IDENTIFIER>]
+              | tk2=<UNIQUE> [tk3 = <KEY> | tk3 = <INDEX>] [indexName = DbObjectName()] "(" indexColumnNames = ColumnNames() ")" [<USING> tk4 = <S_IDENTIFIER>]
               | tk2=<FOREIGN> [tk3 = <KEY>] [indexName = DbObjectName()] "(" indexColumnNames = ColumnNames() ")" [reference = ColumnReference()]
             )
         | tk2 = <KEY> [indexName = DbObjectName()] [<USING> tk4 = <S_IDENTIFIER>] "(" indexColumnNames = ColumnNames() ")" [<USING> tk4 = <S_IDENTIFIER>]

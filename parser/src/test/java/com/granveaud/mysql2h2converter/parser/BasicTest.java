@@ -64,10 +64,11 @@ public class BasicTest {
                 "t3 varchar(55) DEFAULT ''," +
                 "t4 datetime DEFAULT ''," +
                 "t5 datetime(0) DEFAULT ''," +
-                "PRIMARY KEY (t1)," +
+                "PRIMARY KEY (t1) USING BTREE," +
                 "UNIQUE KEY u1 (t1,t2)," +
                 "KEY k1 (t2)," +
-                "CONSTRAINT c1 FOREIGN KEY (t2) REFERENCES test2 (t2) ON DELETE CASCADE" +
+                "CONSTRAINT c1 FOREIGN KEY (t2) REFERENCES test2 (t2) ON DELETE CASCADE," +
+                "UNIQUE INDEX `UNIQUE_NAME_NAMESPACES` (`NAME`,`NAMESPACE`) USING BTREE" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         assertStatementEquals(str);
 
