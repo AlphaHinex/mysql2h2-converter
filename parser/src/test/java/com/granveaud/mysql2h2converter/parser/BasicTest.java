@@ -91,6 +91,9 @@ public class BasicTest {
 
         str = "ALTER TABLE test MODIFY COLUMN c1 VARCHAR(255) NULL AFTER c0";
         assertStatementEquals(str);
+
+        str = "ALTER TABLE test MODIFY c1 VARCHAR(256) AFTER c0,MODIFY c2 VARCHAR(256)";
+        assertStatementEquals(str);
     }
 
     @Test

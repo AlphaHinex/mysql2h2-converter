@@ -461,7 +461,7 @@ SqlStatement AlterTableStatement():
     (
         specification = AlterTableSpecification() { specifications.add(specification); }
         (
-            specification = AlterTableSpecification() { specifications.add(specification); }
+            "," specification = AlterTableSpecification() { specifications.add(specification); }
         )*
     )
     {
