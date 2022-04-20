@@ -6,7 +6,7 @@ import static com.granveaud.mysql2h2converter.util.CollectionUtils.joinList;
 
 /**
  * boolean term ::=
- * <boolean factor> ( AND <boolean factor> )*
+ * BooleanFactor ( AND BooleanFactor )*
  */
 public class BooleanTerm {
 

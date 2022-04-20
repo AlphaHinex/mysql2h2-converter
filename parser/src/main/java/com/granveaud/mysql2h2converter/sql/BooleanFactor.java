@@ -2,7 +2,7 @@ package com.granveaud.mysql2h2converter.sql;
 
 /**
  * boolean factor ::=
- * ( NOT )? <boolean primary>
+ * ( NOT )? BooleanPrimary
  */
 public class BooleanFactor {
 

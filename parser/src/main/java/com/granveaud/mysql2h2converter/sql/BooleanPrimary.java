@@ -6,11 +6,11 @@ package com.granveaud.mysql2h2converter.sql;
  * TODO
  *
  * boolean primary ::=
- * ( <common value expression> ( <between predicate> | <match predicate> | <like regex predicate> | <in predicate> | <is null predicate> | <quantified comparison predicate> | <comparison predicate> )? )
+ * ( common value expression ( between predicate | match predicate | like regex predicate | in predicate | is null predicate | quantified comparison predicate | comparison predicate )? )
  *
- * <exists predicate>
+ * exists predicate
  *
- * <xml query>
+ * xml query
  */
 public class BooleanPrimary {
 

@@ -6,7 +6,7 @@ import static com.granveaud.mysql2h2converter.util.CollectionUtils.joinList;
 
 /**
  * where clause ::=
- * WHERE <boolean term> ( OR <boolean term> )*
+ * WHERE BooleanTerm ( OR BooleanTerm )*
  */
 public class WhereClause {
 
