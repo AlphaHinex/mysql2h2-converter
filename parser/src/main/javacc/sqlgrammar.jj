@@ -143,7 +143,6 @@ TOKEN:
 |   <TRUE: "TRUE">
 |   <FALSE: "FALSE">
 |   <UNKNOWN: "UNKNOWN">
-|   <LOGICAL_OPERATOR: "OR" | "||" | "XOR" | "AND" | "&&">
 |   <IN: "IN">
 }
 
@@ -1116,7 +1115,7 @@ ExpressionValue ExpressionValue():
 }
 {
     (
-          leftExpr = BooleanPrimary() [LOOKAHEAD(2) tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()]
+          leftExpr = BooleanPrimary() [LOOKAHEAD(2) (tk = "OR" | tk = "||" | tk = "XOR" | tk = "AND" | tk = "&&") rightExpr = BooleanPrimary()]
     )
     {
         return new ExpressionValue(leftExpr, tk != null ? tk.image : "", rightExpr);

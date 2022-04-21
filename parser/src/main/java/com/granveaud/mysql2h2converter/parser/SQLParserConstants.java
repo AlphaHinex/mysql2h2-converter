@@ -231,33 +231,31 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int UNKNOWN = 115;
   /** RegularExpression Id. */
-  int LOGICAL_OPERATOR = 116;
+  int IN = 116;
   /** RegularExpression Id. */
-  int IN = 117;
+  int S_IDENTIFIER = 117;
   /** RegularExpression Id. */
-  int S_IDENTIFIER = 118;
+  int S_QUOTED_IDENTIFIER = 118;
   /** RegularExpression Id. */
-  int S_QUOTED_IDENTIFIER = 119;
+  int S_LETTER = 119;
   /** RegularExpression Id. */
-  int S_LETTER = 120;
+  int S_DIGIT = 120;
   /** RegularExpression Id. */
-  int S_DIGIT = 121;
+  int S_SPECIAL_CHARS = 121;
   /** RegularExpression Id. */
-  int S_SPECIAL_CHARS = 122;
+  int S_INTEGER = 122;
   /** RegularExpression Id. */
-  int S_INTEGER = 123;
+  int S_DOUBLE = 123;
   /** RegularExpression Id. */
-  int S_DOUBLE = 124;
+  int S_BINARY_FORMAT1 = 124;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT1 = 125;
+  int S_BINARY_FORMAT2 = 125;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT2 = 126;
+  int S_HEX_DIGIT = 126;
   /** RegularExpression Id. */
-  int S_HEX_DIGIT = 127;
+  int S_BIT_FORMAT1 = 127;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT1 = 128;
-  /** RegularExpression Id. */
-  int S_BIT_FORMAT2 = 129;
+  int S_BIT_FORMAT2 = 128;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -380,7 +378,6 @@ public interface SQLParserConstants {
     "\"TRUE\"",
     "\"FALSE\"",
     "\"UNKNOWN\"",
-    "<LOGICAL_OPERATOR>",
     "\"IN\"",
     "<S_IDENTIFIER>",
     "<S_QUOTED_IDENTIFIER>",
@@ -401,6 +398,9 @@ public interface SQLParserConstants {
     "\")\"",
     "\",\"",
     "\"?\"",
+    "\"||\"",
+    "\"XOR\"",
+    "\"&&\"",
     "\">=\"",
     "\">\"",
     "\"<=\"",
