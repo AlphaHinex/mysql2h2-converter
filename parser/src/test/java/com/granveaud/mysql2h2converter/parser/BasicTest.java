@@ -150,8 +150,8 @@ public class BasicTest {
         String str = "UPDATE test SET t1=1,t2='test',t3=5.0 WHERE t4=1";
         assertStatementEquals(str);
 
-//        str = "UPDATE test SET t1=CONCAT(t1,'-',t2) WHERE t4=1";
-//        assertStatementEquals(str);
+        str = "UPDATE test SET t1=CONCAT(t1,'-',t2) WHERE t4=1";
+        assertStatementEquals(str);
     }
 
     @Test
