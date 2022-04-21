@@ -331,16 +331,16 @@ SqlStatement UpdateStatement():
 {
     String tableName;
     List<Assignment> assignments = null;
-    WhereClause whereClause = null;
+    ExpressionValue expressionValue = null;
 }
 {
     (
         <UPDATE> tableName = DbObjectName()
         <SET> assignments = Assignments()
-        [<WHERE> whereClause = WhereClause()]
+        [<WHERE> expressionValue = ExpressionValue()]
     )
     {
-        return new UpdateStatement(tableName, assignments, whereClause);
+        return new UpdateStatement(tableName, assignments, expressionValue);
     }
 }
 

@@ -8,19 +8,19 @@ public class UpdateStatement implements SqlStatement {
 
     private final String tableName;
     private final List<Assignment> assignments;
-    private final WhereClause whereClause;
+    private final ExpressionValue expressionValue;
 
-    public UpdateStatement(String tableName, List<Assignment> assignments, WhereClause whereClause) {
+    public UpdateStatement(String tableName, List<Assignment> assignments, ExpressionValue expressionValue) {
         this.tableName = tableName;
         this.assignments = assignments;
-        this.whereClause = whereClause;
+        this.expressionValue = expressionValue;
     }
 
     @Override
     public String toString() {
         return "UPDATE " + tableName +
                  " SET " + joinList(assignments, ",") +
-                (whereClause != null ? " " + whereClause : "");
+                (expressionValue != null ? " WHERE " + expressionValue : "");
     }
 
 }
