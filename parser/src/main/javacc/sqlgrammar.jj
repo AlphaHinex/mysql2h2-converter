@@ -1131,20 +1131,24 @@ boolean_primary:
 BooleanPrimary BooleanPrimary():
 {
     String columnName;
-    Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null;
+    Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null, funcTk = null;
     Value value = null;
     ValueList valueList = null;
 }
 {
     (
           LOOKAHEAD(2) columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
-        | LOOKAHEAD(2) columnName = DbObjectName() (tk4 = "=" | tk4 = ">="| tk4 = ">"| tk4 = "<="| tk4 = "<"| tk4 = "<>"| tk4 = "!=") value = Value()
+        | LOOKAHEAD(2) columnName = DbObjectName() (tk4 = "=" | tk4 = ">="| tk4 = ">"| tk4 = "<="| tk4 = "<"| tk4 = "<>"| tk4 = "!=")
+            (
+                 value = Value()
+               | funcTk = "CONCAT" valueList = ValueList()
+            )
         | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
     )
     {
         return new BooleanPrimary(columnName,
             (tk!=null ? tk.image : "") + (tk2!=null ? " " + tk2.image : "") + (tk3!=null ? " " + tk3.image : ""),
-            tk4!=null ? tk4.image : "", value,
+            tk4!=null ? tk4.image : "", value, funcTk!=null ? funcTk.image : "",
             (tk5!=null ? tk5.image + " " : "") + (tk6!=null ? tk6.image : ""), valueList);
     }
 }
