@@ -223,29 +223,43 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int EQUALS = 111;
   /** RegularExpression Id. */
-  int S_IDENTIFIER = 112;
+  int IS = 112;
   /** RegularExpression Id. */
-  int S_QUOTED_IDENTIFIER = 113;
+  int TRUE = 113;
   /** RegularExpression Id. */
-  int S_LETTER = 114;
+  int FALSE = 114;
   /** RegularExpression Id. */
-  int S_DIGIT = 115;
+  int UNKNOWN = 115;
   /** RegularExpression Id. */
-  int S_SPECIAL_CHARS = 116;
+  int LOGICAL_OPERATOR = 116;
   /** RegularExpression Id. */
-  int S_INTEGER = 117;
+  int COMPARISON_OPERATOR = 117;
   /** RegularExpression Id. */
-  int S_DOUBLE = 118;
+  int IN = 118;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT1 = 119;
+  int S_IDENTIFIER = 119;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT2 = 120;
+  int S_QUOTED_IDENTIFIER = 120;
   /** RegularExpression Id. */
-  int S_HEX_DIGIT = 121;
+  int S_LETTER = 121;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT1 = 122;
+  int S_DIGIT = 122;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT2 = 123;
+  int S_SPECIAL_CHARS = 123;
+  /** RegularExpression Id. */
+  int S_INTEGER = 124;
+  /** RegularExpression Id. */
+  int S_DOUBLE = 125;
+  /** RegularExpression Id. */
+  int S_BINARY_FORMAT1 = 126;
+  /** RegularExpression Id. */
+  int S_BINARY_FORMAT2 = 127;
+  /** RegularExpression Id. */
+  int S_HEX_DIGIT = 128;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT1 = 129;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT2 = 130;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -364,6 +378,13 @@ public interface SQLParserConstants {
     "\"AND\"",
     "\"OR\"",
     "\"=\"",
+    "\"IS\"",
+    "\"TRUE\"",
+    "\"FALSE\"",
+    "\"UNKNOWN\"",
+    "<LOGICAL_OPERATOR>",
+    "<COMPARISON_OPERATOR>",
+    "\"IN\"",
     "<S_IDENTIFIER>",
     "<S_QUOTED_IDENTIFIER>",
     "<S_LETTER>",
@@ -383,6 +404,7 @@ public interface SQLParserConstants {
     "\")\"",
     "\",\"",
     "\"?\"",
+    "\"!\"",
   };
 
 }

@@ -143,7 +143,7 @@ TOKEN:
 |   <TRUE: "TRUE">
 |   <FALSE: "FALSE">
 |   <UNKNOWN: "UNKNOWN">
-|   <LOGICAL_OPERATOR: "OR" | "||" | "XOR" | "AND" | "&&" | "NOT" | "!">
+|   <LOGICAL_OPERATOR: "OR" | "||" | "XOR" | "AND" | "&&">
 |   <COMPARISON_OPERATOR: "=" | ">=" | ">" | "<=" | "<" | "<>" | "!=">
 |   <IN: "IN">
 }
@@ -1121,9 +1121,10 @@ ExpressionValue ExpressionValue():
 }
 {
     (
-          LOOKAHEAD(3) [leftExpr = BooleanPrimary()] tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()
+          LOOKAHEAD(2) booleanPrimary = BooleanPrimary()
+        | tk = "NOT" | tk = "!" rightExpr = BooleanPrimary()
+        | LOOKAHEAD(3) leftExpr = BooleanPrimary() tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()
         | LOOKAHEAD(3) booleanPrimary = BooleanPrimary() tk2 = <IS> [tk3 = <NOT>] (tk4 = <TRUE> | tk4 = <FALSE> | tk4 = <UNKNOWN>)
-        | booleanPrimary = BooleanPrimary()
     )
     {
         return new ExpressionValue(leftExpr, tk!=null ? tk.image : "", rightExpr,booleanPrimary,

@@ -37,11 +37,11 @@ public class ExpressionValue implements Value {
 
     @Override
     public String toString() {
-        return (leftExpr != null ? leftExpr + " " : "") +
-               (exprOperator != null ? exprOperator + " " : "") +
-               (rightExpr != null ? rightExpr + " " : "") +
-               (booleanPrimary != null ? booleanPrimary + " " : "") +
-               (booleanPrimaryPredicate != null ? booleanPrimaryPredicate : "");
+        return (leftExpr != null ? leftExpr : "") +
+               (exprOperator != null ? " " + exprOperator + " " : "") +
+               (rightExpr != null ? rightExpr : "") +
+               (booleanPrimary != null ? booleanPrimary : "") +
+               (booleanPrimaryPredicate != null ? " " + booleanPrimaryPredicate : "");
     }
 
 }

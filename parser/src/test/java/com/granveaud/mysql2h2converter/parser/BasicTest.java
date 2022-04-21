@@ -156,7 +156,7 @@ public class BasicTest {
 
     @Test
     public void testWhereClause() throws ParseException {
-        String str = "DELETE FROM test WHERE t1 in ('1','2','3')";
+        String str = "DELETE FROM test WHERE t1 IN ('1','2','3')";
         assertStatementEquals(str);
 
         str = "DELETE FROM test WHERE t1 IS NOT NULL && t2 <> ''";
