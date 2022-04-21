@@ -4,8 +4,9 @@ package com.granveaud.mysql2h2converter.sql;
  * Only support partial operators now
  *
  * boolean_primary:
- *     columnName comparison_operator value
- *   | columnName [NOT] IN (value [, value] ...)
+ *     columnName IS [NOT] NULL
+ *   | columnName comparison_operator expr
+ *   | columnName [NOT] IN (expr [, expr] ...)
  *
  * comparison_operator: = | >= | > | <= | < | <> | !=
  *
@@ -41,7 +42,7 @@ public class BooleanPrimary {
     @Override
     public String toString() {
         return (columnName != null && columnName.length() > 0 ? columnName + " " : "") +
-               (predicate != null && predicate.length() > 0 ? predicate + " " : "") +
+               (predicate != null && predicate.length() > 0 ? predicate : "") +
                (comparisonOperator != null && comparisonOperator.length() > 0 ? comparisonOperator + " " : "") +
                (value != null ? value : "") +
                (inPredicate != null && inPredicate.length() > 0 ? inPredicate + " " : "") +

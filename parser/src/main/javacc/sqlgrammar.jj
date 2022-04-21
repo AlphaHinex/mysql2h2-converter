@@ -1117,7 +1117,7 @@ ExpressionValue ExpressionValue():
 }
 {
     (
-          leftExpr = BooleanPrimary() [tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()]
+          leftExpr = BooleanPrimary() [LOOKAHEAD(2) tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()]
     )
     {
         return new ExpressionValue(leftExpr, tk != null ? tk.image : "", rightExpr);
@@ -1126,8 +1126,9 @@ ExpressionValue ExpressionValue():
 
 /*
 boolean_primary:
-    columnName comparison_operator value
-  | columnName [NOT] IN (value [, value] ...)
+    columnName IS [NOT] NULL
+  | columnName comparison_operator expr
+  | columnName [NOT] IN (expr [, expr] ...)
  */
 BooleanPrimary BooleanPrimary():
 {
@@ -1138,7 +1139,8 @@ BooleanPrimary BooleanPrimary():
 }
 {
     (
-          LOOKAHEAD(2) columnName = DbObjectName() tk4 = <COMPARISON_OPERATOR> value = Value()
+          LOOKAHEAD(2) columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
+        | LOOKAHEAD(2) columnName = DbObjectName() tk4 = <COMPARISON_OPERATOR> value = Value()
         | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
     )
     {

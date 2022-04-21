@@ -159,10 +159,7 @@ public class BasicTest {
         String str = "DELETE FROM test WHERE t1 IN ('1','2','3')";
         assertStatementEquals(str);
 
-        str = "DELETE FROM test WHERE t1 IS NOT NULL && t2 <> ''";
-        assertStatementEquals(str);
-
-        str = "DELETE FROM test WHERE t1='1'";
+        str = "DELETE FROM test WHERE t1 <> '' && t2 IS NOT NULL";
         assertStatementEquals(str);
     }
 

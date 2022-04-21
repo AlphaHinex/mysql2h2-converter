@@ -404,7 +404,6 @@ public interface SQLParserConstants {
     "\")\"",
     "\",\"",
     "\"?\"",
-    "\"!\"",
   };
 
 }
