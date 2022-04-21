@@ -1102,41 +1102,32 @@ SystemVariableValue SystemVariableValue():
 
 /*
 expr:
-    boolean_primary OR boolean_primary
+    boolean_primary
+  | boolean_primary OR boolean_primary
   | boolean_primary || boolean_primary
   | boolean_primary XOR boolean_primary
   | boolean_primary AND boolean_primary
   | boolean_primary && boolean_primary
-  | NOT boolean_primary
-  | ! boolean_primary
-  | boolean_primary IS [NOT] {TRUE | FALSE | UNKNOWN}
-  | boolean_primary
  */
 ExpressionValue ExpressionValue():
 {
     BooleanPrimary leftExpr = null;
-    Token tk = null, tk2 = null, tk3 = null, tk4 = null;
+    Token tk = null;
     BooleanPrimary rightExpr = null;
-    BooleanPrimary booleanPrimary = null;
 }
 {
     (
-          LOOKAHEAD(2) booleanPrimary = BooleanPrimary()
-        | tk = "NOT" | tk = "!" rightExpr = BooleanPrimary()
-        | LOOKAHEAD(3) leftExpr = BooleanPrimary() tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()
-        | LOOKAHEAD(3) booleanPrimary = BooleanPrimary() tk2 = <IS> [tk3 = <NOT>] (tk4 = <TRUE> | tk4 = <FALSE> | tk4 = <UNKNOWN>)
+          leftExpr = BooleanPrimary() [tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()]
     )
     {
-        return new ExpressionValue(leftExpr, tk!=null ? tk.image : "", rightExpr,booleanPrimary,
-            (tk2 != null ? tk2.image : "") + (tk3 != null ? " " + tk3.image : "") + (tk4 != null ? " " + tk4.image : ""));
+        return new ExpressionValue(leftExpr, tk != null ? tk.image : "", rightExpr);
     }
 }
 
 /*
 boolean_primary:
-    columnName IS [NOT] NULL
-  | columnName comparison_operator expr
-  | columnName [NOT] IN (expr [, expr] ...)
+    columnName comparison_operator value
+  | columnName [NOT] IN (value [, value] ...)
  */
 BooleanPrimary BooleanPrimary():
 {
@@ -1147,8 +1138,7 @@ BooleanPrimary BooleanPrimary():
 }
 {
     (
-          LOOKAHEAD(2) columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
-        | LOOKAHEAD(2) columnName = DbObjectName() tk4 = <COMPARISON_OPERATOR> value = Value()
+          LOOKAHEAD(2) columnName = DbObjectName() tk4 = <COMPARISON_OPERATOR> value = Value()
         | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
     )
     {

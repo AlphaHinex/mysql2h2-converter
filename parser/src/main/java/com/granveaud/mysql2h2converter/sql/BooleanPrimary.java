@@ -4,9 +4,8 @@ package com.granveaud.mysql2h2converter.sql;
  * Only support partial operators now
  *
  * boolean_primary:
- *     columnName IS [NOT] NULL
- *   | columnName comparison_operator expr
- *   | columnName [NOT] IN (expr [, expr] ...)
+ *     columnName comparison_operator value
+ *   | columnName [NOT] IN (value [, value] ...)
  *
  * comparison_operator: = | >= | > | <= | < | <> | !=
  *
