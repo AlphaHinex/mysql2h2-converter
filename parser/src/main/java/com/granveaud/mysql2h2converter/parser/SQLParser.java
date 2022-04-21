@@ -2685,7 +2685,7 @@ boolean_primary:
  */
   final public BooleanPrimary BooleanPrimary() throws ParseException {    try {
 String columnName;
-    Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null, funcTk = null;
+    Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null;
     Value value = null;
     ValueList valueList = null;
       if (jj_2_7(2)) {
@@ -2701,7 +2701,7 @@ String columnName;
           ;
         }
         tk3 = jj_consume_token(NULL);
-      } else if (jj_2_8(2)) {
+      } else if (jj_2_8(3)) {
         columnName = DbObjectName();
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case EQUALS:{
@@ -2737,8 +2737,7 @@ String columnName;
           jj_consume_token(-1);
           throw new ParseException();
         }
-        funcTk = jj_consume_token(CONCAT);
-        valueList = ValueList();
+        value = Value();
       } else {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case S_IDENTIFIER:
@@ -2765,7 +2764,7 @@ String columnName;
       }
 return new BooleanPrimary(columnName,
             (tk!=null ? tk.image : "") + (tk2!=null ? " " + tk2.image : "") + (tk3!=null ? " " + tk3.image : ""),
-            tk4!=null ? tk4.image : "", value, funcTk!=null ? funcTk.image : "",
+            tk4!=null ? tk4.image : "", value,
             (tk5!=null ? tk5.image + " " : "") + (tk6!=null ? tk6.image : ""), valueList);
     } finally {
       trace_return("BooleanPrimary");
@@ -3654,12 +3653,6 @@ return new BooleanPrimary(columnName,
     { if (!jj_rescan) trace_return("Assignment(LOOKAHEAD SUCCEEDED)"); return false; }
   }
 
-  private boolean jj_3R_29()
- {
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
   private boolean jj_3R_11()
  {
     if (!jj_rescan) trace_call("ColumnDefinition(LOOKING AHEAD...)");
@@ -3671,6 +3664,12 @@ return new BooleanPrimary(columnName,
       if (jj_3R_19()) { jj_scanpos = xsp; break; }
     }
     { if (!jj_rescan) trace_return("ColumnDefinition(LOOKAHEAD SUCCEEDED)"); return false; }
+  }
+
+  private boolean jj_3R_29()
+ {
+    if (jj_3R_16()) return true;
+    return false;
   }
 
   private boolean jj_3_8()
@@ -3697,6 +3696,7 @@ return new BooleanPrimary(columnName,
     }
     }
     }
+    if (jj_3R_14()) return true;
     return false;
   }
 
