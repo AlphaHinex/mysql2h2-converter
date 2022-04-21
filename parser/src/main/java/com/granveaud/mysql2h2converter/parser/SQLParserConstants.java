@@ -221,41 +221,45 @@ public interface SQLParserConstants {
   /** RegularExpression Id. */
   int OR = 110;
   /** RegularExpression Id. */
-  int EQUALS = 111;
+  int XOR = 111;
   /** RegularExpression Id. */
-  int IS = 112;
+  int EQUALS = 112;
   /** RegularExpression Id. */
-  int TRUE = 113;
+  int IS = 113;
   /** RegularExpression Id. */
-  int FALSE = 114;
+  int TRUE = 114;
   /** RegularExpression Id. */
-  int UNKNOWN = 115;
+  int FALSE = 115;
   /** RegularExpression Id. */
-  int IN = 116;
+  int UNKNOWN = 116;
   /** RegularExpression Id. */
-  int S_IDENTIFIER = 117;
+  int IN = 117;
   /** RegularExpression Id. */
-  int S_QUOTED_IDENTIFIER = 118;
+  int CONCAT = 118;
   /** RegularExpression Id. */
-  int S_LETTER = 119;
+  int S_IDENTIFIER = 119;
   /** RegularExpression Id. */
-  int S_DIGIT = 120;
+  int S_QUOTED_IDENTIFIER = 120;
   /** RegularExpression Id. */
-  int S_SPECIAL_CHARS = 121;
+  int S_LETTER = 121;
   /** RegularExpression Id. */
-  int S_INTEGER = 122;
+  int S_DIGIT = 122;
   /** RegularExpression Id. */
-  int S_DOUBLE = 123;
+  int S_SPECIAL_CHARS = 123;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT1 = 124;
+  int S_INTEGER = 124;
   /** RegularExpression Id. */
-  int S_BINARY_FORMAT2 = 125;
+  int S_DOUBLE = 125;
   /** RegularExpression Id. */
-  int S_HEX_DIGIT = 126;
+  int S_BINARY_FORMAT1 = 126;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT1 = 127;
+  int S_BINARY_FORMAT2 = 127;
   /** RegularExpression Id. */
-  int S_BIT_FORMAT2 = 128;
+  int S_HEX_DIGIT = 128;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT1 = 129;
+  /** RegularExpression Id. */
+  int S_BIT_FORMAT2 = 130;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -373,12 +377,14 @@ public interface SQLParserConstants {
     "\"WHERE\"",
     "\"AND\"",
     "\"OR\"",
+    "\"XOR\"",
     "\"=\"",
     "\"IS\"",
     "\"TRUE\"",
     "\"FALSE\"",
     "\"UNKNOWN\"",
     "\"IN\"",
+    "\"CONCAT\"",
     "<S_IDENTIFIER>",
     "<S_QUOTED_IDENTIFIER>",
     "<S_LETTER>",
@@ -399,7 +405,6 @@ public interface SQLParserConstants {
     "\",\"",
     "\"?\"",
     "\"||\"",
-    "\"XOR\"",
     "\"&&\"",
     "\">=\"",
     "\">\"",

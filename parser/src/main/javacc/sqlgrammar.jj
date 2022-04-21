@@ -138,12 +138,14 @@ TOKEN:
 |   <WHERE: "WHERE">
 |   <AND: "AND">
 |   <OR: "OR">
+|   <XOR: "XOR">
 |   <EQUALS: "=">
 |   <IS: "IS">
 |   <TRUE: "TRUE">
 |   <FALSE: "FALSE">
 |   <UNKNOWN: "UNKNOWN">
 |   <IN: "IN">
+|   <CONCAT: "CONCAT">
 }
 
 TOKEN:
@@ -1115,7 +1117,7 @@ ExpressionValue ExpressionValue():
 }
 {
     (
-          leftExpr = BooleanPrimary() [LOOKAHEAD(2) (tk = "OR" | tk = "||" | tk = "XOR" | tk = "AND" | tk = "&&") rightExpr = BooleanPrimary()]
+          leftExpr = BooleanPrimary() [LOOKAHEAD(2) (tk = <OR> | tk = "||" | tk = <XOR> | tk = <AND> | tk = "&&") rightExpr = BooleanPrimary()]
     )
     {
         return new ExpressionValue(leftExpr, tk != null ? tk.image : "", rightExpr);
@@ -1138,11 +1140,9 @@ BooleanPrimary BooleanPrimary():
 {
     (
           LOOKAHEAD(2) columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
-        | LOOKAHEAD(2) columnName = DbObjectName() (tk4 = "=" | tk4 = ">="| tk4 = ">"| tk4 = "<="| tk4 = "<"| tk4 = "<>"| tk4 = "!=")
-            (
-                 value = Value()
-               | funcTk = "CONCAT" valueList = ValueList()
-            )
+        | LOOKAHEAD(2) columnName = DbObjectName()
+            (tk4 = "=" | tk4 = ">="| tk4 = ">"| tk4 = "<="| tk4 = "<"| tk4 = "<>"| tk4 = "!=")
+            ( funcTk = <CONCAT> valueList = ValueList() | value = Value() )
         | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
     )
     {
