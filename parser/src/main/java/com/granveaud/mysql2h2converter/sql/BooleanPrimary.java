@@ -41,11 +41,11 @@ public class BooleanPrimary {
 
     @Override
     public String toString() {
-        return (columnName != null ? columnName + " " : "") +
-               (predicate != null ? predicate + " " : "") +
-               (comparisonOperator != null ? comparisonOperator + " " : "") +
+        return (columnName != null && columnName.length() > 0 ? columnName + " " : "") +
+               (predicate != null && predicate.length() > 0 ? predicate + " " : "") +
+               (comparisonOperator != null && comparisonOperator.length() > 0 ? comparisonOperator + " " : "") +
                (value != null ? value : "") +
-               (inPredicate != null ? inPredicate + " " : "") +
+               (inPredicate != null && inPredicate.length() > 0 ? inPredicate + " " : "") +
                (valueList != null ? valueList : "");
     }
 

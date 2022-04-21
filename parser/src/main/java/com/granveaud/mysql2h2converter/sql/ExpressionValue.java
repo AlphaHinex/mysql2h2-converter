@@ -38,10 +38,10 @@ public class ExpressionValue implements Value {
     @Override
     public String toString() {
         return (leftExpr != null ? leftExpr : "") +
-               (exprOperator != null ? " " + exprOperator + " " : "") +
+               (exprOperator != null && exprOperator.length() > 0 ? " " + exprOperator + " " : "") +
                (rightExpr != null ? rightExpr : "") +
                (booleanPrimary != null ? booleanPrimary : "") +
-               (booleanPrimaryPredicate != null ? " " + booleanPrimaryPredicate : "");
+               (booleanPrimaryPredicate != null && booleanPrimaryPredicate.length() > 0 ? " " + booleanPrimaryPredicate : "");
     }
 
 }
