@@ -146,7 +146,6 @@ TOKEN:
 |   <LOGICAL_OPERATOR: "OR" | "||" | "XOR" | "AND" | "&&" | "NOT" | "!">
 |   <COMPARISON_OPERATOR: "=" | ">=" | ">" | "<=" | "<" | "<>" | "!=">
 |   <IN: "IN">
-|   <EPS: "">
 }
 
 TOKEN:
@@ -1103,26 +1102,26 @@ SystemVariableValue SystemVariableValue():
 
 /*
 expr:
-    expr OR expr
-  | expr || expr
-  | expr XOR expr
-  | expr AND expr
-  | expr && expr
-  | NOT expr
-  | ! expr
+    boolean_primary OR boolean_primary
+  | boolean_primary || boolean_primary
+  | boolean_primary XOR boolean_primary
+  | boolean_primary AND boolean_primary
+  | boolean_primary && boolean_primary
+  | NOT boolean_primary
+  | ! boolean_primary
   | boolean_primary IS [NOT] {TRUE | FALSE | UNKNOWN}
   | boolean_primary
  */
 ExpressionValue ExpressionValue():
 {
-    ExpressionValue leftExpr = null;
+    BooleanPrimary leftExpr = null;
     Token tk = null, tk2 = null, tk3 = null, tk4 = null;
-    ExpressionValue rightExpr = null;
+    BooleanPrimary rightExpr = null;
     BooleanPrimary booleanPrimary = null;
 }
 {
     (
-        [<EPS> leftExpr = ExpressionValue()] tk = <LOGICAL_OPERATOR> rightExpr = ExpressionValue()
+          [leftExpr = BooleanPrimary()] tk = <LOGICAL_OPERATOR> rightExpr = BooleanPrimary()
         | booleanPrimary = BooleanPrimary() tk2 = <IS> [tk3 = <NOT>] (tk4 = <TRUE> | tk4 = <FALSE> | tk4 = <UNKNOWN>)
         | booleanPrimary = BooleanPrimary()
     )
@@ -1134,57 +1133,27 @@ ExpressionValue ExpressionValue():
 
 /*
 boolean_primary:
-    boolean_primary IS [NOT] NULL
-  | boolean_primary comparison_operator predicate
-  | predicate
+    columnName IS [NOT] NULL
+  | columnName comparison_operator expr
+  | columnName [NOT] IN (expr [, expr] ...)
  */
 BooleanPrimary BooleanPrimary():
 {
-    BooleanPrimary booleanPrimary = null;
-    Token tk = null, tk2 = null, tk3 = null, tk4 = null;
-    Predicate predicate = null;
+    String columnName;
+    Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null;
+    Value value = null;
+    ValueList valueList = null;
 }
 {
     (
-          <EPS> booleanPrimary = BooleanPrimary() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
-        | <EPS> booleanPrimary = BooleanPrimary() tk = <COMPARISON_OPERATOR> predicate = Predicate()
-        | <EPS> predicate = Predicate()
+          columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
+        | columnName = DbObjectName() tk4 = <COMPARISON_OPERATOR> value = Value()
+        | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
     )
     {
-        return new BooleanPrimary(booleanPrimary,
+        return new BooleanPrimary(columnName,
             (tk!=null ? tk.image : "") + (tk2!=null ? " " + tk2.image : "") + (tk3!=null ? " " + tk3.image : ""),
-            tk4!=null ? tk4.image : "", predicate);
-    }
-}
-
-/*
-predicate:
-    bit_expr [NOT] IN (expr [, expr] ...)
-  | bit_expr
-
-bit_expr:
-    simple_expr
-
-simple_expr:
-    literal
-  | identifier
- */
-Predicate Predicate():
-{
-    Value bitExpr = null;
-    Token tk = null, tk2 = null;
-    ExpressionValue expression = null;
-    List<ExpressionValue> expressions = new ArrayList<ExpressionValue>();
-}
-{
-    (
-          bitExpr = Value() [tk = <NOT>] tk2 = <IN> "(" expression = ExpressionValue() { expressions.add(expression); }
-          (
-            "," expression = ExpressionValue() { expressions.add(expression); }
-          )* ")"
-        | bitExpr = Value()
-    )
-    {
-        return new Predicate(bitExpr, (tk!=null ? tk.image + " " : "") + (tk2!=null ? tk2.image : ""), expressions);
+            tk4!=null ? tk4.image : "", value,
+            (tk5!=null ? tk5.image + " " : "") + (tk6!=null ? tk6.image : ""), valueList);
     }
 }

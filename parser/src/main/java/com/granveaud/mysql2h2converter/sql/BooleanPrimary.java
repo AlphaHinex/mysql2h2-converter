@@ -4,9 +4,9 @@ package com.granveaud.mysql2h2converter.sql;
  * Only support partial operators now
  *
  * boolean_primary:
- *     boolean_primary IS [NOT] NULL
- *   | boolean_primary comparison_operator predicate
- *   | predicate
+ *     columnName IS [NOT] NULL
+ *   | columnName comparison_operator expr
+ *   | columnName [NOT] IN (expr [, expr] ...)
  *
  * comparison_operator: = | >= | > | <= | < | <> | !=
  *
@@ -14,30 +14,39 @@ package com.granveaud.mysql2h2converter.sql;
  */
 public class BooleanPrimary {
 
-    private final BooleanPrimary booleanPrimary;
+    private final String columnName;
     /**
      * IS [NOT] NULL
      */
-    private final String booleanPrimaryPredicate;
+    private final String predicate;
     /**
      * = | >= | > | <= | < | <> | !=
      */
     private final String comparisonOperator;
-    private final Predicate predicate;
+    private final Value value;
+    /**
+     * [NOT] IN
+     */
+    private final String inPredicate;
+    private final ValueList valueList;
 
-    public BooleanPrimary(BooleanPrimary booleanPrimary, String booleanPrimaryPredicate, String comparisonOperator, Predicate predicate) {
-        this.booleanPrimary = booleanPrimary;
-        this.booleanPrimaryPredicate = booleanPrimaryPredicate;
-        this.comparisonOperator = comparisonOperator;
+    public BooleanPrimary(String columnName, String predicate, String comparisonOperator, Value value, String inPredicate, ValueList valueList) {
+        this.columnName = columnName;
         this.predicate = predicate;
+        this.comparisonOperator = comparisonOperator;
+        this.value = value;
+        this.inPredicate = inPredicate;
+        this.valueList = valueList;
     }
 
     @Override
     public String toString() {
-        return (booleanPrimary != null ? booleanPrimary + " " : "") +
-               (booleanPrimaryPredicate != null ? booleanPrimaryPredicate + " " : "") +
+        return (columnName != null ? columnName + " " : "") +
+               (predicate != null ? predicate + " " : "") +
                (comparisonOperator != null ? comparisonOperator + " " : "") +
-               (predicate != null ? predicate : "");
+               (value != null ? value : "") +
+               (inPredicate != null ? inPredicate + " " : "") +
+               (valueList != null ? valueList + "");
     }
 
 }
