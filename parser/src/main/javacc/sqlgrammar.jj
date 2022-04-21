@@ -144,7 +144,6 @@ TOKEN:
 |   <FALSE: "FALSE">
 |   <UNKNOWN: "UNKNOWN">
 |   <LOGICAL_OPERATOR: "OR" | "||" | "XOR" | "AND" | "&&">
-|   <COMPARISON_OPERATOR: "=" | ">=" | ">" | "<=" | "<" | "<>" | "!=">
 |   <IN: "IN">
 }
 
@@ -1127,8 +1126,8 @@ ExpressionValue ExpressionValue():
 /*
 boolean_primary:
     columnName IS [NOT] NULL
-  | columnName comparison_operator expr
-  | columnName [NOT] IN (expr [, expr] ...)
+  | columnName comparison_operator value
+  | columnName [NOT] IN (value [, value] ...)
  */
 BooleanPrimary BooleanPrimary():
 {
@@ -1140,7 +1139,7 @@ BooleanPrimary BooleanPrimary():
 {
     (
           LOOKAHEAD(2) columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
-        | LOOKAHEAD(2) columnName = DbObjectName() tk4 = <COMPARISON_OPERATOR> value = Value()
+        | LOOKAHEAD(2) columnName = DbObjectName() (tk4 = "=" | tk4 = ">="| tk4 = ">"| tk4 = "<="| tk4 = "<"| tk4 = "<>"| tk4 = "!=") value = Value()
         | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
     )
     {
