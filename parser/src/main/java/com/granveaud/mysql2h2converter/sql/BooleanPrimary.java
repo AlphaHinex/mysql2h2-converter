@@ -1,31 +1,43 @@
 package com.granveaud.mysql2h2converter.sql;
 
 /**
- * Only Support simple equal operator now
+ * Only support partial operators now
  *
- * TODO
+ * boolean_primary:
+ *     boolean_primary IS [NOT] NULL
+ *   | boolean_primary comparison_operator predicate
+ *   | predicate
  *
- * boolean primary ::=
- * ( common value expression ( between predicate | match predicate | like regex predicate | in predicate | is null predicate | quantified comparison predicate | comparison predicate )? )
+ * comparison_operator: = | >= | > | <= | < | <> | !=
  *
- * exists predicate
- *
- * xml query
+ * TODO: Support other operators
  */
 public class BooleanPrimary {
 
-    private final String columnName;
+    private final BooleanPrimary booleanPrimary;
+    /**
+     * IS [NOT] NULL
+     */
+    private final String booleanPrimaryPredicate;
+    /**
+     * = | >= | > | <= | < | <> | !=
+     */
+    private final String comparisonOperator;
+    private final Predicate predicate;
 
-    private final Value value;
-
-    public BooleanPrimary(String columnName, Value value) {
-        this.columnName = columnName;
-        this.value = value;
+    public BooleanPrimary(BooleanPrimary booleanPrimary, String booleanPrimaryPredicate, String comparisonOperator, Predicate predicate) {
+        this.booleanPrimary = booleanPrimary;
+        this.booleanPrimaryPredicate = booleanPrimaryPredicate;
+        this.comparisonOperator = comparisonOperator;
+        this.predicate = predicate;
     }
 
     @Override
     public String toString() {
-        return columnName + "=" + value;
+        return (booleanPrimary != null ? booleanPrimary + " " : "") +
+               (booleanPrimaryPredicate != null ? booleanPrimaryPredicate + " " : "") +
+               (comparisonOperator != null ? comparisonOperator + " " : "") +
+               (predicate != null ? predicate : "");
     }
 
 }

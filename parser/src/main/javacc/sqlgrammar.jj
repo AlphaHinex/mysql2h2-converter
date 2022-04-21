@@ -139,6 +139,14 @@ TOKEN:
 |   <AND: "AND">
 |   <OR: "OR">
 |   <EQUALS: "=">
+|   <IS: "IS">
+|   <TRUE: "TRUE">
+|   <FALSE: "FALSE">
+|   <UNKNOWN: "UNKNOWN">
+|   <LOGICAL_OPERATOR: "OR" | "||" | "XOR" | "AND" | "&&" | "NOT" | "!">
+|   <COMPARISON_OPERATOR: "=" | ">=" | ">" | "<=" | "<" | "<>" | "!=">
+|   <IN: "IN">
+|   <EPS: "">
 }
 
 TOKEN:
@@ -338,85 +346,20 @@ SqlStatement UpdateStatement():
 
 /*
 DELETE FROM tbl_name
-    [WHERE where_condition]
+    [WHERE expressionValue]
  */
 SqlStatement DeleteStatement():
 {
     String tableName;
-    WhereClause whereClause = null;
+    ExpressionValue expressionValue = null;
 }
 {
     (
         <DELETE> <FROM> tableName = DbObjectName()
-        [<WHERE> whereClause = WhereClause()]
+        [<WHERE> expressionValue = ExpressionValue()]
     )
     {
-        return new DeleteStatement(tableName, whereClause);
-    }
-}
-
-/*
-WHERE <boolean term> ( OR <boolean term> )*
- */
-WhereClause WhereClause():
-{
-    BooleanTerm booleanTerm = null;
-    List<BooleanTerm> booleanTerms = new ArrayList<BooleanTerm>();
-}
-{
-    (
-        booleanTerm = BooleanTerm() { booleanTerms.add(booleanTerm); }
-        (
-            <OR> booleanTerm = BooleanTerm() { booleanTerms.add(booleanTerm); }
-        )*
-    )
-    {
-        return new WhereClause(booleanTerms);
-    }
-}
-
-BooleanTerm BooleanTerm():
-{
-    BooleanFactor booleanFactor = null;
-    List<BooleanFactor> booleanFactors = new ArrayList<BooleanFactor>();
-}
-{
-    (
-        booleanFactor = BooleanFactor() { booleanFactors.add(booleanFactor); }
-        (
-            <AND> booleanFactor = BooleanFactor() { booleanFactors.add(booleanFactor); }
-        )*
-    )
-    {
-        return new BooleanTerm(booleanFactors);
-    }
-}
-
-BooleanFactor BooleanFactor():
-{
-    Token tk = null;
-    BooleanPrimary booleanPrimary = null;
-}
-{
-    (
-        [tk = <NOT>] booleanPrimary = BooleanPrimary()
-    )
-    {
-        return new BooleanFactor(tk != null, booleanPrimary);
-    }
-}
-
-BooleanPrimary BooleanPrimary():
-{
-    String columnName;
-    Value value;
-}
-{
-    (
-        columnName = DbObjectName() <EQUALS> value = Value()
-    )
-    {
-        return new BooleanPrimary(columnName, value);
+        return new DeleteStatement(tableName, expressionValue);
     }
 }
 
@@ -1158,10 +1101,90 @@ SystemVariableValue SystemVariableValue():
     tk = <CURRENT_TIMESTAMP> { return new SystemVariableValue(tk.image); }
 }
 
+/*
+expr:
+    expr OR expr
+  | expr || expr
+  | expr XOR expr
+  | expr AND expr
+  | expr && expr
+  | NOT expr
+  | ! expr
+  | boolean_primary IS [NOT] {TRUE | FALSE | UNKNOWN}
+  | boolean_primary
+ */
 ExpressionValue ExpressionValue():
 {
+    ExpressionValue leftExpr = null;
+    Token tk = null, tk2 = null, tk3 = null, tk4 = null;
+    ExpressionValue rightExpr = null;
+    BooleanPrimary booleanPrimary = null;
 }
 {
-    <TODO> { return new ExpressionValue("TODO"); }
+    (
+        [<EPS> leftExpr = ExpressionValue()] tk = <LOGICAL_OPERATOR> rightExpr = ExpressionValue()
+        | booleanPrimary = BooleanPrimary() tk2 = <IS> [tk3 = <NOT>] (tk4 = <TRUE> | tk4 = <FALSE> | tk4 = <UNKNOWN>)
+        | booleanPrimary = BooleanPrimary()
+    )
+    {
+        return new ExpressionValue(leftExpr, tk!=null ? tk.image : "", rightExpr,booleanPrimary,
+            (tk2 != null ? tk2.image : "") + (tk3 != null ? " " + tk3.image : "") + (tk4 != null ? " " + tk4.image : ""));
+    }
 }
 
+/*
+boolean_primary:
+    boolean_primary IS [NOT] NULL
+  | boolean_primary comparison_operator predicate
+  | predicate
+ */
+BooleanPrimary BooleanPrimary():
+{
+    BooleanPrimary booleanPrimary = null;
+    Token tk = null, tk2 = null, tk3 = null, tk4 = null;
+    Predicate predicate = null;
+}
+{
+    (
+          <EPS> booleanPrimary = BooleanPrimary() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
+        | <EPS> booleanPrimary = BooleanPrimary() tk = <COMPARISON_OPERATOR> predicate = Predicate()
+        | <EPS> predicate = Predicate()
+    )
+    {
+        return new BooleanPrimary(booleanPrimary,
+            (tk!=null ? tk.image : "") + (tk2!=null ? " " + tk2.image : "") + (tk3!=null ? " " + tk3.image : ""),
+            tk4!=null ? tk4.image : "", predicate);
+    }
+}
+
+/*
+predicate:
+    bit_expr [NOT] IN (expr [, expr] ...)
+  | bit_expr
+
+bit_expr:
+    simple_expr
+
+simple_expr:
+    literal
+  | identifier
+ */
+Predicate Predicate():
+{
+    Value bitExpr = null;
+    Token tk = null, tk2 = null;
+    ExpressionValue expression = null;
+    List<ExpressionValue> expressions = new ArrayList<ExpressionValue>();
+}
+{
+    (
+          bitExpr = Value() [tk = <NOT>] tk2 = <IN> "(" expression = ExpressionValue() { expressions.add(expression); }
+          (
+            "," expression = ExpressionValue() { expressions.add(expression); }
+          )* ")"
+        | bitExpr = Value()
+    )
+    {
+        return new Predicate(bitExpr, (tk!=null ? tk.image + " " : "") + (tk2!=null ? tk2.image : ""), expressions);
+    }
+}

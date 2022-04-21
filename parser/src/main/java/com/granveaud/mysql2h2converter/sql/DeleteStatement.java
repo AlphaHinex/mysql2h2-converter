@@ -2,21 +2,21 @@ package com.granveaud.mysql2h2converter.sql;
 
 /**
 DELETE [FROM] tbl_name
-    [WHERE where_condition]
+    [WHERE expressionValue]
  */
 public class DeleteStatement implements SqlStatement {
 
     private final String tableName;
-    private final WhereClause whereClause;
+    private final ExpressionValue expressionValue;
 
-    public DeleteStatement(String tableName, WhereClause whereClause) {
+    public DeleteStatement(String tableName, ExpressionValue expressionValue) {
         this.tableName = tableName;
-        this.whereClause = whereClause;
+        this.expressionValue = expressionValue;
     }
 
     @Override
     public String toString() {
-        return "DELETE FROM " + tableName + (whereClause != null ? " " + whereClause : "");
+        return "DELETE FROM " + tableName + (expressionValue != null ? " WHERE " + expressionValue : "");
     }
 
 }
