@@ -46,7 +46,7 @@ public class BooleanPrimary {
                (comparisonOperator != null ? comparisonOperator + " " : "") +
                (value != null ? value : "") +
                (inPredicate != null ? inPredicate + " " : "") +
-               (valueList != null ? valueList + "");
+               (valueList != null ? valueList : "");
     }
 
 }
