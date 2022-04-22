@@ -72,12 +72,24 @@ return tk1;
   String parseConcat() throws ParseException, ParseException {
     trace_call("parseConcat");
     try {StringBuilder sb = new StringBuilder("CONCAT(");
+    boolean inQuote = false;
+    char quote = 0;
     try {
         char c = jj_input_stream.BeginToken();
         while (true) {
             sb.append(c);
-            if (c == ')') {
-                return sb.toString();
+            if (c == '\'' || c == '"') {
+                if (quote == 0) {
+                    quote = c;
+                    inQuote = true;
+                } else if (c == quote) {
+                    quote = 0;
+                    inQuote = false;
+                }
+            } else if (c == ')') {
+                if (!inQuote) {
+                    return sb.toString();
+                }
             } else if (c == 0x5c) { // backslash
                 char c2 = jj_input_stream.readChar();
                 sb.append(c2); // always append following character even if it is a single quote
@@ -2868,18 +2880,6 @@ return new BooleanPrimary(columnName,
     finally { jj_save(7, xla); }
   }
 
-  private boolean jj_3R_32()
- {
-    if (jj_scan_token(S_QUOTED_IDENTIFIER)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_31()
- {
-    if (jj_scan_token(S_IDENTIFIER)) return true;
-    return false;
-  }
-
   private boolean jj_3R_96()
  {
     if (jj_scan_token(132)) return true;
@@ -2890,30 +2890,6 @@ return new BooleanPrimary(columnName,
  {
     if (jj_scan_token(131)) return true;
     return false;
-  }
-
-  private boolean jj_3R_16()
- {
-    if (!jj_rescan) trace_call("DbObjectName(LOOKING AHEAD...)");
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_31()) {
-    jj_scanpos = xsp;
-    if (jj_3R_32()) { if (!jj_rescan) trace_return("DbObjectName(LOOKAHEAD FAILED)"); return true; }
-    }
-    { if (!jj_rescan) trace_return("DbObjectName(LOOKAHEAD SUCCEEDED)"); return false; }
-  }
-
-  private boolean jj_3R_90()
- {
-    if (!jj_rescan) trace_call("CharLiteral(LOOKING AHEAD...)");
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_95()) {
-    jj_scanpos = xsp;
-    if (jj_3R_96()) { if (!jj_rescan) trace_return("CharLiteral(LOOKAHEAD FAILED)"); return true; }
-    }
-    { if (!jj_rescan) trace_return("CharLiteral(LOOKAHEAD SUCCEEDED)"); return false; }
   }
 
   private boolean jj_3R_89()
@@ -2928,6 +2904,18 @@ return new BooleanPrimary(columnName,
     if (!jj_rescan) trace_call("SystemVariableValue(LOOKING AHEAD...)");
     if (jj_scan_token(CURRENT_TIMESTAMP)) { if (!jj_rescan) trace_return("SystemVariableValue(LOOKAHEAD FAILED)"); return true; }
     { if (!jj_rescan) trace_return("SystemVariableValue(LOOKAHEAD SUCCEEDED)"); return false; }
+  }
+
+  private boolean jj_3R_90()
+ {
+    if (!jj_rescan) trace_call("CharLiteral(LOOKING AHEAD...)");
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_95()) {
+    jj_scanpos = xsp;
+    if (jj_3R_96()) { if (!jj_rescan) trace_return("CharLiteral(LOOKAHEAD FAILED)"); return true; }
+    }
+    { if (!jj_rescan) trace_return("CharLiteral(LOOKAHEAD SUCCEEDED)"); return false; }
   }
 
   private boolean jj_3R_85()
@@ -3769,6 +3757,30 @@ return new BooleanPrimary(columnName,
     if (!jj_rescan) trace_call("ExpressionValue(LOOKING AHEAD...)");
     if (jj_3R_15()) { if (!jj_rescan) trace_return("ExpressionValue(LOOKAHEAD FAILED)"); return true; }
     { if (!jj_rescan) trace_return("ExpressionValue(LOOKAHEAD SUCCEEDED)"); return false; }
+  }
+
+  private boolean jj_3R_32()
+ {
+    if (jj_scan_token(S_QUOTED_IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_31()
+ {
+    if (jj_scan_token(S_IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_16()
+ {
+    if (!jj_rescan) trace_call("DbObjectName(LOOKING AHEAD...)");
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_31()) {
+    jj_scanpos = xsp;
+    if (jj_3R_32()) { if (!jj_rescan) trace_return("DbObjectName(LOOKAHEAD FAILED)"); return true; }
+    }
+    { if (!jj_rescan) trace_return("DbObjectName(LOOKAHEAD SUCCEEDED)"); return false; }
   }
 
   /** Generated Token Manager. */

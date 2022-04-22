@@ -218,12 +218,24 @@ String parseStringValue(char delimiter) throws ParseException {
 JAVACODE
 String parseConcat() throws ParseException {
     StringBuilder sb = new StringBuilder("CONCAT(");
+    boolean inQuote = false;
+    char quote = 0;
     try {
         char c = jj_input_stream.BeginToken();
         while (true) {
             sb.append(c);
-            if (c == ')') {
-                return sb.toString();
+            if (c == '\'' || c == '"') {
+                if (quote == 0) {
+                    quote = c;
+                    inQuote = true;
+                } else if (c == quote) {
+                    quote = 0;
+                    inQuote = false;
+                }
+            } else if (c == ')') {
+                if (!inQuote) {
+                    return sb.toString();
+                }
             } else if (c == 0x5c) { // backslash
                 char c2 = jj_input_stream.readChar();
                 sb.append(c2); // always append following character even if it is a single quote
