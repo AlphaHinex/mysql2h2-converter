@@ -87,11 +87,11 @@ public class H2Converter {
                 LOGGER.warn("Dropping SET statement {}", sourceStatement);
             } else if (sourceStatement instanceof StartTransactionStatement) {
                 // replace with H2 equivalent
-                result.add(new SetStatement("AUTOCOMMIT", Arrays.<Value>asList(new ExpressionValue("OFF"))));
+                result.add(new SetStatement("AUTOCOMMIT", Arrays.<Value>asList(new StringValue("OFF"))));
             } else if (sourceStatement instanceof CommitTransactionStatement) {
                 // replace with H2 equivalent
                 result.add(new CommitTransactionStatement());
-                result.add(new SetStatement("AUTOCOMMIT", Arrays.<Value>asList(new ExpressionValue("ON"))));
+                result.add(new SetStatement("AUTOCOMMIT", Arrays.<Value>asList(new StringValue("ON"))));
             } else if (sourceStatement instanceof UseStatement) {
                 // USE dbName => SET SCHEMA dbName
                 UseStatement useStatement = (UseStatement) sourceStatement;

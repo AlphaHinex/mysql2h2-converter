@@ -1,6 +1,6 @@
 package com.granveaud.mysql2h2converter.converter;
 
-import com.granveaud.mysql2h2converter.sql.ExpressionValue;
+import com.granveaud.mysql2h2converter.sql.StringValue;
 import com.granveaud.mysql2h2converter.sql.Value;
 
 public class DbUtils {
@@ -43,6 +43,6 @@ public class DbUtils {
 
 //      LOGGER.info("TRANSFORM " + str + " => STRINGDECODE('" + sb.toString() + "')");
 
-        return new ExpressionValue("STRINGDECODE('" + sb.toString() + "')");
+        return new StringValue("STRINGDECODE('" + sb.toString() + "')");
     }
 }
