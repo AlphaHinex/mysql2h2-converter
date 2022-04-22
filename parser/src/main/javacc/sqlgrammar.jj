@@ -215,6 +215,28 @@ String parseStringValue(char delimiter) throws ParseException {
     }
 }
 
+JAVACODE
+String parseConcat() throws ParseException {
+    StringBuilder sb = new StringBuilder("CONCAT(");
+    try {
+        char c = jj_input_stream.BeginToken();
+        while (true) {
+            sb.append(c);
+            if (c == ')') {
+                return sb.toString();
+            } else if (c == 0x5c) { // backslash
+                char c2 = jj_input_stream.readChar();
+                sb.append(c2); // always append following character even if it is a single quote
+            }
+
+            // next character
+            c = jj_input_stream.readChar();
+        }
+    } catch (IOException e) {
+        throw new ParseException("Error while parsing CONCAT function: " + e.getMessage());
+    }
+}
+
 // parse one statement in a script (terminated by ';')
 SqlStatement ScriptStatement():
 {
@@ -1129,10 +1151,11 @@ boolean_primary:
     columnName IS [NOT] NULL
   | columnName comparison_operator value
   | columnName [NOT] IN (value [, value] ...)
+  | CONCAT()
  */
 BooleanPrimary BooleanPrimary():
 {
-    String columnName;
+    String columnName = "";
     Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null;
     Value value = null;
     ValueList valueList = null;
@@ -1142,6 +1165,7 @@ BooleanPrimary BooleanPrimary():
           LOOKAHEAD(2) columnName = DbObjectName() tk = <IS> [tk2 = <NOT>] tk3 = <NULL>
         | LOOKAHEAD(3) columnName = DbObjectName() (tk4 = "=" | tk4 = ">="| tk4 = ">"| tk4 = "<="| tk4 = "<"| tk4 = "<>"| tk4 = "!=") value = Value()
         | columnName = DbObjectName() [tk5 = <NOT>] tk6 = <IN> valueList = ValueList()
+        | <CONCAT> "(" columnName= parseConcat()
     )
     {
         return new BooleanPrimary(columnName,
