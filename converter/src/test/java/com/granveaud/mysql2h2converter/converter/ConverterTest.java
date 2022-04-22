@@ -141,6 +141,11 @@ public class ConverterTest {
         loadScript("create-table-with-key.sql");
     }
 
+    @Test
+    public void testChampScripts() throws Exception {
+        loadScript("champ.sql");
+    }
+
     private void loadScript(String s) throws Exception {
         long time0 = System.currentTimeMillis();
 
