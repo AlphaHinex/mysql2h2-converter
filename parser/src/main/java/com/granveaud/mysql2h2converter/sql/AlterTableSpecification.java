@@ -64,6 +64,10 @@ public class AlterTableSpecification {
         this.constraint = constraint;
     }
 
+    public ColumnConstraint getConstraint() {
+        return constraint;
+    }
+
     @Override
     public String toString() {
         return operation +

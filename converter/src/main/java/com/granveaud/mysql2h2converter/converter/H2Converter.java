@@ -147,6 +147,19 @@ public class H2Converter {
                     // dropTableStatement.setDatabaseName(currentDbName);
                 }
                 result.add(sourceStatement);
+            } else if (sourceStatement instanceof AlterTableStatement) {
+                AlterTableStatement alterTableStatement = (AlterTableStatement) sourceStatement;
+                ColumnConstraint columnConstraint;
+                ColumnType columnType;
+                for (AlterTableSpecification specification : alterTableStatement.getSpecifications()) {
+                    columnConstraint = specification.getConstraint();
+                    columnConstraint.setModifyType("");
+                    columnConstraint.setAfterColumn(null);
+                    columnType = columnConstraint.getColumnDefinition().getColumnType();
+                    columnType.setCharsetName("");
+                    columnType.setCollationName("");
+                    result.add(new AlterTableStatement(alterTableStatement.isIgnore(), alterTableStatement.getTableName(), Collections.singletonList(specification)));
+                }
             } else {
                 // general case: add statement unchanged
                 result.add(sourceStatement);

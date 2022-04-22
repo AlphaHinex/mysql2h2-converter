@@ -75,6 +75,18 @@ public class ColumnConstraint {
         this.indexType = indexType;
     }
 
+    public ColumnDefinition getColumnDefinition() {
+        return columnDefinition;
+    }
+
+    public void setModifyType(String modifyType) {
+        this.modifyType = modifyType;
+    }
+
+    public void setAfterColumn(ColumnName afterColumn) {
+        this.afterColumn = afterColumn;
+    }
+
     @Override
     public String toString() {
         return (constraint ? "CONSTRAINT " : "") +

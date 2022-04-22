@@ -51,6 +51,18 @@ public class AlterTableStatement implements SqlStatement {
         this.specifications = specifications;
     }
 
+    public boolean isIgnore() {
+        return ignore;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public List<AlterTableSpecification> getSpecifications() {
+        return specifications;
+    }
+
     @Override
     public String toString() {
         return "ALTER" + (ignore ? " IGNORE" : "") + " TABLE " + tableName + " " + joinList(specifications, ",");

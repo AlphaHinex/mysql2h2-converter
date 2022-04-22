@@ -88,8 +88,8 @@ public class ColumnType {
                 (binary ? " BINARY" : "") +
                 (ascii ? " ASCII" : "") +
                 (unicode ? " UNICODE" : "") +
-                (charsetName != null ? " CHARACTER SET " + charsetName : "") +
-                (collationName != null ? " COLLATION " + collationName : "");
+                (charsetName != null && charsetName.length() > 0 ? " CHARACTER SET " + charsetName : "") +
+                (collationName != null && collationName.length() > 0 ? " COLLATION " + collationName : "");
 
     }
 }
