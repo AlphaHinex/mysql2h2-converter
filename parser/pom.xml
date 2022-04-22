@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.parmet</groupId>
+    <groupId>com.github.alphahinex.mysql2h2-converter</groupId>
     <artifactId>mysql2h2-parent</artifactId>
     <version>0.2.2-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.parmet</groupId>
+  <groupId>com.github.alphahinex.mysql2h2-converter</groupId>
   <artifactId>mysql2h2-parser</artifactId>
   
   <distributionManagement>
