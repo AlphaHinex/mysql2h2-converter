@@ -153,11 +153,17 @@ public class H2Converter {
                 ColumnType columnType;
                 for (AlterTableSpecification specification : alterTableStatement.getSpecifications()) {
                     columnConstraint = specification.getConstraint();
-                    columnConstraint.setModifyType("");
-                    columnConstraint.setAfterColumn(null);
-                    columnType = columnConstraint.getColumnDefinition().getColumnType();
-                    columnType.setCharsetName("");
-                    columnType.setCollationName("");
+                    if (columnConstraint != null) {
+                        columnConstraint.setModifyType("");
+                        columnConstraint.setAfterColumn(null);
+                        if (columnConstraint.getColumnDefinition() != null) {
+                            columnType = columnConstraint.getColumnDefinition().getColumnType();
+                            if (columnType != null) {
+                                columnType.setCharsetName("");
+                                columnType.setCollationName("");
+                            }
+                        }
+                    }
                     result.add(new AlterTableStatement(alterTableStatement.isIgnore(), alterTableStatement.getTableName(), Collections.singletonList(specification)));
                 }
             } else {
