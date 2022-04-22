@@ -4,8 +4,8 @@ options{
     UNICODE_INPUT=true;
     JAVA_TEMPLATE_TYPE="modern";
 //  USER_CHAR_STREAM=false;
-  DEBUG_TOKEN_MANAGER = true;
-  DEBUG_LOOKAHEAD= true ;
+//  DEBUG_TOKEN_MANAGER = true;
+//  DEBUG_LOOKAHEAD= true ;
 }
 
 PARSER_BEGIN(SQLParser)

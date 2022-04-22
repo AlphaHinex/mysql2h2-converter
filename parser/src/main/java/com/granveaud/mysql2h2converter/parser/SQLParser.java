@@ -8,37 +8,31 @@ import com.granveaud.mysql2h2converter.sql.*;
 
 public class SQLParser implements SQLParserConstants {
 
-  final public Token CharLiteral() throws ParseException {    try {
-Token tk;
+  final public Token CharLiteral() throws ParseException {Token tk;
     String str;
     Token tk1;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 131:{
-        tk = jj_consume_token(131);
-        str = parseStringValue((char) 0x27);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 131:{
+      tk = jj_consume_token(131);
+      str = parseStringValue((char) 0x27);
 tk1 = new Token(tk.kind, str);
-        break;
-        }
-      case 132:{
-        tk = jj_consume_token(132);
-        str = parseStringValue((char) 0x22);
-tk1 = new Token(tk.kind, str);
-        break;
-        }
-      default:
-        jj_la1[0] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+      break;
       }
-return tk1;
-    } finally {
-      trace_return("CharLiteral");
+    case 132:{
+      tk = jj_consume_token(132);
+      str = parseStringValue((char) 0x22);
+tk1 = new Token(tk.kind, str);
+      break;
+      }
+    default:
+      jj_la1[0] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
+return tk1;
 }
 
-  String parseStringValue(char delimiter) throws ParseException, ParseException {
-    trace_call("parseStringValue");
-    try {StringBuilder sb = new StringBuilder();
+  String parseStringValue(char delimiter) throws ParseException, ParseException {StringBuilder sb = new StringBuilder();
     sb.append(delimiter);
 
     try {
@@ -64,14 +58,9 @@ return tk1;
     } catch (IOException e) {
         throw new ParseException("Error while parsing string value: " + e.getMessage());
     }
-    } finally {
-      trace_return("parseStringValue");
-    }
   }
 
-  String parseConcat() throws ParseException, ParseException {
-    trace_call("parseConcat");
-    try {StringBuilder sb = new StringBuilder("CONCAT(");
+  String parseConcat() throws ParseException, ParseException {StringBuilder sb = new StringBuilder("CONCAT(");
     boolean inQuote = false;
     char quote = 0;
     try {
@@ -101,117 +90,102 @@ return tk1;
     } catch (IOException e) {
         throw new ParseException("Error while parsing CONCAT function: " + e.getMessage());
     }
-    } finally {
-      trace_return("parseConcat");
-    }
   }
 
 // parse one statement in a script (terminated by ';')
-  final public SqlStatement ScriptStatement() throws ParseException {    try {
-SqlStatement st = null;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case USE:
-      case CREATE:
-      case DROP:
-      case SET:
-      case DELETE:
-      case UPDATE:
-      case INSERT:
-      case ALTER:
-      case LOCK:
-      case UNLOCK:
-      case START:
-      case COMMIT:
-      case 133:{
-        st = Statement();
-        jj_consume_token(133);
-        break;
-        }
-      case 0:{
-        jj_consume_token(0);
-        break;
-        }
-      default:
-        jj_la1[1] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+  final public SqlStatement ScriptStatement() throws ParseException {SqlStatement st = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case USE:
+    case CREATE:
+    case DROP:
+    case SET:
+    case DELETE:
+    case UPDATE:
+    case INSERT:
+    case ALTER:
+    case LOCK:
+    case UNLOCK:
+    case START:
+    case COMMIT:
+    case 133:{
+      st = Statement();
+      jj_consume_token(133);
+      break;
       }
-return st;
-    } finally {
-      trace_return("ScriptStatement");
+    case 0:{
+      jj_consume_token(0);
+      break;
+      }
+    default:
+      jj_la1[1] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
+return st;
 }
 
 // parse one statement (without trailing ';')
-  final public SqlStatement Statement() throws ParseException {    try {
-SqlStatement st = null;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case USE:{
-        st = UseStatement();
-        break;
-        }
-      case SET:{
-        st = SetVariableStatement();
-        break;
-        }
-      case CREATE:{
-        st = CreateStatement();
-        break;
-        }
-      case ALTER:{
-        st = AlterStatement();
-        break;
-        }
-      case DROP:{
-        st = DropStatement();
-        break;
-        }
-      case INSERT:{
-        st = InsertStatement();
-        break;
-        }
-      case UPDATE:{
-        st = UpdateStatement();
-        break;
-        }
-      case DELETE:{
-        st = DeleteStatement();
-        break;
-        }
-      case LOCK:{
-        st = LockTablesStatement();
-        break;
-        }
-      case UNLOCK:{
-        st = UnlockTablesStatement();
-        break;
-        }
-      case START:{
-        st = StartTransactionStatement();
-        break;
-        }
-      case COMMIT:{
-        st = CommitTransactionStatement();
-        break;
-        }
-      default:
-        jj_la1[2] = jj_gen;
-st = new EmptyStatement();
+  final public SqlStatement Statement() throws ParseException {SqlStatement st = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case USE:{
+      st = UseStatement();
+      break;
       }
-return st;
-    } finally {
-      trace_return("Statement");
+    case SET:{
+      st = SetVariableStatement();
+      break;
+      }
+    case CREATE:{
+      st = CreateStatement();
+      break;
+      }
+    case ALTER:{
+      st = AlterStatement();
+      break;
+      }
+    case DROP:{
+      st = DropStatement();
+      break;
+      }
+    case INSERT:{
+      st = InsertStatement();
+      break;
+      }
+    case UPDATE:{
+      st = UpdateStatement();
+      break;
+      }
+    case DELETE:{
+      st = DeleteStatement();
+      break;
+      }
+    case LOCK:{
+      st = LockTablesStatement();
+      break;
+      }
+    case UNLOCK:{
+      st = UnlockTablesStatement();
+      break;
+      }
+    case START:{
+      st = StartTransactionStatement();
+      break;
+      }
+    case COMMIT:{
+      st = CommitTransactionStatement();
+      break;
+      }
+    default:
+      jj_la1[2] = jj_gen;
+st = new EmptyStatement();
     }
+return st;
 }
 
-  final public SqlStatement SetVariableStatement() throws ParseException {    try {
-Assignment assignment;
-      jj_consume_token(SET);
-      assignment = Assignment();
+  final public SqlStatement SetVariableStatement() throws ParseException {Assignment assignment;
+    jj_consume_token(SET);
+    assignment = Assignment();
 return new SetVariableStatement(assignment);
-    } finally {
-      trace_return("SetVariableStatement");
-    }
 }
 
 /*
@@ -238,128 +212,124 @@ INSERT [LOW_PRIORITY | HIGH_PRIORITY] [IGNORE]
       col_name = expr
         [, col_name = expr] ... ]
 */
-  final public SqlStatement InsertStatement() throws ParseException {    try {
-List<ValueList> valueLists = null;
+  final public SqlStatement InsertStatement() throws ParseException {List<ValueList> valueLists = null;
     String tableName;
     List<String> columnNames = null;
     List<Assignment> assignments = null;
     List<Assignment> onDuplicateKeyUpdateAssignments = null;
     Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null;
-      jj_consume_token(INSERT);
+    jj_consume_token(INSERT);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case LOW_PRIORITY:
+    case HIGH_PRIORITY:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case LOW_PRIORITY:
+      case LOW_PRIORITY:{
+        tk = jj_consume_token(LOW_PRIORITY);
+        break;
+        }
       case HIGH_PRIORITY:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case LOW_PRIORITY:{
-          tk = jj_consume_token(LOW_PRIORITY);
-          break;
-          }
-        case HIGH_PRIORITY:{
-          tk2 = jj_consume_token(HIGH_PRIORITY);
-          break;
-          }
-        default:
-          jj_la1[3] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
+        tk2 = jj_consume_token(HIGH_PRIORITY);
         break;
         }
       default:
-        jj_la1[4] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case DELAYED:{
-        tk3 = jj_consume_token(DELAYED);
-        break;
-        }
-      default:
-        jj_la1[5] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IGNORE:{
-        tk4 = jj_consume_token(IGNORE);
-        break;
-        }
-      default:
-        jj_la1[6] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case INTO:{
-        tk5 = jj_consume_token(INTO);
-        break;
-        }
-      default:
-        jj_la1[7] = jj_gen;
-        ;
-      }
-      tableName = DbObjectName();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 134:{
-        jj_consume_token(134);
-        columnNames = DbObjectNames();
-        jj_consume_token(135);
-        break;
-        }
-      default:
-        jj_la1[8] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case VALUES:
-      case VALUE:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case VALUES:{
-          jj_consume_token(VALUES);
-          break;
-          }
-        case VALUE:{
-          jj_consume_token(VALUE);
-          break;
-          }
-        default:
-          jj_la1[9] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        valueLists = MultiValueList();
-        break;
-        }
-      case SET:{
-        jj_consume_token(SET);
-        assignments = Assignments();
-        break;
-        }
-      case SELECT:{
-        jj_consume_token(SELECT);
-        break;
-        }
-      default:
-        jj_la1[10] = jj_gen;
+        jj_la1[3] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
+      break;
+      }
+    default:
+      jj_la1[4] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case DELAYED:{
+      tk3 = jj_consume_token(DELAYED);
+      break;
+      }
+    default:
+      jj_la1[5] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IGNORE:{
+      tk4 = jj_consume_token(IGNORE);
+      break;
+      }
+    default:
+      jj_la1[6] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case INTO:{
+      tk5 = jj_consume_token(INTO);
+      break;
+      }
+    default:
+      jj_la1[7] = jj_gen;
+      ;
+    }
+    tableName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 134:{
+      jj_consume_token(134);
+      columnNames = DbObjectNames();
+      jj_consume_token(135);
+      break;
+      }
+    default:
+      jj_la1[8] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case VALUES:
+    case VALUE:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case ON:{
-        jj_consume_token(ON);
-        jj_consume_token(DUPLICATE);
-        jj_consume_token(KEY);
-        jj_consume_token(UPDATE);
-        onDuplicateKeyUpdateAssignments = Assignments();
+      case VALUES:{
+        jj_consume_token(VALUES);
+        break;
+        }
+      case VALUE:{
+        jj_consume_token(VALUE);
         break;
         }
       default:
-        jj_la1[11] = jj_gen;
-        ;
+        jj_la1[9] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
+      valueLists = MultiValueList();
+      break;
+      }
+    case SET:{
+      jj_consume_token(SET);
+      assignments = Assignments();
+      break;
+      }
+    case SELECT:{
+      jj_consume_token(SELECT);
+      break;
+      }
+    default:
+      jj_la1[10] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ON:{
+      jj_consume_token(ON);
+      jj_consume_token(DUPLICATE);
+      jj_consume_token(KEY);
+      jj_consume_token(UPDATE);
+      onDuplicateKeyUpdateAssignments = Assignments();
+      break;
+      }
+    default:
+      jj_la1[11] = jj_gen;
+      ;
+    }
 return new InsertStatement(tk != null, tk2 != null, tk3 != null, tk4 != null, tk5 != null, tableName,
             columnNames, valueLists, assignments, onDuplicateKeyUpdateAssignments);
-    } finally {
-      trace_return("InsertStatement");
-    }
 }
 
 /*
@@ -367,117 +337,97 @@ UPDATE [LOW_PRIORITY] [IGNORE] table_references
     SET assignment_list
     [WHERE where_condition]
  */
-  final public SqlStatement UpdateStatement() throws ParseException {    try {
-String tableName;
+  final public SqlStatement UpdateStatement() throws ParseException {String tableName;
     List<Assignment> assignments = null;
     ExpressionValue expressionValue = null;
-      jj_consume_token(UPDATE);
-      tableName = DbObjectName();
-      jj_consume_token(SET);
-      assignments = Assignments();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case WHERE:{
-        jj_consume_token(WHERE);
-        expressionValue = ExpressionValue();
-        break;
-        }
-      default:
-        jj_la1[12] = jj_gen;
-        ;
+    jj_consume_token(UPDATE);
+    tableName = DbObjectName();
+    jj_consume_token(SET);
+    assignments = Assignments();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case WHERE:{
+      jj_consume_token(WHERE);
+      expressionValue = ExpressionValue();
+      break;
       }
-return new UpdateStatement(tableName, assignments, expressionValue);
-    } finally {
-      trace_return("UpdateStatement");
+    default:
+      jj_la1[12] = jj_gen;
+      ;
     }
+return new UpdateStatement(tableName, assignments, expressionValue);
 }
 
 /*
 DELETE FROM tbl_name
     [WHERE expressionValue]
  */
-  final public SqlStatement DeleteStatement() throws ParseException {    try {
-String tableName;
+  final public SqlStatement DeleteStatement() throws ParseException {String tableName;
     ExpressionValue expressionValue = null;
-      jj_consume_token(DELETE);
-      jj_consume_token(FROM);
-      tableName = DbObjectName();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case WHERE:{
-        jj_consume_token(WHERE);
-        expressionValue = ExpressionValue();
-        break;
-        }
-      default:
-        jj_la1[13] = jj_gen;
-        ;
+    jj_consume_token(DELETE);
+    jj_consume_token(FROM);
+    tableName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case WHERE:{
+      jj_consume_token(WHERE);
+      expressionValue = ExpressionValue();
+      break;
       }
-return new DeleteStatement(tableName, expressionValue);
-    } finally {
-      trace_return("DeleteStatement");
+    default:
+      jj_la1[13] = jj_gen;
+      ;
     }
+return new DeleteStatement(tableName, expressionValue);
 }
 
-  final public SqlStatement UseStatement() throws ParseException {    try {
-String dbName;
-      jj_consume_token(USE);
-      dbName = DbObjectName();
+  final public SqlStatement UseStatement() throws ParseException {String dbName;
+    jj_consume_token(USE);
+    dbName = DbObjectName();
 return new UseStatement(dbName);
-    } finally {
-      trace_return("UseStatement");
-    }
 }
 
 /*
 ALTER [IGNORE] TABLE tbl_name
     alter_specification [, alter_specification] ...
 */
-  final public SqlStatement AlterStatement() throws ParseException {    try {
-SqlStatement st;
-      jj_consume_token(ALTER);
-      st = AlterTableStatement();
+  final public SqlStatement AlterStatement() throws ParseException {SqlStatement st;
+    jj_consume_token(ALTER);
+    st = AlterTableStatement();
 return st;
-    } finally {
-      trace_return("AlterStatement");
-    }
 }
 
-  final public SqlStatement AlterTableStatement() throws ParseException {    try {
-Token tk = null;
+  final public SqlStatement AlterTableStatement() throws ParseException {Token tk = null;
     String tableName;
     AlterTableSpecification specification = null;
     List<AlterTableSpecification> specifications = new ArrayList<AlterTableSpecification>();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IGNORE:{
+      tk = jj_consume_token(IGNORE);
+      break;
+      }
+    default:
+      jj_la1[14] = jj_gen;
+      ;
+    }
+    jj_consume_token(TABLE);
+    tableName = DbObjectName();
+    specification = AlterTableSpecification();
+specifications.add(specification);
+    label_1:
+    while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IGNORE:{
-        tk = jj_consume_token(IGNORE);
+      case 136:{
+        ;
         break;
         }
       default:
-        jj_la1[14] = jj_gen;
-        ;
+        jj_la1[15] = jj_gen;
+        break label_1;
       }
-      jj_consume_token(TABLE);
-      tableName = DbObjectName();
+      jj_consume_token(136);
       specification = AlterTableSpecification();
 specifications.add(specification);
-      label_1:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 136:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[15] = jj_gen;
-          break label_1;
-        }
-        jj_consume_token(136);
-        specification = AlterTableSpecification();
-specifications.add(specification);
-      }
-return new AlterTableStatement(tk != null, tableName, specifications);
-    } finally {
-      trace_return("AlterTableStatement");
     }
+return new AlterTableStatement(tk != null, tableName, specifications);
 }
 
 /*
@@ -493,75 +443,63 @@ alter_specification:
         [reference_definition]
         | MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]
 */
-  final public AlterTableSpecification AlterTableSpecification() throws ParseException {    try {
-Token tk;
+  final public AlterTableSpecification AlterTableSpecification() throws ParseException {Token tk;
     ColumnConstraint constraint;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case ADD:{
-        tk = jj_consume_token(ADD);
-        constraint = ColumnConstraint();
-        break;
-        }
-      case MODIFY:{
-        tk = jj_consume_token(MODIFY);
-        constraint = ColumnConstraint();
-        break;
-        }
-      default:
-        jj_la1[16] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ADD:{
+      tk = jj_consume_token(ADD);
+      constraint = ColumnConstraint();
+      break;
       }
+    case MODIFY:{
+      tk = jj_consume_token(MODIFY);
+      constraint = ColumnConstraint();
+      break;
+      }
+    default:
+      jj_la1[16] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return new AlterTableSpecification(tk.image, constraint);
-    } finally {
-      trace_return("AlterTableSpecification");
-    }
 }
 
-  final public SqlStatement CreateStatement() throws ParseException {    try {
-SqlStatement st;
-      jj_consume_token(CREATE);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case DATABASE:{
-        st = CreateDatabaseStatement();
-        break;
-        }
-      case TEMPORARY:
-      case TABLE:{
-        st = CreateTableStatement();
-        break;
-        }
-      default:
-        jj_la1[17] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+  final public SqlStatement CreateStatement() throws ParseException {SqlStatement st;
+    jj_consume_token(CREATE);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case DATABASE:{
+      st = CreateDatabaseStatement();
+      break;
       }
+    case TEMPORARY:
+    case TABLE:{
+      st = CreateTableStatement();
+      break;
+      }
+    default:
+      jj_la1[17] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return st;
-    } finally {
-      trace_return("CreateStatement");
-    }
 }
 
-  final public SqlStatement CreateDatabaseStatement() throws ParseException {    try {
-Token tk = null;
+  final public SqlStatement CreateDatabaseStatement() throws ParseException {Token tk = null;
     String dbName;
-      jj_consume_token(DATABASE);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IF:{
-        tk = jj_consume_token(IF);
-        jj_consume_token(NOT);
-        jj_consume_token(EXISTS);
-        break;
-        }
-      default:
-        jj_la1[18] = jj_gen;
-        ;
+    jj_consume_token(DATABASE);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IF:{
+      tk = jj_consume_token(IF);
+      jj_consume_token(NOT);
+      jj_consume_token(EXISTS);
+      break;
       }
-      dbName = DbObjectName();
-return new CreateDatabaseStatement(dbName, tk != null);
-    } finally {
-      trace_return("CreateDatabaseStatement");
+    default:
+      jj_la1[18] = jj_gen;
+      ;
     }
+    dbName = DbObjectName();
+return new CreateDatabaseStatement(dbName, tk != null);
 }
 
 /*CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
@@ -569,42 +507,64 @@ return new CreateDatabaseStatement(dbName, tk != null);
       [table_options] [select_statement]
 
 */
-  final public SqlStatement CreateTableStatement() throws ParseException {    try {
-Token tk = null, tk2 = null;
+  final public SqlStatement CreateTableStatement() throws ParseException {Token tk = null, tk2 = null;
     String tableName;
     CreateTableDefinition definition = null;
     List<CreateTableOption> options = null;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case TEMPORARY:{
-        tk = jj_consume_token(TEMPORARY);
-        break;
-        }
-      default:
-        jj_la1[19] = jj_gen;
-        ;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case TEMPORARY:{
+      tk = jj_consume_token(TEMPORARY);
+      break;
       }
-      jj_consume_token(TABLE);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IF:{
-        tk2 = jj_consume_token(IF);
-        jj_consume_token(NOT);
-        jj_consume_token(EXISTS);
-        break;
-        }
-      default:
-        jj_la1[20] = jj_gen;
-        ;
+    default:
+      jj_la1[19] = jj_gen;
+      ;
+    }
+    jj_consume_token(TABLE);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IF:{
+      tk2 = jj_consume_token(IF);
+      jj_consume_token(NOT);
+      jj_consume_token(EXISTS);
+      break;
       }
-      tableName = DbObjectName();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 134:{
-        definition = CreateTableDefinition();
-        break;
-        }
-      default:
-        jj_la1[21] = jj_gen;
-        ;
+    default:
+      jj_la1[20] = jj_gen;
+      ;
+    }
+    tableName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 134:{
+      definition = CreateTableDefinition();
+      break;
       }
+    default:
+      jj_la1[21] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case K_DEFAULT:
+    case AUTO_INCREMENT:
+    case COMMENT:
+    case CHARACTER:
+    case COLLATE:
+    case S_IDENTIFIER:{
+      options = CreateTableOptions();
+      break;
+      }
+    default:
+      jj_la1[22] = jj_gen;
+      ;
+    }
+return new CreateTableStatement(tk != null, tk2 != null, tableName, definition, options);
+}
+
+  final public List<CreateTableOption> CreateTableOptions() throws ParseException {List<CreateTableOption> result = new ArrayList<CreateTableOption>();
+    CreateTableOption option = null;
+    option = CreateTableOption();
+result.add(option);
+    label_2:
+    while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case K_DEFAULT:
       case AUTO_INCREMENT:
@@ -612,123 +572,127 @@ Token tk = null, tk2 = null;
       case CHARACTER:
       case COLLATE:
       case S_IDENTIFIER:{
-        options = CreateTableOptions();
+        ;
         break;
         }
       default:
-        jj_la1[22] = jj_gen;
-        ;
+        jj_la1[23] = jj_gen;
+        break label_2;
       }
-return new CreateTableStatement(tk != null, tk2 != null, tableName, definition, options);
-    } finally {
-      trace_return("CreateTableStatement");
-    }
-}
-
-  final public List<CreateTableOption> CreateTableOptions() throws ParseException {    try {
-List<CreateTableOption> result = new ArrayList<CreateTableOption>();
-    CreateTableOption option = null;
       option = CreateTableOption();
 result.add(option);
-      label_2:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case K_DEFAULT:
-        case AUTO_INCREMENT:
-        case COMMENT:
-        case CHARACTER:
-        case COLLATE:
-        case S_IDENTIFIER:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[23] = jj_gen;
-          break label_2;
-        }
-        option = CreateTableOption();
-result.add(option);
-      }
-return result;
-    } finally {
-      trace_return("CreateTableOptions");
     }
+return result;
 }
 
-  final public CreateTableOption CreateTableOption() throws ParseException {    try {
-Token tk1 = null, tk2 = null;
+  final public CreateTableOption CreateTableOption() throws ParseException {Token tk1 = null, tk2 = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case S_IDENTIFIER:{
+      tk1 = jj_consume_token(S_IDENTIFIER);
+      break;
+      }
+    case K_DEFAULT:{
+      tk1 = jj_consume_token(K_DEFAULT);
+      break;
+      }
+    case COMMENT:{
+      tk1 = jj_consume_token(COMMENT);
+      break;
+      }
+    case AUTO_INCREMENT:{
+      tk1 = jj_consume_token(AUTO_INCREMENT);
+      break;
+      }
+    case CHARACTER:{
+      tk1 = jj_consume_token(CHARACTER);
+      jj_consume_token(SET);
+      break;
+      }
+    case COLLATE:{
+      tk1 = jj_consume_token(COLLATE);
+      break;
+      }
+    default:
+      jj_la1[24] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case EQUALS:{
+      jj_consume_token(EQUALS);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case S_IDENTIFIER:{
-        tk1 = jj_consume_token(S_IDENTIFIER);
+        tk2 = jj_consume_token(S_IDENTIFIER);
         break;
         }
-      case K_DEFAULT:{
-        tk1 = jj_consume_token(K_DEFAULT);
+      case 131:
+      case 132:{
+        tk2 = CharLiteral();
         break;
         }
-      case COMMENT:{
-        tk1 = jj_consume_token(COMMENT);
-        break;
-        }
-      case AUTO_INCREMENT:{
-        tk1 = jj_consume_token(AUTO_INCREMENT);
-        break;
-        }
-      case CHARACTER:{
-        tk1 = jj_consume_token(CHARACTER);
-        jj_consume_token(SET);
-        break;
-        }
-      case COLLATE:{
-        tk1 = jj_consume_token(COLLATE);
+      case S_INTEGER:{
+        tk2 = jj_consume_token(S_INTEGER);
         break;
         }
       default:
-        jj_la1[24] = jj_gen;
+        jj_la1[25] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case EQUALS:{
-        jj_consume_token(EQUALS);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case S_IDENTIFIER:{
-          tk2 = jj_consume_token(S_IDENTIFIER);
-          break;
-          }
-        case 131:
-        case 132:{
-          tk2 = CharLiteral();
-          break;
-          }
-        case S_INTEGER:{
-          tk2 = jj_consume_token(S_INTEGER);
-          break;
-          }
-        default:
-          jj_la1[25] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        break;
-        }
-      default:
-        jj_la1[26] = jj_gen;
-        ;
+      break;
       }
-return new CreateTableOption(tk1.image, tk2 != null ? tk2.image : null);
-    } finally {
-      trace_return("CreateTableOption");
+    default:
+      jj_la1[26] = jj_gen;
+      ;
     }
+return new CreateTableOption(tk1.image, tk2 != null ? tk2.image : null);
 }
 
-  final public CreateTableDefinition CreateTableDefinition() throws ParseException {    try {
-List<ColumnDefinition> columnDefinitions = new ArrayList<ColumnDefinition>();
+  final public CreateTableDefinition CreateTableDefinition() throws ParseException {List<ColumnDefinition> columnDefinitions = new ArrayList<ColumnDefinition>();
     List<ColumnConstraint> columnConstraints = new ArrayList<ColumnConstraint>();
     ColumnDefinition columnDefinition;
     ColumnConstraint columnConstraint;
-      jj_consume_token(134);
-      if (jj_2_1(3)) {
+    jj_consume_token(134);
+    if (jj_2_1(3)) {
+      columnDefinition = ColumnDefinition();
+columnDefinitions.add(columnDefinition);
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case PRIMARY:
+      case KEY:
+      case CONSTRAINT:
+      case INDEX:
+      case UNIQUE:
+      case FULLTEXT:
+      case SPATIAL:
+      case FOREIGN:
+      case CHECK:
+      case COLUMN:
+      case S_IDENTIFIER:
+      case S_QUOTED_IDENTIFIER:{
+        columnConstraint = ColumnConstraint();
+columnConstraints.add(columnConstraint);
+        break;
+        }
+      default:
+        jj_la1[27] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    label_3:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 136:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[28] = jj_gen;
+        break label_3;
+      }
+      jj_consume_token(136);
+      if (jj_2_2(3)) {
         columnDefinition = ColumnDefinition();
 columnDefinitions.add(columnDefinition);
       } else {
@@ -750,56 +714,14 @@ columnConstraints.add(columnConstraint);
           break;
           }
         default:
-          jj_la1[27] = jj_gen;
+          jj_la1[29] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
       }
-      label_3:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 136:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[28] = jj_gen;
-          break label_3;
-        }
-        jj_consume_token(136);
-        if (jj_2_2(3)) {
-          columnDefinition = ColumnDefinition();
-columnDefinitions.add(columnDefinition);
-        } else {
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case PRIMARY:
-          case KEY:
-          case CONSTRAINT:
-          case INDEX:
-          case UNIQUE:
-          case FULLTEXT:
-          case SPATIAL:
-          case FOREIGN:
-          case CHECK:
-          case COLUMN:
-          case S_IDENTIFIER:
-          case S_QUOTED_IDENTIFIER:{
-            columnConstraint = ColumnConstraint();
-columnConstraints.add(columnConstraint);
-            break;
-            }
-          default:
-            jj_la1[29] = jj_gen;
-            jj_consume_token(-1);
-            throw new ParseException();
-          }
-        }
-      }
-      jj_consume_token(135);
-return new CreateTableDefinition(columnDefinitions, columnConstraints);
-    } finally {
-      trace_return("CreateTableDefinition");
     }
+    jj_consume_token(135);
+return new CreateTableDefinition(columnDefinitions, columnConstraints);
 }
 
 /*
@@ -808,161 +730,149 @@ column_definition:
         [AUTO_INCREMENT] [[PRIMARY] KEY] [COMMENT 'string']
         [reference_definition]
   */
-  final public ColumnDefinition ColumnDefinition() throws ParseException {    try {
-ColumnName columnName;
+  final public ColumnDefinition ColumnDefinition() throws ParseException {ColumnName columnName;
     ColumnType columnType;
     Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null;
     Value defaultValue = null;
     Value updateValue = null;
     StringValue comment = null;
     ColumnReference columnReference = null;
-      columnName = ColumnName();
-      columnType = ColumnType();
-      label_4:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case NOT:
-        case NULL:
-        case K_DEFAULT:
-        case AUTO_INCREMENT:
-        case PRIMARY:
-        case KEY:
-        case COMMENT:
-        case REFERENCES:
-        case ON:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[30] = jj_gen;
-          break label_4;
+    columnName = ColumnName();
+    columnType = ColumnType();
+    label_4:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case NOT:
+      case NULL:
+      case K_DEFAULT:
+      case AUTO_INCREMENT:
+      case PRIMARY:
+      case KEY:
+      case COMMENT:
+      case REFERENCES:
+      case ON:{
+        ;
+        break;
         }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case NOT:{
-          tk = jj_consume_token(NOT);
-          jj_consume_token(NULL);
-          break;
-          }
-        case NULL:{
-          tk2 = jj_consume_token(NULL);
-          break;
-          }
-        case K_DEFAULT:{
-          jj_consume_token(K_DEFAULT);
-          defaultValue = Value();
-          break;
-          }
-        case ON:{
-          jj_consume_token(ON);
-          jj_consume_token(UPDATE);
-          updateValue = Value();
-          break;
-          }
-        case AUTO_INCREMENT:{
-          tk3 = jj_consume_token(AUTO_INCREMENT);
-          break;
-          }
-        case PRIMARY:
-        case KEY:{
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case PRIMARY:{
-            tk4 = jj_consume_token(PRIMARY);
-            break;
-            }
-          default:
-            jj_la1[31] = jj_gen;
-            ;
-          }
-          tk5 = jj_consume_token(KEY);
-          break;
-          }
-        case COMMENT:{
-          jj_consume_token(COMMENT);
-          comment = StringValue();
-          break;
-          }
-        case REFERENCES:{
-          columnReference = ColumnReference();
-          break;
-          }
-        default:
-          jj_la1[32] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
+      default:
+        jj_la1[30] = jj_gen;
+        break label_4;
       }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case NOT:{
+        tk = jj_consume_token(NOT);
+        jj_consume_token(NULL);
+        break;
+        }
+      case NULL:{
+        tk2 = jj_consume_token(NULL);
+        break;
+        }
+      case K_DEFAULT:{
+        jj_consume_token(K_DEFAULT);
+        defaultValue = Value();
+        break;
+        }
+      case ON:{
+        jj_consume_token(ON);
+        jj_consume_token(UPDATE);
+        updateValue = Value();
+        break;
+        }
+      case AUTO_INCREMENT:{
+        tk3 = jj_consume_token(AUTO_INCREMENT);
+        break;
+        }
+      case PRIMARY:
+      case KEY:{
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case PRIMARY:{
+          tk4 = jj_consume_token(PRIMARY);
+          break;
+          }
+        default:
+          jj_la1[31] = jj_gen;
+          ;
+        }
+        tk5 = jj_consume_token(KEY);
+        break;
+        }
+      case COMMENT:{
+        jj_consume_token(COMMENT);
+        comment = StringValue();
+        break;
+        }
+      case REFERENCES:{
+        columnReference = ColumnReference();
+        break;
+        }
+      default:
+        jj_la1[32] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
 return new ColumnDefinition(columnName, columnType, tk2 != null, tk != null, tk3 != null, tk4 != null, tk5 != null,
                 defaultValue, updateValue, comment, columnReference);
-    } finally {
-      trace_return("ColumnDefinition");
-    }
 }
 
 /* col_name [(length)] [ASC | DESC] */
-  final public ColumnName ColumnName() throws ParseException {    try {
-String columnName;
+  final public ColumnName ColumnName() throws ParseException {String columnName;
     IntegerValue length = null;
     Token tk = null, tk2 = null;
-      columnName = DbObjectName();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 134:{
-        jj_consume_token(134);
-        length = IntValue();
-        jj_consume_token(135);
-        break;
-        }
-      default:
-        jj_la1[33] = jj_gen;
-        ;
+    columnName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 134:{
+      jj_consume_token(134);
+      length = IntValue();
+      jj_consume_token(135);
+      break;
       }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case ASC:{
-        tk = jj_consume_token(ASC);
-        break;
-        }
-      default:
-        jj_la1[34] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case DESC:{
-        tk2 = jj_consume_token(DESC);
-        break;
-        }
-      default:
-        jj_la1[35] = jj_gen;
-        ;
-      }
-return new ColumnName(columnName, length, tk != null, tk2 != null);
-    } finally {
-      trace_return("ColumnName");
+    default:
+      jj_la1[33] = jj_gen;
+      ;
     }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ASC:{
+      tk = jj_consume_token(ASC);
+      break;
+      }
+    default:
+      jj_la1[34] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case DESC:{
+      tk2 = jj_consume_token(DESC);
+      break;
+      }
+    default:
+      jj_la1[35] = jj_gen;
+      ;
+    }
+return new ColumnName(columnName, length, tk != null, tk2 != null);
 }
 
-  final public List<ColumnName> ColumnNames() throws ParseException {    try {
-List<ColumnName> result = new ArrayList<ColumnName>();
+  final public List<ColumnName> ColumnNames() throws ParseException {List<ColumnName> result = new ArrayList<ColumnName>();
     ColumnName columnName;
+    columnName = ColumnName();
+result.add(columnName);
+    label_5:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 136:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[36] = jj_gen;
+        break label_5;
+      }
+      jj_consume_token(136);
       columnName = ColumnName();
 result.add(columnName);
-      label_5:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 136:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[36] = jj_gen;
-          break label_5;
-        }
-        jj_consume_token(136);
-        columnName = ColumnName();
-result.add(columnName);
-      }
-return result;
-    } finally {
-      trace_return("ColumnNames");
     }
+return result;
 }
 
 /*
@@ -995,701 +905,697 @@ return result;
   | SET(value1,value2,value3,...)
     public ColumnType(String name, Integer length, Integer decimals, List<String> values, boolean unsigned, boolean zerofill, boolean binary, boolean ascii, boolean unicode) {
 */
-  final public ColumnType ColumnType() throws ParseException {    try {
-IntegerValue length = null;
+  final public ColumnType ColumnType() throws ParseException {IntegerValue length = null;
     IntegerValue decimals = null;
     Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null;
     ValueList valueList = null;
     String charsetName = null;
     String collationName = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case BIT:{
+      tk = jj_consume_token(BIT);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case BIT:{
-        tk = jj_consume_token(BIT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[37] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[38] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[39] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case TINYINT:{
-        tk = jj_consume_token(TINYINT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[40] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[41] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[42] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case SMALLINT:{
-        tk = jj_consume_token(SMALLINT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[43] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[44] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[45] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case MEDIUMINT:{
-        tk = jj_consume_token(MEDIUMINT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[46] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[47] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[48] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case INT:{
-        tk = jj_consume_token(INT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[49] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[50] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[51] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case INTEGER:{
-        tk = jj_consume_token(INTEGER);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[52] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[53] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[54] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case BIGINT:{
-        tk = jj_consume_token(BIGINT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[55] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[56] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[57] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case REAL:{
-        tk = jj_consume_token(REAL);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(136);
-          decimals = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[58] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[59] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[60] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case DOUBLE:{
-        tk = jj_consume_token(DOUBLE);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(136);
-          decimals = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[61] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[62] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[63] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case FLOAT:{
-        tk = jj_consume_token(FLOAT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(136);
-          decimals = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[64] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[65] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[66] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case DECIMAL:{
-        tk = jj_consume_token(DECIMAL);
-        jj_consume_token(134);
-        length = IntValue();
-        jj_consume_token(136);
-        decimals = IntValue();
-        jj_consume_token(135);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[67] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[68] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case NUMERIC:{
-        tk = jj_consume_token(NUMERIC);
-        jj_consume_token(134);
-        length = IntValue();
-        jj_consume_token(136);
-        decimals = IntValue();
-        jj_consume_token(135);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNSIGNED:{
-          tk2 = jj_consume_token(UNSIGNED);
-          break;
-          }
-        default:
-          jj_la1[69] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ZEROFILL:{
-          tk3 = jj_consume_token(ZEROFILL);
-          break;
-          }
-        default:
-          jj_la1[70] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case DATE:{
-        tk = jj_consume_token(DATE);
-        break;
-        }
-      case TIME:{
-        tk = jj_consume_token(TIME);
-        break;
-        }
-      case TIMESTAMP:{
-        tk = jj_consume_token(TIMESTAMP);
-        break;
-        }
-      case DATETIME:{
-        tk = jj_consume_token(DATETIME);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 134:{
-          jj_consume_token(134);
-          length = IntValue();
-          jj_consume_token(135);
-          break;
-          }
-        default:
-          jj_la1[71] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case CHAR:{
-        tk = jj_consume_token(CHAR);
+      case 134:{
         jj_consume_token(134);
         length = IntValue();
         jj_consume_token(135);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case BINARY:{
-          tk4 = jj_consume_token(BINARY);
-          break;
-          }
-        default:
-          jj_la1[72] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case ASCII:{
-          tk5 = jj_consume_token(ASCII);
-          break;
-          }
-        default:
-          jj_la1[73] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case UNICODE:{
-          tk6 = jj_consume_token(UNICODE);
-          break;
-          }
-        default:
-          jj_la1[74] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[75] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[76] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case VARCHAR:{
-        tk = jj_consume_token(VARCHAR);
-        jj_consume_token(134);
-        length = IntValue();
-        jj_consume_token(135);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case BINARY:{
-          tk4 = jj_consume_token(BINARY);
-          break;
-          }
-        default:
-          jj_la1[77] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[78] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[79] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case TINYBLOB:{
-        tk = jj_consume_token(TINYBLOB);
-        break;
-        }
-      case BLOB:{
-        tk = jj_consume_token(BLOB);
-        break;
-        }
-      case MEDIUMBLOB:{
-        tk = jj_consume_token(MEDIUMBLOB);
-        break;
-        }
-      case LONGBLOB:{
-        tk = jj_consume_token(LONGBLOB);
-        break;
-        }
-      case TINYTEXT:{
-        tk = jj_consume_token(TINYTEXT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[80] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[81] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case TEXT:{
-        tk = jj_consume_token(TEXT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[82] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[83] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case MEDIUMTEXT:{
-        tk = jj_consume_token(MEDIUMTEXT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[84] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[85] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case LONGTEXT:{
-        tk = jj_consume_token(LONGTEXT);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[86] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[87] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case ENUM:{
-        tk = jj_consume_token(ENUM);
-        valueList = ValueList();
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[88] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[89] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case SET:{
-        tk = jj_consume_token(SET);
-        valueList = ValueList();
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CHARACTER:{
-          jj_consume_token(CHARACTER);
-          jj_consume_token(SET);
-          charsetName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[90] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLLATE:{
-          jj_consume_token(COLLATE);
-          collationName = Identifier();
-          break;
-          }
-        default:
-          jj_la1[91] = jj_gen;
-          ;
-        }
         break;
         }
       default:
-        jj_la1[92] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        jj_la1[37] = jj_gen;
+        ;
       }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[38] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[39] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case TINYINT:{
+      tk = jj_consume_token(TINYINT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[40] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[41] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[42] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case SMALLINT:{
+      tk = jj_consume_token(SMALLINT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[43] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[44] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[45] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case MEDIUMINT:{
+      tk = jj_consume_token(MEDIUMINT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[46] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[47] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[48] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case INT:{
+      tk = jj_consume_token(INT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[49] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[50] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[51] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case INTEGER:{
+      tk = jj_consume_token(INTEGER);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[52] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[53] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[54] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case BIGINT:{
+      tk = jj_consume_token(BIGINT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[55] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[56] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[57] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case REAL:{
+      tk = jj_consume_token(REAL);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(136);
+        decimals = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[58] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[59] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[60] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case DOUBLE:{
+      tk = jj_consume_token(DOUBLE);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(136);
+        decimals = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[61] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[62] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[63] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case FLOAT:{
+      tk = jj_consume_token(FLOAT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(136);
+        decimals = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[64] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[65] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[66] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case DECIMAL:{
+      tk = jj_consume_token(DECIMAL);
+      jj_consume_token(134);
+      length = IntValue();
+      jj_consume_token(136);
+      decimals = IntValue();
+      jj_consume_token(135);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[67] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[68] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case NUMERIC:{
+      tk = jj_consume_token(NUMERIC);
+      jj_consume_token(134);
+      length = IntValue();
+      jj_consume_token(136);
+      decimals = IntValue();
+      jj_consume_token(135);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNSIGNED:{
+        tk2 = jj_consume_token(UNSIGNED);
+        break;
+        }
+      default:
+        jj_la1[69] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ZEROFILL:{
+        tk3 = jj_consume_token(ZEROFILL);
+        break;
+        }
+      default:
+        jj_la1[70] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case DATE:{
+      tk = jj_consume_token(DATE);
+      break;
+      }
+    case TIME:{
+      tk = jj_consume_token(TIME);
+      break;
+      }
+    case TIMESTAMP:{
+      tk = jj_consume_token(TIMESTAMP);
+      break;
+      }
+    case DATETIME:{
+      tk = jj_consume_token(DATETIME);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 134:{
+        jj_consume_token(134);
+        length = IntValue();
+        jj_consume_token(135);
+        break;
+        }
+      default:
+        jj_la1[71] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case CHAR:{
+      tk = jj_consume_token(CHAR);
+      jj_consume_token(134);
+      length = IntValue();
+      jj_consume_token(135);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case BINARY:{
+        tk4 = jj_consume_token(BINARY);
+        break;
+        }
+      default:
+        jj_la1[72] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ASCII:{
+        tk5 = jj_consume_token(ASCII);
+        break;
+        }
+      default:
+        jj_la1[73] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case UNICODE:{
+        tk6 = jj_consume_token(UNICODE);
+        break;
+        }
+      default:
+        jj_la1[74] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[75] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[76] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case VARCHAR:{
+      tk = jj_consume_token(VARCHAR);
+      jj_consume_token(134);
+      length = IntValue();
+      jj_consume_token(135);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case BINARY:{
+        tk4 = jj_consume_token(BINARY);
+        break;
+        }
+      default:
+        jj_la1[77] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[78] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[79] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case TINYBLOB:{
+      tk = jj_consume_token(TINYBLOB);
+      break;
+      }
+    case BLOB:{
+      tk = jj_consume_token(BLOB);
+      break;
+      }
+    case MEDIUMBLOB:{
+      tk = jj_consume_token(MEDIUMBLOB);
+      break;
+      }
+    case LONGBLOB:{
+      tk = jj_consume_token(LONGBLOB);
+      break;
+      }
+    case TINYTEXT:{
+      tk = jj_consume_token(TINYTEXT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[80] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[81] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case TEXT:{
+      tk = jj_consume_token(TEXT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[82] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[83] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case MEDIUMTEXT:{
+      tk = jj_consume_token(MEDIUMTEXT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[84] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[85] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case LONGTEXT:{
+      tk = jj_consume_token(LONGTEXT);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[86] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[87] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case ENUM:{
+      tk = jj_consume_token(ENUM);
+      valueList = ValueList();
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[88] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[89] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case SET:{
+      tk = jj_consume_token(SET);
+      valueList = ValueList();
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CHARACTER:{
+        jj_consume_token(CHARACTER);
+        jj_consume_token(SET);
+        charsetName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[90] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLLATE:{
+        jj_consume_token(COLLATE);
+        collationName = Identifier();
+        break;
+        }
+      default:
+        jj_la1[91] = jj_gen;
+        ;
+      }
+      break;
+      }
+    default:
+      jj_la1[92] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return new ColumnType(tk.image, length, decimals, valueList, tk2 != null, tk3 != null,
                tk4 != null, tk5 != null, tk6 != null, charsetName, collationName);
-    } finally {
-      trace_return("ColumnType");
-    }
 }
 
 /*
@@ -1704,120 +1610,112 @@ reference_option:
 
  public ColumnReference(String tableName, List<String> columnNames, boolean matchFull, boolean matchPartial, String onDeleteOption, String onUpdateOption) {
 */
-  final public ColumnReference ColumnReference() throws ParseException {    try {
-String tableName;
+  final public ColumnReference ColumnReference() throws ParseException {String tableName;
     List<String> columnNames = null;
     Token tk = null, tk2 = null;
     String onDeleteOption = null;
     String onUpdateOption = null;
-      jj_consume_token(REFERENCES);
-      tableName = DbObjectName();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 134:{
-        jj_consume_token(134);
-        columnNames = DbObjectNames();
-        jj_consume_token(135);
-        break;
-        }
-      default:
-        jj_la1[93] = jj_gen;
-        ;
+    jj_consume_token(REFERENCES);
+    tableName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 134:{
+      jj_consume_token(134);
+      columnNames = DbObjectNames();
+      jj_consume_token(135);
+      break;
       }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case MATCH:{
-        jj_consume_token(MATCH);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case FULL:{
-          tk = jj_consume_token(FULL);
-          break;
-          }
-        case PARTIAL:{
-          tk2 = jj_consume_token(PARTIAL);
-          break;
-          }
-        default:
-          jj_la1[94] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        break;
-        }
-      default:
-        jj_la1[95] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case ON:{
-        jj_consume_token(ON);
-        jj_consume_token(DELETE);
-        onDeleteOption = ReferenceOption();
-        break;
-        }
-      default:
-        jj_la1[96] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case ON:{
-        jj_consume_token(ON);
-        jj_consume_token(UPDATE);
-        onUpdateOption = ReferenceOption();
-        break;
-        }
-      default:
-        jj_la1[97] = jj_gen;
-        ;
-      }
-return new ColumnReference(tableName, columnNames, tk != null, tk2 != null,
-                onDeleteOption, onUpdateOption);
-    } finally {
-      trace_return("ColumnReference");
+    default:
+      jj_la1[93] = jj_gen;
+      ;
     }
-}
-
-  final public String ReferenceOption() throws ParseException {    try {
-Token tk = null, tk2 = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case MATCH:{
+      jj_consume_token(MATCH);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case RESTRICT:{
-        tk = jj_consume_token(RESTRICT);
+      case FULL:{
+        tk = jj_consume_token(FULL);
         break;
         }
-      case CASCADE:{
-        tk = jj_consume_token(CASCADE);
-        break;
-        }
-      case NO:{
-        tk = jj_consume_token(NO);
-        tk2 = jj_consume_token(ACTION);
-        break;
-        }
-      case SET:{
-        tk = jj_consume_token(SET);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case NULL:{
-          tk2 = jj_consume_token(NULL);
-          break;
-          }
-        case K_DEFAULT:{
-          tk2 = jj_consume_token(K_DEFAULT);
-          break;
-          }
-        default:
-          jj_la1[98] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
+      case PARTIAL:{
+        tk2 = jj_consume_token(PARTIAL);
         break;
         }
       default:
-        jj_la1[99] = jj_gen;
+        jj_la1[94] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-return tk.image + (tk2 != null ? " " + tk2.image : "");
-    } finally {
-      trace_return("ReferenceOption");
+      break;
+      }
+    default:
+      jj_la1[95] = jj_gen;
+      ;
     }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ON:{
+      jj_consume_token(ON);
+      jj_consume_token(DELETE);
+      onDeleteOption = ReferenceOption();
+      break;
+      }
+    default:
+      jj_la1[96] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ON:{
+      jj_consume_token(ON);
+      jj_consume_token(UPDATE);
+      onUpdateOption = ReferenceOption();
+      break;
+      }
+    default:
+      jj_la1[97] = jj_gen;
+      ;
+    }
+return new ColumnReference(tableName, columnNames, tk != null, tk2 != null,
+                onDeleteOption, onUpdateOption);
+}
+
+  final public String ReferenceOption() throws ParseException {Token tk = null, tk2 = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case RESTRICT:{
+      tk = jj_consume_token(RESTRICT);
+      break;
+      }
+    case CASCADE:{
+      tk = jj_consume_token(CASCADE);
+      break;
+      }
+    case NO:{
+      tk = jj_consume_token(NO);
+      tk2 = jj_consume_token(ACTION);
+      break;
+      }
+    case SET:{
+      tk = jj_consume_token(SET);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case NULL:{
+        tk2 = jj_consume_token(NULL);
+        break;
+        }
+      case K_DEFAULT:{
+        tk2 = jj_consume_token(K_DEFAULT);
+        break;
+        }
+      default:
+        jj_la1[98] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      break;
+      }
+    default:
+      jj_la1[99] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+return tk.image + (tk2 != null ? " " + tk2.image : "");
 }
 
 /*
@@ -1832,8 +1730,7 @@ return tk.image + (tk2 != null ? " " + tk2.image : "");
   | CHECK (expr)
   | [COLUMN] column_definition [FIRST | AFTER col_name]
  */
-  final public ColumnConstraint ColumnConstraint() throws ParseException {    try {
-Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null;
+  final public ColumnConstraint ColumnConstraint() throws ParseException {Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null;
     String constraintName = null;
     String indexName = null;
     List<ColumnName> indexColumnNames = null;
@@ -1841,398 +1738,383 @@ Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null;
     ExpressionValue checkExpr = null;
     ColumnDefinition columnDefinition = null;
     ColumnName afterColumn = null;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case PRIMARY:
+    case CONSTRAINT:
+    case UNIQUE:
+    case FOREIGN:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case PRIMARY:
-      case CONSTRAINT:
-      case UNIQUE:
-      case FOREIGN:{
+      case CONSTRAINT:{
+        tk = jj_consume_token(CONSTRAINT);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case CONSTRAINT:{
-          tk = jj_consume_token(CONSTRAINT);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case S_IDENTIFIER:
-          case S_QUOTED_IDENTIFIER:{
-            constraintName = DbObjectName();
-            break;
-            }
-          default:
-            jj_la1[100] = jj_gen;
-            ;
-          }
+        case S_IDENTIFIER:
+        case S_QUOTED_IDENTIFIER:{
+          constraintName = DbObjectName();
           break;
           }
         default:
-          jj_la1[101] = jj_gen;
+          jj_la1[100] = jj_gen;
           ;
         }
+        break;
+        }
+      default:
+        jj_la1[101] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case PRIMARY:{
+        tk2 = jj_consume_token(PRIMARY);
+        tk3 = jj_consume_token(KEY);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case PRIMARY:{
-          tk2 = jj_consume_token(PRIMARY);
-          tk3 = jj_consume_token(KEY);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case USING:{
-            jj_consume_token(USING);
-            tk4 = jj_consume_token(S_IDENTIFIER);
-            break;
-            }
-          default:
-            jj_la1[102] = jj_gen;
-            ;
-          }
-          jj_consume_token(134);
-          indexColumnNames = ColumnNames();
-          jj_consume_token(135);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case USING:{
-            jj_consume_token(USING);
-            tk4 = jj_consume_token(S_IDENTIFIER);
-            break;
-            }
-          default:
-            jj_la1[103] = jj_gen;
-            ;
-          }
+        case USING:{
+          jj_consume_token(USING);
+          tk4 = jj_consume_token(S_IDENTIFIER);
           break;
           }
-        case UNIQUE:{
-          tk2 = jj_consume_token(UNIQUE);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case KEY:
-          case INDEX:{
-            switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-            case KEY:{
-              tk3 = jj_consume_token(KEY);
-              break;
-              }
-            case INDEX:{
-              tk3 = jj_consume_token(INDEX);
-              break;
-              }
-            default:
-              jj_la1[104] = jj_gen;
-              jj_consume_token(-1);
-              throw new ParseException();
-            }
-            break;
-            }
-          default:
-            jj_la1[105] = jj_gen;
-            ;
-          }
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case S_IDENTIFIER:
-          case S_QUOTED_IDENTIFIER:{
-            indexName = DbObjectName();
-            break;
-            }
-          default:
-            jj_la1[106] = jj_gen;
-            ;
-          }
-          jj_consume_token(134);
-          indexColumnNames = ColumnNames();
-          jj_consume_token(135);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case USING:{
-            jj_consume_token(USING);
-            tk4 = jj_consume_token(S_IDENTIFIER);
-            break;
-            }
-          default:
-            jj_la1[107] = jj_gen;
-            ;
-          }
+        default:
+          jj_la1[102] = jj_gen;
+          ;
+        }
+        jj_consume_token(134);
+        indexColumnNames = ColumnNames();
+        jj_consume_token(135);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case USING:{
+          jj_consume_token(USING);
+          tk4 = jj_consume_token(S_IDENTIFIER);
           break;
           }
-        case FOREIGN:{
-          tk2 = jj_consume_token(FOREIGN);
+        default:
+          jj_la1[103] = jj_gen;
+          ;
+        }
+        break;
+        }
+      case UNIQUE:{
+        tk2 = jj_consume_token(UNIQUE);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case KEY:
+        case INDEX:{
           switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
           case KEY:{
             tk3 = jj_consume_token(KEY);
             break;
             }
-          default:
-            jj_la1[108] = jj_gen;
-            ;
-          }
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case S_IDENTIFIER:
-          case S_QUOTED_IDENTIFIER:{
-            indexName = DbObjectName();
+          case INDEX:{
+            tk3 = jj_consume_token(INDEX);
             break;
             }
           default:
-            jj_la1[109] = jj_gen;
-            ;
-          }
-          jj_consume_token(134);
-          indexColumnNames = ColumnNames();
-          jj_consume_token(135);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case REFERENCES:{
-            reference = ColumnReference();
-            break;
-            }
-          default:
-            jj_la1[110] = jj_gen;
-            ;
-          }
-          break;
-          }
-        default:
-          jj_la1[111] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        break;
-        }
-      case KEY:{
-        tk2 = jj_consume_token(KEY);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case S_IDENTIFIER:
-        case S_QUOTED_IDENTIFIER:{
-          indexName = DbObjectName();
-          break;
-          }
-        default:
-          jj_la1[112] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case USING:{
-          jj_consume_token(USING);
-          tk4 = jj_consume_token(S_IDENTIFIER);
-          break;
-          }
-        default:
-          jj_la1[113] = jj_gen;
-          ;
-        }
-        jj_consume_token(134);
-        indexColumnNames = ColumnNames();
-        jj_consume_token(135);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case USING:{
-          jj_consume_token(USING);
-          tk4 = jj_consume_token(S_IDENTIFIER);
-          break;
-          }
-        default:
-          jj_la1[114] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case INDEX:{
-        tk2 = jj_consume_token(INDEX);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case S_IDENTIFIER:
-        case S_QUOTED_IDENTIFIER:{
-          indexName = DbObjectName();
-          break;
-          }
-        default:
-          jj_la1[115] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case USING:{
-          jj_consume_token(USING);
-          tk4 = jj_consume_token(S_IDENTIFIER);
-          break;
-          }
-        default:
-          jj_la1[116] = jj_gen;
-          ;
-        }
-        jj_consume_token(134);
-        indexColumnNames = ColumnNames();
-        jj_consume_token(135);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case USING:{
-          jj_consume_token(USING);
-          tk4 = jj_consume_token(S_IDENTIFIER);
-          break;
-          }
-        default:
-          jj_la1[117] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case FULLTEXT:
-      case SPATIAL:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case FULLTEXT:{
-          tk2 = jj_consume_token(FULLTEXT);
-          break;
-          }
-        case SPATIAL:{
-          tk2 = jj_consume_token(SPATIAL);
-          break;
-          }
-        default:
-          jj_la1[118] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case INDEX:{
-          tk3 = jj_consume_token(INDEX);
-          break;
-          }
-        default:
-          jj_la1[119] = jj_gen;
-          ;
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case S_IDENTIFIER:
-        case S_QUOTED_IDENTIFIER:{
-          indexName = DbObjectName();
-          break;
-          }
-        default:
-          jj_la1[120] = jj_gen;
-          ;
-        }
-        jj_consume_token(134);
-        indexColumnNames = ColumnNames();
-        jj_consume_token(135);
-        break;
-        }
-      case CHECK:{
-        tk2 = jj_consume_token(CHECK);
-        jj_consume_token(134);
-        checkExpr = ExpressionValue();
-        jj_consume_token(135);
-        break;
-        }
-      case COLUMN:
-      case S_IDENTIFIER:
-      case S_QUOTED_IDENTIFIER:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case COLUMN:{
-          tk2 = jj_consume_token(COLUMN);
-          break;
-          }
-        default:
-          jj_la1[121] = jj_gen;
-          ;
-        }
-        columnDefinition = ColumnDefinition();
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case FIRST:
-        case AFTER:{
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case FIRST:{
-            tk5 = jj_consume_token(FIRST);
-            break;
-            }
-          case AFTER:{
-            tk5 = jj_consume_token(AFTER);
-            afterColumn = ColumnName();
-            break;
-            }
-          default:
-            jj_la1[122] = jj_gen;
+            jj_la1[104] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
           break;
           }
         default:
-          jj_la1[123] = jj_gen;
+          jj_la1[105] = jj_gen;
+          ;
+        }
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case S_IDENTIFIER:
+        case S_QUOTED_IDENTIFIER:{
+          indexName = DbObjectName();
+          break;
+          }
+        default:
+          jj_la1[106] = jj_gen;
+          ;
+        }
+        jj_consume_token(134);
+        indexColumnNames = ColumnNames();
+        jj_consume_token(135);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case USING:{
+          jj_consume_token(USING);
+          tk4 = jj_consume_token(S_IDENTIFIER);
+          break;
+          }
+        default:
+          jj_la1[107] = jj_gen;
+          ;
+        }
+        break;
+        }
+      case FOREIGN:{
+        tk2 = jj_consume_token(FOREIGN);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case KEY:{
+          tk3 = jj_consume_token(KEY);
+          break;
+          }
+        default:
+          jj_la1[108] = jj_gen;
+          ;
+        }
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case S_IDENTIFIER:
+        case S_QUOTED_IDENTIFIER:{
+          indexName = DbObjectName();
+          break;
+          }
+        default:
+          jj_la1[109] = jj_gen;
+          ;
+        }
+        jj_consume_token(134);
+        indexColumnNames = ColumnNames();
+        jj_consume_token(135);
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case REFERENCES:{
+          reference = ColumnReference();
+          break;
+          }
+        default:
+          jj_la1[110] = jj_gen;
           ;
         }
         break;
         }
       default:
-        jj_la1[124] = jj_gen;
+        jj_la1[111] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
+      break;
+      }
+    case KEY:{
+      tk2 = jj_consume_token(KEY);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case S_IDENTIFIER:
+      case S_QUOTED_IDENTIFIER:{
+        indexName = DbObjectName();
+        break;
+        }
+      default:
+        jj_la1[112] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case USING:{
+        jj_consume_token(USING);
+        tk4 = jj_consume_token(S_IDENTIFIER);
+        break;
+        }
+      default:
+        jj_la1[113] = jj_gen;
+        ;
+      }
+      jj_consume_token(134);
+      indexColumnNames = ColumnNames();
+      jj_consume_token(135);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case USING:{
+        jj_consume_token(USING);
+        tk4 = jj_consume_token(S_IDENTIFIER);
+        break;
+        }
+      default:
+        jj_la1[114] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case INDEX:{
+      tk2 = jj_consume_token(INDEX);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case S_IDENTIFIER:
+      case S_QUOTED_IDENTIFIER:{
+        indexName = DbObjectName();
+        break;
+        }
+      default:
+        jj_la1[115] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case USING:{
+        jj_consume_token(USING);
+        tk4 = jj_consume_token(S_IDENTIFIER);
+        break;
+        }
+      default:
+        jj_la1[116] = jj_gen;
+        ;
+      }
+      jj_consume_token(134);
+      indexColumnNames = ColumnNames();
+      jj_consume_token(135);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case USING:{
+        jj_consume_token(USING);
+        tk4 = jj_consume_token(S_IDENTIFIER);
+        break;
+        }
+      default:
+        jj_la1[117] = jj_gen;
+        ;
+      }
+      break;
+      }
+    case FULLTEXT:
+    case SPATIAL:{
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case FULLTEXT:{
+        tk2 = jj_consume_token(FULLTEXT);
+        break;
+        }
+      case SPATIAL:{
+        tk2 = jj_consume_token(SPATIAL);
+        break;
+        }
+      default:
+        jj_la1[118] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case INDEX:{
+        tk3 = jj_consume_token(INDEX);
+        break;
+        }
+      default:
+        jj_la1[119] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case S_IDENTIFIER:
+      case S_QUOTED_IDENTIFIER:{
+        indexName = DbObjectName();
+        break;
+        }
+      default:
+        jj_la1[120] = jj_gen;
+        ;
+      }
+      jj_consume_token(134);
+      indexColumnNames = ColumnNames();
+      jj_consume_token(135);
+      break;
+      }
+    case CHECK:{
+      tk2 = jj_consume_token(CHECK);
+      jj_consume_token(134);
+      checkExpr = ExpressionValue();
+      jj_consume_token(135);
+      break;
+      }
+    case COLUMN:
+    case S_IDENTIFIER:
+    case S_QUOTED_IDENTIFIER:{
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case COLUMN:{
+        tk2 = jj_consume_token(COLUMN);
+        break;
+        }
+      default:
+        jj_la1[121] = jj_gen;
+        ;
+      }
+      columnDefinition = ColumnDefinition();
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case FIRST:
+      case AFTER:{
+        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+        case FIRST:{
+          tk5 = jj_consume_token(FIRST);
+          break;
+          }
+        case AFTER:{
+          tk5 = jj_consume_token(AFTER);
+          afterColumn = ColumnName();
+          break;
+          }
+        default:
+          jj_la1[122] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        break;
+        }
+      default:
+        jj_la1[123] = jj_gen;
+        ;
+      }
+      break;
+      }
+    default:
+      jj_la1[124] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return new ColumnConstraint(tk != null, constraintName, (tk2 != null ? tk2.image : "") + (tk3 != null ? " " + tk3.image : ""),
                 indexColumnNames, (tk4 != null ? tk4.image : null), indexName, reference, checkExpr,
                 columnDefinition, (tk5 != null ? tk5.image : ""), afterColumn);
-    } finally {
-      trace_return("ColumnConstraint");
-    }
 }
 
-  final public SqlStatement DropStatement() throws ParseException {    try {
-SqlStatement st;
-      jj_consume_token(DROP);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case DATABASE:{
-        st = DropDatabaseStatement();
-        break;
-        }
-      case TEMPORARY:
-      case TABLE:{
-        st = DropTableStatement();
-        break;
-        }
-      default:
-        jj_la1[125] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+  final public SqlStatement DropStatement() throws ParseException {SqlStatement st;
+    jj_consume_token(DROP);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case DATABASE:{
+      st = DropDatabaseStatement();
+      break;
       }
+    case TEMPORARY:
+    case TABLE:{
+      st = DropTableStatement();
+      break;
+      }
+    default:
+      jj_la1[125] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return st;
-    } finally {
-      trace_return("DropStatement");
-    }
 }
 
-  final public SqlStatement DropDatabaseStatement() throws ParseException {    try {
-Token tk = null;
+  final public SqlStatement DropDatabaseStatement() throws ParseException {Token tk = null;
     String dbName;
-      jj_consume_token(DATABASE);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IF:{
-        tk = jj_consume_token(IF);
-        jj_consume_token(EXISTS);
-        break;
-        }
-      default:
-        jj_la1[126] = jj_gen;
-        ;
+    jj_consume_token(DATABASE);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IF:{
+      tk = jj_consume_token(IF);
+      jj_consume_token(EXISTS);
+      break;
       }
-      dbName = DbObjectName();
-return new DropDatabaseStatement(dbName, tk != null);
-    } finally {
-      trace_return("DropDatabaseStatement");
+    default:
+      jj_la1[126] = jj_gen;
+      ;
     }
+    dbName = DbObjectName();
+return new DropDatabaseStatement(dbName, tk != null);
 }
 
-  final public SqlStatement DropTableStatement() throws ParseException {    try {
-Token tk = null;
+  final public SqlStatement DropTableStatement() throws ParseException {Token tk = null;
     Token tk2 = null;
     List<String> tableNames;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case TEMPORARY:{
-        tk = jj_consume_token(TEMPORARY);
-        break;
-        }
-      default:
-        jj_la1[127] = jj_gen;
-        ;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case TEMPORARY:{
+      tk = jj_consume_token(TEMPORARY);
+      break;
       }
-      jj_consume_token(TABLE);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case IF:{
-        tk2 = jj_consume_token(IF);
-        jj_consume_token(EXISTS);
-        break;
-        }
-      default:
-        jj_la1[128] = jj_gen;
-        ;
-      }
-      tableNames = DbObjectNames();
-return new DropTableStatement(tk != null, tk2 != null, tableNames);
-    } finally {
-      trace_return("DropTableStatement");
+    default:
+      jj_la1[127] = jj_gen;
+      ;
     }
+    jj_consume_token(TABLE);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IF:{
+      tk2 = jj_consume_token(IF);
+      jj_consume_token(EXISTS);
+      break;
+      }
+    default:
+      jj_la1[128] = jj_gen;
+      ;
+    }
+    tableNames = DbObjectNames();
+return new DropTableStatement(tk != null, tk2 != null, tableNames);
 }
 
 /*
@@ -2240,428 +2122,344 @@ LOCK TABLES
     tbl_name [AS alias] {READ [LOCAL] | [LOW_PRIORITY] WRITE}
     [, tbl_name [AS alias] {READ [LOCAL] | [LOW_PRIORITY] WRITE}] ...
 */
-  final public SqlStatement LockTablesStatement() throws ParseException {    try {
-List<LockTablesSpecification> specifications = new ArrayList<LockTablesSpecification>();
+  final public SqlStatement LockTablesStatement() throws ParseException {List<LockTablesSpecification> specifications = new ArrayList<LockTablesSpecification>();
     LockTablesSpecification specification;
-      jj_consume_token(LOCK);
-      jj_consume_token(TABLES);
+    jj_consume_token(LOCK);
+    jj_consume_token(TABLES);
+    specification = LockTablesSpecification();
+specifications.add(specification);
+    label_6:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 136:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[129] = jj_gen;
+        break label_6;
+      }
+      jj_consume_token(136);
       specification = LockTablesSpecification();
 specifications.add(specification);
-      label_6:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 136:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[129] = jj_gen;
-          break label_6;
-        }
-        jj_consume_token(136);
-        specification = LockTablesSpecification();
-specifications.add(specification);
-      }
-return new LockTablesStatement(specifications);
-    } finally {
-      trace_return("LockTablesStatement");
     }
+return new LockTablesStatement(specifications);
 }
 
-  final public LockTablesSpecification LockTablesSpecification() throws ParseException {    try {
-String tableName;
+  final public LockTablesSpecification LockTablesSpecification() throws ParseException {String tableName;
     Token alias = null, tk = null, tk2 = null, tk3 = null, tk4 = null;
-      tableName = DbObjectName();
+    tableName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case AS:{
+      jj_consume_token(AS);
+      alias = jj_consume_token(S_IDENTIFIER);
+      break;
+      }
+    default:
+      jj_la1[130] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case READ:{
+      tk = jj_consume_token(READ);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case AS:{
-        jj_consume_token(AS);
-        alias = jj_consume_token(S_IDENTIFIER);
+      case LOCAL:{
+        tk2 = jj_consume_token(LOCAL);
         break;
         }
       default:
-        jj_la1[130] = jj_gen;
+        jj_la1[131] = jj_gen;
         ;
       }
+      break;
+      }
+    case LOW_PRIORITY:
+    case WRITE:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case READ:{
-        tk = jj_consume_token(READ);
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case LOCAL:{
-          tk2 = jj_consume_token(LOCAL);
-          break;
-          }
-        default:
-          jj_la1[131] = jj_gen;
-          ;
-        }
-        break;
-        }
-      case LOW_PRIORITY:
-      case WRITE:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case LOW_PRIORITY:{
-          tk3 = jj_consume_token(LOW_PRIORITY);
-          break;
-          }
-        default:
-          jj_la1[132] = jj_gen;
-          ;
-        }
-        tk4 = jj_consume_token(WRITE);
+      case LOW_PRIORITY:{
+        tk3 = jj_consume_token(LOW_PRIORITY);
         break;
         }
       default:
-        jj_la1[133] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        jj_la1[132] = jj_gen;
+        ;
       }
+      tk4 = jj_consume_token(WRITE);
+      break;
+      }
+    default:
+      jj_la1[133] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return new LockTablesSpecification(tableName, alias != null ? alias.image : null, tk != null, tk2 != null, tk3 != null, tk4 != null);
-    } finally {
-      trace_return("LockTablesSpecification");
-    }
 }
 
-  final public SqlStatement UnlockTablesStatement() throws ParseException {    try {
-
-      jj_consume_token(UNLOCK);
-      jj_consume_token(TABLES);
+  final public SqlStatement UnlockTablesStatement() throws ParseException {
+    jj_consume_token(UNLOCK);
+    jj_consume_token(TABLES);
 return new UnlockTablesStatement();
-    } finally {
-      trace_return("UnlockTablesStatement");
-    }
 }
 
-  final public SqlStatement StartTransactionStatement() throws ParseException {    try {
-
-      jj_consume_token(START);
-      jj_consume_token(TRANSACTION);
+  final public SqlStatement StartTransactionStatement() throws ParseException {
+    jj_consume_token(START);
+    jj_consume_token(TRANSACTION);
 return new StartTransactionStatement();
-    } finally {
-      trace_return("StartTransactionStatement");
-    }
 }
 
-  final public SqlStatement CommitTransactionStatement() throws ParseException {    try {
-
-      jj_consume_token(COMMIT);
+  final public SqlStatement CommitTransactionStatement() throws ParseException {
+    jj_consume_token(COMMIT);
 return new CommitTransactionStatement();
-    } finally {
-      trace_return("CommitTransactionStatement");
-    }
 }
 
-  final public List<String> DbObjectNames() throws ParseException {    try {
-List<String> result = new ArrayList<String>();
+  final public List<String> DbObjectNames() throws ParseException {List<String> result = new ArrayList<String>();
     String name;
+    name = DbObjectName();
+result.add(name);
+    label_7:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case 136:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[134] = jj_gen;
+        break label_7;
+      }
+      jj_consume_token(136);
       name = DbObjectName();
 result.add(name);
-      label_7:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 136:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[134] = jj_gen;
-          break label_7;
-        }
-        jj_consume_token(136);
-        name = DbObjectName();
-result.add(name);
-      }
+    }
 return result;
-    } finally {
-      trace_return("DbObjectNames");
-    }
 }
 
-  final public String DbObjectName() throws ParseException {    try {
-Token tk;
+  final public String DbObjectName() throws ParseException {Token tk;
     String str;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case S_IDENTIFIER:{
-        tk = jj_consume_token(S_IDENTIFIER);
-str = tk.image;
-        break;
-        }
-      case S_QUOTED_IDENTIFIER:{
-        tk = jj_consume_token(S_QUOTED_IDENTIFIER);
-str = tk.image;
-        break;
-        }
-      default:
-        jj_la1[135] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-return str;
-    } finally {
-      trace_return("DbObjectName");
-    }
-}
-
-  final public String Identifier() throws ParseException {    try {
-Token tk;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case S_IDENTIFIER:{
       tk = jj_consume_token(S_IDENTIFIER);
-return tk.image;
-    } finally {
-      trace_return("Identifier");
+str = tk.image;
+      break;
+      }
+    case S_QUOTED_IDENTIFIER:{
+      tk = jj_consume_token(S_QUOTED_IDENTIFIER);
+str = tk.image;
+      break;
+      }
+    default:
+      jj_la1[135] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
+return str;
 }
 
-  final public List<Assignment> Assignments() throws ParseException {    try {
-List<Assignment> assignments = new ArrayList<Assignment>();
+  final public String Identifier() throws ParseException {Token tk;
+    tk = jj_consume_token(S_IDENTIFIER);
+return tk.image;
+}
+
+  final public List<Assignment> Assignments() throws ParseException {List<Assignment> assignments = new ArrayList<Assignment>();
     Assignment assignment;
+    assignment = Assignment();
+assignments.add(assignment);
+    label_8:
+    while (true) {
+      if (jj_2_3(2)) {
+        ;
+      } else {
+        break label_8;
+      }
+      jj_consume_token(136);
       assignment = Assignment();
 assignments.add(assignment);
-      label_8:
-      while (true) {
-        if (jj_2_3(2)) {
-          ;
-        } else {
-          break label_8;
-        }
-        jj_consume_token(136);
-        assignment = Assignment();
-assignments.add(assignment);
-      }
-return assignments;
-    } finally {
-      trace_return("Assignments");
     }
+return assignments;
 }
 
-  final public Assignment Assignment() throws ParseException {    try {
-String columnName;
+  final public Assignment Assignment() throws ParseException {String columnName;
     Value value;
     String str;
-      columnName = DbObjectName();
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case EQUALS:{
-        jj_consume_token(EQUALS);
-        value = Value();
-        break;
-        }
-      case S_IDENTIFIER:{
-        str = Identifier();
-value = new StringValue(str);
-        break;
-        }
-      default:
-        jj_la1[136] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+    columnName = DbObjectName();
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case EQUALS:{
+      jj_consume_token(EQUALS);
+      value = Value();
+      break;
       }
-return new Assignment(columnName, value);
-    } finally {
-      trace_return("Assignment");
+    case S_IDENTIFIER:{
+      str = Identifier();
+value = new StringValue(str);
+      break;
+      }
+    default:
+      jj_la1[136] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
+return new Assignment(columnName, value);
 }
 
-  final public List<ValueList> MultiValueList() throws ParseException {    try {
-List<ValueList> result = new ArrayList<ValueList>();
+  final public List<ValueList> MultiValueList() throws ParseException {List<ValueList> result = new ArrayList<ValueList>();
     ValueList valueList;
+    valueList = ValueList();
+result.add(valueList);
+    label_9:
+    while (true) {
+      if (jj_2_4(2)) {
+        ;
+      } else {
+        break label_9;
+      }
+      jj_consume_token(136);
       valueList = ValueList();
 result.add(valueList);
-      label_9:
-      while (true) {
-        if (jj_2_4(2)) {
-          ;
-        } else {
-          break label_9;
-        }
-        jj_consume_token(136);
-        valueList = ValueList();
-result.add(valueList);
-      }
-return result;
-    } finally {
-      trace_return("MultiValueList");
     }
+return result;
 }
 
-  final public ValueList ValueList() throws ParseException {    try {
-List<Value> values = new ArrayList<Value>();
+  final public ValueList ValueList() throws ParseException {List<Value> values = new ArrayList<Value>();
     Value value;
-      jj_consume_token(134);
+    jj_consume_token(134);
+    value = Value();
+values.add(value);
+    label_10:
+    while (true) {
+      if (jj_2_5(2)) {
+        ;
+      } else {
+        break label_10;
+      }
+      jj_consume_token(136);
       value = Value();
 values.add(value);
-      label_10:
-      while (true) {
-        if (jj_2_5(2)) {
-          ;
-        } else {
-          break label_10;
-        }
-        jj_consume_token(136);
-        value = Value();
-values.add(value);
-      }
-      jj_consume_token(135);
+    }
+    jj_consume_token(135);
 return new ValueList(values);
-    } finally {
-      trace_return("ValueList");
-    }
 }
 
-  final public Value Value() throws ParseException {    try {
-Value val;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 137:{
-        val = JdbcPlaceholderValue();
-        break;
-        }
-      case S_INTEGER:{
-        val = IntValue();
-        break;
-        }
-      case S_DOUBLE:{
-        val = DoubleValue();
-        break;
-        }
-      case 131:
-      case 132:{
-        val = StringValue();
-        break;
-        }
-      case S_BINARY_FORMAT1:
-      case S_BINARY_FORMAT2:{
-        val = BinaryValue();
-        break;
-        }
-      case S_BIT_FORMAT1:
-      case S_BIT_FORMAT2:{
-        val = BitFieldValue();
-        break;
-        }
-      case NULL:{
-        val = NullValue();
-        break;
-        }
-      case CURRENT_TIMESTAMP:{
-        val = SystemVariableValue();
-        break;
-        }
-      case CONCAT:
-      case S_IDENTIFIER:
-      case S_QUOTED_IDENTIFIER:{
-        val = ExpressionValue();
-        break;
-        }
-      default:
-        jj_la1[137] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+  final public Value Value() throws ParseException {Value val;
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 137:{
+      val = JdbcPlaceholderValue();
+      break;
       }
+    case S_INTEGER:{
+      val = IntValue();
+      break;
+      }
+    case S_DOUBLE:{
+      val = DoubleValue();
+      break;
+      }
+    case 131:
+    case 132:{
+      val = StringValue();
+      break;
+      }
+    case S_BINARY_FORMAT1:
+    case S_BINARY_FORMAT2:{
+      val = BinaryValue();
+      break;
+      }
+    case S_BIT_FORMAT1:
+    case S_BIT_FORMAT2:{
+      val = BitFieldValue();
+      break;
+      }
+    case NULL:{
+      val = NullValue();
+      break;
+      }
+    case CURRENT_TIMESTAMP:{
+      val = SystemVariableValue();
+      break;
+      }
+    case CONCAT:
+    case S_IDENTIFIER:
+    case S_QUOTED_IDENTIFIER:{
+      val = ExpressionValue();
+      break;
+      }
+    default:
+      jj_la1[137] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return val;
-    } finally {
-      trace_return("Value");
-    }
 }
 
-  final public StringValue StringValue() throws ParseException {    try {
-Token tk;
-      tk = CharLiteral();
+  final public StringValue StringValue() throws ParseException {Token tk;
+    tk = CharLiteral();
 return new StringValue(tk.image);
-    } finally {
-      trace_return("StringValue");
-    }
 }
 
-  final public BinaryValue BinaryValue() throws ParseException {    try {
-Token tk;
+  final public BinaryValue BinaryValue() throws ParseException {Token tk;
     BinaryValue bv;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case S_BINARY_FORMAT1:{
-        tk = jj_consume_token(S_BINARY_FORMAT1);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case S_BINARY_FORMAT1:{
+      tk = jj_consume_token(S_BINARY_FORMAT1);
 bv = new BinaryValue(BinaryValue.Format.FORMAT1, tk.image.substring(2, tk.image.length() - 1));
-        break;
-        }
-      case S_BINARY_FORMAT2:{
-        tk = jj_consume_token(S_BINARY_FORMAT2);
+      break;
+      }
+    case S_BINARY_FORMAT2:{
+      tk = jj_consume_token(S_BINARY_FORMAT2);
 bv = new BinaryValue(BinaryValue.Format.FORMAT2, tk.image.substring(2));
-        break;
-        }
-      default:
-        jj_la1[138] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+      break;
       }
+    default:
+      jj_la1[138] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return bv;
-    } finally {
-      trace_return("BinaryValue");
-    }
 }
 
-  final public BitFieldValue BitFieldValue() throws ParseException {    try {
-Token tk;
+  final public BitFieldValue BitFieldValue() throws ParseException {Token tk;
     BitFieldValue bfv;
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case S_BIT_FORMAT1:{
-        tk = jj_consume_token(S_BIT_FORMAT1);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case S_BIT_FORMAT1:{
+      tk = jj_consume_token(S_BIT_FORMAT1);
 bfv = new BitFieldValue(BitFieldValue.Format.FORMAT1, tk.image.substring(2, tk.image.length() - 1));
-        break;
-        }
-      case S_BIT_FORMAT2:{
-        tk = jj_consume_token(S_BIT_FORMAT2);
-bfv = new BitFieldValue(BitFieldValue.Format.FORMAT2, tk.image.substring(2));
-        break;
-        }
-      default:
-        jj_la1[139] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+      break;
       }
+    case S_BIT_FORMAT2:{
+      tk = jj_consume_token(S_BIT_FORMAT2);
+bfv = new BitFieldValue(BitFieldValue.Format.FORMAT2, tk.image.substring(2));
+      break;
+      }
+    default:
+      jj_la1[139] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
 return bfv;
-    } finally {
-      trace_return("BitFieldValue");
-    }
 }
 
-  final public IntegerValue IntValue() throws ParseException {    try {
-Token tk;
-      tk = jj_consume_token(S_INTEGER);
+  final public IntegerValue IntValue() throws ParseException {Token tk;
+    tk = jj_consume_token(S_INTEGER);
 return new IntegerValue(tk.image);
-    } finally {
-      trace_return("IntValue");
-    }
 }
 
-  final public DoubleValue DoubleValue() throws ParseException {    try {
-Token tk;
-      tk = jj_consume_token(S_DOUBLE);
+  final public DoubleValue DoubleValue() throws ParseException {Token tk;
+    tk = jj_consume_token(S_DOUBLE);
 return new DoubleValue(tk.image);
-    } finally {
-      trace_return("DoubleValue");
-    }
 }
 
-  final public NullValue NullValue() throws ParseException {    try {
-
-      jj_consume_token(NULL);
+  final public NullValue NullValue() throws ParseException {
+    jj_consume_token(NULL);
 return new NullValue();
-    } finally {
-      trace_return("NullValue");
-    }
 }
 
-  final public JdbcPlaceholderValue JdbcPlaceholderValue() throws ParseException {    try {
-
-      jj_consume_token(137);
+  final public JdbcPlaceholderValue JdbcPlaceholderValue() throws ParseException {
+    jj_consume_token(137);
 return new JdbcPlaceholderValue();
-    } finally {
-      trace_return("JdbcPlaceholderValue");
-    }
 }
 
-  final public SystemVariableValue SystemVariableValue() throws ParseException {    try {
-Token tk;
-      tk = jj_consume_token(CURRENT_TIMESTAMP);
+  final public SystemVariableValue SystemVariableValue() throws ParseException {Token tk;
+    tk = jj_consume_token(CURRENT_TIMESTAMP);
 return new SystemVariableValue(tk.image);
-    } finally {
-      trace_return("SystemVariableValue");
-    }
 }
 
 /*
@@ -2673,46 +2471,42 @@ expr:
   | boolean_primary AND boolean_primary
   | boolean_primary && boolean_primary
  */
-  final public ExpressionValue ExpressionValue() throws ParseException {    try {
-BooleanPrimary leftExpr = null;
+  final public ExpressionValue ExpressionValue() throws ParseException {BooleanPrimary leftExpr = null;
     Token tk = null;
     BooleanPrimary rightExpr = null;
-      leftExpr = BooleanPrimary();
-      if (jj_2_6(2)) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case OR:{
-          tk = jj_consume_token(OR);
-          break;
-          }
-        case 138:{
-          tk = jj_consume_token(138);
-          break;
-          }
-        case XOR:{
-          tk = jj_consume_token(XOR);
-          break;
-          }
-        case AND:{
-          tk = jj_consume_token(AND);
-          break;
-          }
-        case 139:{
-          tk = jj_consume_token(139);
-          break;
-          }
-        default:
-          jj_la1[140] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
+    leftExpr = BooleanPrimary();
+    if (jj_2_6(2)) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case OR:{
+        tk = jj_consume_token(OR);
+        break;
         }
-        rightExpr = BooleanPrimary();
-      } else {
-        ;
+      case 138:{
+        tk = jj_consume_token(138);
+        break;
+        }
+      case XOR:{
+        tk = jj_consume_token(XOR);
+        break;
+        }
+      case AND:{
+        tk = jj_consume_token(AND);
+        break;
+        }
+      case 139:{
+        tk = jj_consume_token(139);
+        break;
+        }
+      default:
+        jj_la1[140] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
-return new ExpressionValue(leftExpr, tk != null ? tk.image : "", rightExpr);
-    } finally {
-      trace_return("ExpressionValue");
+      rightExpr = BooleanPrimary();
+    } else {
+      ;
     }
+return new ExpressionValue(leftExpr, tk != null ? tk.image : "", rightExpr);
 }
 
 /*
@@ -2722,98 +2516,94 @@ boolean_primary:
   | columnName [NOT] IN (value [, value] ...)
   | CONCAT()
  */
-  final public BooleanPrimary BooleanPrimary() throws ParseException {    try {
-String columnName = "";
+  final public BooleanPrimary BooleanPrimary() throws ParseException {String columnName = "";
     Token tk = null, tk2 = null, tk3 = null, tk4 = null, tk5 = null, tk6 = null;
     Value value = null;
     ValueList valueList = null;
-      if (jj_2_7(2)) {
+    if (jj_2_7(2)) {
+      columnName = DbObjectName();
+      tk = jj_consume_token(IS);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case NOT:{
+        tk2 = jj_consume_token(NOT);
+        break;
+        }
+      default:
+        jj_la1[141] = jj_gen;
+        ;
+      }
+      tk3 = jj_consume_token(NULL);
+    } else if (jj_2_8(3)) {
+      columnName = DbObjectName();
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case EQUALS:{
+        tk4 = jj_consume_token(EQUALS);
+        break;
+        }
+      case 140:{
+        tk4 = jj_consume_token(140);
+        break;
+        }
+      case 141:{
+        tk4 = jj_consume_token(141);
+        break;
+        }
+      case 142:{
+        tk4 = jj_consume_token(142);
+        break;
+        }
+      case 143:{
+        tk4 = jj_consume_token(143);
+        break;
+        }
+      case 144:{
+        tk4 = jj_consume_token(144);
+        break;
+        }
+      case 145:{
+        tk4 = jj_consume_token(145);
+        break;
+        }
+      default:
+        jj_la1[142] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      value = Value();
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case S_IDENTIFIER:
+      case S_QUOTED_IDENTIFIER:{
         columnName = DbObjectName();
-        tk = jj_consume_token(IS);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case NOT:{
-          tk2 = jj_consume_token(NOT);
+          tk5 = jj_consume_token(NOT);
           break;
           }
         default:
-          jj_la1[141] = jj_gen;
+          jj_la1[143] = jj_gen;
           ;
         }
-        tk3 = jj_consume_token(NULL);
-      } else if (jj_2_8(3)) {
-        columnName = DbObjectName();
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case EQUALS:{
-          tk4 = jj_consume_token(EQUALS);
-          break;
-          }
-        case 140:{
-          tk4 = jj_consume_token(140);
-          break;
-          }
-        case 141:{
-          tk4 = jj_consume_token(141);
-          break;
-          }
-        case 142:{
-          tk4 = jj_consume_token(142);
-          break;
-          }
-        case 143:{
-          tk4 = jj_consume_token(143);
-          break;
-          }
-        case 144:{
-          tk4 = jj_consume_token(144);
-          break;
-          }
-        case 145:{
-          tk4 = jj_consume_token(145);
-          break;
-          }
-        default:
-          jj_la1[142] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
+        tk6 = jj_consume_token(IN);
+        valueList = ValueList();
+        break;
         }
-        value = Value();
-      } else {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case S_IDENTIFIER:
-        case S_QUOTED_IDENTIFIER:{
-          columnName = DbObjectName();
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case NOT:{
-            tk5 = jj_consume_token(NOT);
-            break;
-            }
-          default:
-            jj_la1[143] = jj_gen;
-            ;
-          }
-          tk6 = jj_consume_token(IN);
-          valueList = ValueList();
-          break;
-          }
-        case CONCAT:{
-          jj_consume_token(CONCAT);
-          jj_consume_token(134);
-          columnName = parseConcat();
-          break;
-          }
-        default:
-          jj_la1[144] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
+      case CONCAT:{
+        jj_consume_token(CONCAT);
+        jj_consume_token(134);
+        columnName = parseConcat();
+        break;
         }
+      default:
+        jj_la1[144] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
+    }
 return new BooleanPrimary(columnName,
             (tk!=null ? tk.image : "") + (tk2!=null ? " " + tk2.image : "") + (tk3!=null ? " " + tk3.image : ""),
             tk4!=null ? tk4.image : "", value,
             (tk5!=null ? tk5.image + " " : "") + (tk6!=null ? tk6.image : ""), valueList);
-    } finally {
-      trace_return("BooleanPrimary");
-    }
 }
 
   private boolean jj_2_1(int xla)
@@ -2894,28 +2684,25 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_89()
  {
-    if (!jj_rescan) trace_call("ColumnReference(LOOKING AHEAD...)");
-    if (jj_scan_token(REFERENCES)) { if (!jj_rescan) trace_return("ColumnReference(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("ColumnReference(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(REFERENCES)) return true;
+    return false;
   }
 
   private boolean jj_3R_68()
  {
-    if (!jj_rescan) trace_call("SystemVariableValue(LOOKING AHEAD...)");
-    if (jj_scan_token(CURRENT_TIMESTAMP)) { if (!jj_rescan) trace_return("SystemVariableValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("SystemVariableValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(CURRENT_TIMESTAMP)) return true;
+    return false;
   }
 
   private boolean jj_3R_90()
  {
-    if (!jj_rescan) trace_call("CharLiteral(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_95()) {
     jj_scanpos = xsp;
-    if (jj_3R_96()) { if (!jj_rescan) trace_return("CharLiteral(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_96()) return true;
     }
-    { if (!jj_rescan) trace_return("CharLiteral(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3R_85()
@@ -2932,9 +2719,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_61()
  {
-    if (!jj_rescan) trace_call("JdbcPlaceholderValue(LOOKING AHEAD...)");
-    if (jj_scan_token(137)) { if (!jj_rescan) trace_return("JdbcPlaceholderValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("JdbcPlaceholderValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(137)) return true;
+    return false;
   }
 
   private boolean jj_3R_81()
@@ -2951,9 +2737,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_67()
  {
-    if (!jj_rescan) trace_call("NullValue(LOOKING AHEAD...)");
-    if (jj_scan_token(NULL)) { if (!jj_rescan) trace_return("NullValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("NullValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(NULL)) return true;
+    return false;
   }
 
   private boolean jj_3R_80()
@@ -2964,9 +2749,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_63()
  {
-    if (!jj_rescan) trace_call("DoubleValue(LOOKING AHEAD...)");
-    if (jj_scan_token(S_DOUBLE)) { if (!jj_rescan) trace_return("DoubleValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("DoubleValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(S_DOUBLE)) return true;
+    return false;
   }
 
   private boolean jj_3R_54()
@@ -3065,9 +2849,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_62()
  {
-    if (!jj_rescan) trace_call("IntValue(LOOKING AHEAD...)");
-    if (jj_scan_token(S_INTEGER)) { if (!jj_rescan) trace_return("IntValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("IntValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(S_INTEGER)) return true;
+    return false;
   }
 
   private boolean jj_3R_72()
@@ -3184,14 +2967,13 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_66()
  {
-    if (!jj_rescan) trace_call("BitFieldValue(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_93()) {
     jj_scanpos = xsp;
-    if (jj_3R_94()) { if (!jj_rescan) trace_return("BitFieldValue(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_94()) return true;
     }
-    { if (!jj_rescan) trace_return("BitFieldValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3R_40()
@@ -3299,7 +3081,6 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_18()
  {
-    if (!jj_rescan) trace_call("ColumnType(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_34()) {
@@ -3356,7 +3137,7 @@ return new BooleanPrimary(columnName,
     jj_scanpos = xsp;
     if (jj_3R_53()) {
     jj_scanpos = xsp;
-    if (jj_3R_54()) { if (!jj_rescan) trace_return("ColumnType(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_54()) return true;
     }
     }
     }
@@ -3384,26 +3165,24 @@ return new BooleanPrimary(columnName,
     }
     }
     }
-    { if (!jj_rescan) trace_return("ColumnType(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3R_65()
  {
-    if (!jj_rescan) trace_call("BinaryValue(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_91()) {
     jj_scanpos = xsp;
-    if (jj_3R_92()) { if (!jj_rescan) trace_return("BinaryValue(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_92()) return true;
     }
-    { if (!jj_rescan) trace_return("BinaryValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3R_64()
  {
-    if (!jj_rescan) trace_call("StringValue(LOOKING AHEAD...)");
-    if (jj_3R_90()) { if (!jj_rescan) trace_return("StringValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("StringValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_3R_90()) return true;
+    return false;
   }
 
   private boolean jj_3R_28()
@@ -3469,7 +3248,6 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_14()
  {
-    if (!jj_rescan) trace_call("Value(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_20()) {
@@ -3488,7 +3266,7 @@ return new BooleanPrimary(columnName,
     jj_scanpos = xsp;
     if (jj_3R_27()) {
     jj_scanpos = xsp;
-    if (jj_3R_28()) { if (!jj_rescan) trace_return("Value(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_28()) return true;
     }
     }
     }
@@ -3497,7 +3275,7 @@ return new BooleanPrimary(columnName,
     }
     }
     }
-    { if (!jj_rescan) trace_return("Value(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3_5()
@@ -3509,9 +3287,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_13()
  {
-    if (!jj_rescan) trace_call("ValueList(LOOKING AHEAD...)");
-    if (jj_scan_token(134)) { if (!jj_rescan) trace_return("ValueList(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("ValueList(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_scan_token(134)) return true;
+    return false;
   }
 
   private boolean jj_3_4()
@@ -3523,8 +3300,7 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_17()
  {
-    if (!jj_rescan) trace_call("ColumnName(LOOKING AHEAD...)");
-    if (jj_3R_16()) { if (!jj_rescan) trace_return("ColumnName(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_16()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_33()) jj_scanpos = xsp;
@@ -3532,7 +3308,7 @@ return new BooleanPrimary(columnName,
     if (jj_scan_token(24)) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(25)) jj_scanpos = xsp;
-    { if (!jj_rescan) trace_return("ColumnName(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3R_60()
@@ -3626,9 +3402,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_12()
  {
-    if (!jj_rescan) trace_call("Assignment(LOOKING AHEAD...)");
-    if (jj_3R_16()) { if (!jj_rescan) trace_return("Assignment(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("Assignment(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_3R_16()) return true;
+    return false;
   }
 
   private boolean jj_3R_30()
@@ -3645,15 +3420,14 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_11()
  {
-    if (!jj_rescan) trace_call("ColumnDefinition(LOOKING AHEAD...)");
-    if (jj_3R_17()) { if (!jj_rescan) trace_return("ColumnDefinition(LOOKAHEAD FAILED)"); return true; }
-    if (jj_3R_18()) { if (!jj_rescan) trace_return("ColumnDefinition(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_17()) return true;
+    if (jj_3R_18()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
       if (jj_3R_19()) { jj_scanpos = xsp; break; }
     }
-    { if (!jj_rescan) trace_return("ColumnDefinition(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3_8()
@@ -3700,7 +3474,6 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_15()
  {
-    if (!jj_rescan) trace_call("BooleanPrimary(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_7()) {
@@ -3709,11 +3482,11 @@ return new BooleanPrimary(columnName,
     jj_scanpos = xsp;
     if (jj_3R_29()) {
     jj_scanpos = xsp;
-    if (jj_3R_30()) { if (!jj_rescan) trace_return("BooleanPrimary(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_30()) return true;
     }
     }
     }
-    { if (!jj_rescan) trace_return("BooleanPrimary(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   private boolean jj_3R_86()
@@ -3754,9 +3527,8 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_69()
  {
-    if (!jj_rescan) trace_call("ExpressionValue(LOOKING AHEAD...)");
-    if (jj_3R_15()) { if (!jj_rescan) trace_return("ExpressionValue(LOOKAHEAD FAILED)"); return true; }
-    { if (!jj_rescan) trace_return("ExpressionValue(LOOKAHEAD SUCCEEDED)"); return false; }
+    if (jj_3R_15()) return true;
+    return false;
   }
 
   private boolean jj_3R_32()
@@ -3773,14 +3545,13 @@ return new BooleanPrimary(columnName,
 
   private boolean jj_3R_16()
  {
-    if (!jj_rescan) trace_call("DbObjectName(LOOKING AHEAD...)");
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_31()) {
     jj_scanpos = xsp;
-    if (jj_3R_32()) { if (!jj_rescan) trace_return("DbObjectName(LOOKAHEAD FAILED)"); return true; }
+    if (jj_3R_32()) return true;
     }
-    { if (!jj_rescan) trace_return("DbObjectName(LOOKAHEAD SUCCEEDED)"); return false; }
+    return false;
   }
 
   /** Generated Token Manager. */
@@ -3826,9 +3597,6 @@ return new BooleanPrimary(columnName,
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
-  {
-      enable_tracing();
-  }
   /** Constructor. */
   public SQLParser(Provider stream) {
 	 jj_input_stream = new SimpleCharStream(stream, 1, 1);
@@ -3904,7 +3672,6 @@ return new BooleanPrimary(columnName,
 		   }
 		 }
 	   }
-	   trace_token(token, "");
 	   return token;
 	 }
 	 token = oldToken;
@@ -3930,8 +3697,6 @@ return new BooleanPrimary(columnName,
 	   int i = 0; Token tok = token;
 	   while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
 	   if (tok != null) jj_add_error_token(kind, i);
-	 } else {
-	   trace_scan(jj_scanpos, kind);
 	 }
 	 if (jj_scanpos.kind != kind) return true;
 	 if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
@@ -3945,7 +3710,6 @@ return new BooleanPrimary(columnName,
 	 else token = token.next = token_source.getNextToken();
 	 jj_ntk = -1;
 	 jj_gen++;
-	   trace_token(token, " (in getNextToken)");
 	 return token;
   }
 
@@ -4064,52 +3828,12 @@ return new BooleanPrimary(columnName,
 	 return trace_enabled;
   }
 
-/** Enable tracing. */
+  /** Enable tracing. */
   final public void enable_tracing() {
-	 trace_enabled = true;
   }
 
-/** Disable tracing. */
+  /** Disable tracing. */
   final public void disable_tracing() {
-	 trace_enabled = false;
-  }
-
-  protected void trace_call(String s) {
-	 if (trace_enabled) {
-	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-	   System.out.println("Call:	" + s);
-	 }
-	 trace_indent = trace_indent + 2;
-  }
-
-  protected void trace_return(String s) {
-	 trace_indent = trace_indent - 2;
-	 if (trace_enabled) {
-	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-	   System.out.println("Return: " + s);
-	 }
-  }
-
-  protected void trace_token(Token t, String where) {
-	 if (trace_enabled) {
-	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-	   System.out.print("Consumed token: <" + tokenImage[t.kind]);
-	   if (t.kind != 0 && !tokenImage[t.kind].equals("\"" + t.image + "\"")) {
-		 System.out.print(": \"" + TokenMgrException.addEscapes(t.image) + "\"");
-	   }
-	   System.out.println(" at line " + t.beginLine + " column " + t.beginColumn + ">" + where);
-	 }
-  }
-
-  protected void trace_scan(Token t1, int t2) {
-	 if (trace_enabled) {
-	   for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-	   System.out.print("Visited token: <" + tokenImage[t1.kind]);
-	   if (t1.kind != 0 && !tokenImage[t1.kind].equals("\"" + t1.image + "\"")) {
-		 System.out.print(": \"" + TokenMgrException.addEscapes(t1.image) + "\"");
-	   }
-	   System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
-	 }
   }
 
   private void jj_rescan_token() {
