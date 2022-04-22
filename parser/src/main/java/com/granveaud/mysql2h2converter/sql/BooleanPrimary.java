@@ -8,8 +8,6 @@ package com.granveaud.mysql2h2converter.sql;
  *   | columnName comparison_operator expr
  *   | columnName [NOT] IN (expr [, expr] ...)
  *
- * comparison_operator: = | >= | > | <= | < | <> | !=
- *
  * TODO: Support other operators
  */
 public class BooleanPrimary {

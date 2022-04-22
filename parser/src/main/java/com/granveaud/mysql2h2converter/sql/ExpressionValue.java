@@ -4,10 +4,8 @@ package com.granveaud.mysql2h2converter.sql;
  * expr:
  *     boolean_primary
  *   | boolean_primary OR boolean_primary
- *   | boolean_primary || boolean_primary
  *   | boolean_primary XOR boolean_primary
  *   | boolean_primary AND boolean_primary
- *   | boolean_primary && boolean_primary
  */
 public class ExpressionValue implements Value {
 
