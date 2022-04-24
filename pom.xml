@@ -5,7 +5,7 @@
 
   <groupId>com.github.alphahinex.mysql2h2-converter</groupId>
   <artifactId>mysql2h2-parent</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.2</version>
   <packaging>pom</packaging>
     
   <name>MySQL to H2 Converter</name>
