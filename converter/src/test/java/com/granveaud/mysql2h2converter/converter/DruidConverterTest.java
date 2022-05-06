@@ -133,6 +133,7 @@ public class DruidConverterTest {
             }
         }
 
+        LOGGER.info(out.toString());
         executeUpdate(out.toString());
     }
 
@@ -195,6 +196,7 @@ public class DruidConverterTest {
     @Test
     public void testScriptCreateTableWithKey() throws Exception {
         loadScript("create-table-with-key.sql");
+
     }
 
     @Test

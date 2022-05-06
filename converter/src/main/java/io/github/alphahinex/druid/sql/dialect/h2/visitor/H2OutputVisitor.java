@@ -16,16 +16,16 @@
 package io.github.alphahinex.druid.sql.dialect.h2.visitor;
 
 import com.alibaba.druid.DbType;
-import com.alibaba.druid.sql.ast.SQLExpr;
+import com.alibaba.druid.sql.ast.*;
 import com.alibaba.druid.sql.ast.expr.SQLQueryExpr;
-import com.alibaba.druid.sql.ast.statement.SQLCreateDatabaseStatement;
-import com.alibaba.druid.sql.ast.statement.SQLCreateIndexStatement;
-import com.alibaba.druid.sql.ast.statement.SQLInsertStatement;
-import com.alibaba.druid.sql.ast.statement.SQLReplaceStatement;
+import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.dialect.h2.visitor.H2ASTVisitor;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
+import com.alibaba.druid.sql.visitor.SQLASTVisitor;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
+import java.util.Objects;
 
 public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor {
     public H2OutputVisitor(Appendable appender) {
@@ -103,6 +103,74 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
         x.getName().accept(this);
 
         return false;
+    }
+
+    @Override
+    public boolean visit(SQLCreateTableStatement x) {
+
+        /*
+        https://h2database.com/html/commands.html#create_table
+        CREATE [ CACHED | MEMORY ] [ { TEMP } | [ GLOBAL | LOCAL ] TEMPORARY ]
+        TABLE [ IF NOT EXISTS ] [schemaName.]tableName
+        [ ( { columnName [columnDefinition] | tableConstraintDefinition } [,...] ) ]
+        [ ENGINE tableEngineName ]
+        [ WITH tableEngineParamName [,...] ]
+        [ NOT PERSISTENT ] [ TRANSACTIONAL ]
+        [ AS query [ WITH [ NO ] DATA ] ]
+         */
+
+        printCreateTable(x, true);
+        return false;
+    }
+
+    protected void printTableElements(List<SQLTableElement> tableElementList) {
+        int size = tableElementList.size();
+        if (size == 0) {
+            return;
+        }
+
+        print0(" (");
+
+        this.indentCount++;
+        println();
+        for (int i = 0; i < size; ++i) {
+            SQLTableElement element = tableElementList.get(i);
+            if (element instanceof SQLPrimaryKey) {
+                printUcase("PRIMARY KEY ");
+                acceptChild(((SQLPrimaryKey) element).getColumns());
+            } else if (element instanceof SQLUnique) {
+                printUcase("UNIQUE KEY ");
+                ((SQLUnique) element).getName().accept(this);
+                acceptChild(((SQLUnique) element).getColumns());
+            } else {
+                element.accept(this);
+            }
+
+            if (i != size - 1) {
+                print(',');
+            }
+            if (this.isPrettyFormat() && element.hasAfterComment()) {
+                print(' ');
+                printlnComment(element.getAfterCommentsDirect());
+            }
+
+            if (i != size - 1) {
+                println();
+            }
+        }
+        this.indentCount--;
+        println();
+        print(')');
+    }
+
+    private void acceptChild(List<? extends SQLObject> children) {
+        if (children == null) {
+            return;
+        }
+
+        print('(');
+        children.stream().filter(Objects::nonNull).forEach(child -> child.accept(this));
+        print(')');
     }
 
     @Override
