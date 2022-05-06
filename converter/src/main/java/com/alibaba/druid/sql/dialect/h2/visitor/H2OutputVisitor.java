@@ -16,16 +16,13 @@
 package com.alibaba.druid.sql.dialect.h2.visitor;
 
 import com.alibaba.druid.DbType;
-import com.alibaba.druid.sql.ast.*;
+import com.alibaba.druid.sql.ast.SQLExpr;
+import com.alibaba.druid.sql.ast.SQLObject;
 import com.alibaba.druid.sql.ast.expr.SQLQueryExpr;
 import com.alibaba.druid.sql.ast.statement.*;
-import com.alibaba.druid.sql.dialect.h2.visitor.H2ASTVisitor;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
-import com.alibaba.druid.sql.visitor.SQLASTVisitor;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
-import java.util.Objects;
 
 public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor {
     public H2OutputVisitor(Appendable appender) {
@@ -139,8 +136,11 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
                 printUcase("PRIMARY KEY ");
                 acceptChild(((SQLPrimaryKey) element).getColumns());
             } else if (element instanceof SQLUnique) {
-                printUcase("UNIQUE KEY ");
-                ((SQLUnique) element).getName().accept(this);
+                if ("UNIQUE".equalsIgnoreCase(((SQLUnique) element).getIndexDefinition().getType())) {
+                    printUcase("UNIQUE ");
+                }
+                printUcase("KEY ");
+                print(((SQLUnique) element).getName().getSimpleName().replaceFirst("`$", System.currentTimeMillis() + "`"));
                 acceptChild(((SQLUnique) element).getColumns());
             } else {
                 element.accept(this);
@@ -169,7 +169,16 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
         }
 
         print('(');
-        children.stream().filter(Objects::nonNull).forEach(child -> child.accept(this));
+        for (int i = 0; i < children.size(); i++) {
+            SQLObject child = children.get(i);
+            if (child == null) {
+                continue;
+            }
+            child.accept(this);
+            if (i != children.size() - 1) {
+                print(',');
+            }
+        }
         print(')');
     }
 
@@ -204,6 +213,11 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
         printAndAccept(x.getItems(), ", ");
         print(')');
 
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLSetStatement x) {
         return false;
     }
 
