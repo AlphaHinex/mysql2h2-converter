@@ -18,6 +18,8 @@ package com.alibaba.druid.sql.dialect.h2.visitor;
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.ast.SQLExpr;
 import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.expr.SQLHexExpr;
+import com.alibaba.druid.sql.ast.expr.SQLMethodInvokeExpr;
 import com.alibaba.druid.sql.ast.expr.SQLQueryExpr;
 import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
@@ -134,14 +136,14 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
             SQLTableElement element = tableElementList.get(i);
             if (element instanceof SQLPrimaryKey) {
                 printUcase("PRIMARY KEY ");
-                acceptChild(((SQLPrimaryKey) element).getColumns());
+                acceptChildName(((SQLPrimaryKey) element).getColumns());
             } else if (element instanceof SQLUnique) {
                 if ("UNIQUE".equalsIgnoreCase(((SQLUnique) element).getIndexDefinition().getType())) {
                     printUcase("UNIQUE ");
                 }
                 printUcase("KEY ");
-                print(((SQLUnique) element).getName().getSimpleName().replaceFirst("`$", System.currentTimeMillis() + "`"));
-                acceptChild(((SQLUnique) element).getColumns());
+                print(((SQLUnique) element).getName().getSimpleName().replaceFirst("`$", System.nanoTime() + "`"));
+                acceptChildName(((SQLUnique) element).getColumns());
             } else {
                 element.accept(this);
             }
@@ -163,18 +165,22 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
         print(')');
     }
 
-    private void acceptChild(List<? extends SQLObject> children) {
+    private void acceptChildName(List<SQLSelectOrderByItem> children) {
         if (children == null) {
             return;
         }
 
         print('(');
         for (int i = 0; i < children.size(); i++) {
-            SQLObject child = children.get(i);
+            SQLSelectOrderByItem child = children.get(i);
             if (child == null) {
                 continue;
             }
-            child.accept(this);
+            if (child.getExpr() instanceof SQLMethodInvokeExpr) {
+                print0(((SQLMethodInvokeExpr) child.getExpr()).getMethodName());
+            } else {
+                print0(child.getExpr().toString());
+            }
             if (i != children.size() - 1) {
                 print(',');
             }
@@ -218,6 +224,14 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
 
     @Override
     public boolean visit(SQLSetStatement x) {
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLHexExpr x) {
+        print0("X'");
+        print0(x.getHex());
+        print0("'");
         return false;
     }
 
