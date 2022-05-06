@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.alphahinex.druid.sql.dialect.h2.visitor;
+package com.alibaba.druid.sql.dialect.h2.visitor;
 
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.ast.*;

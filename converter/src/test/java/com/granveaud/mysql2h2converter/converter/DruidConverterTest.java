@@ -1,25 +1,24 @@
 package com.granveaud.mysql2h2converter.converter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import com.alibaba.druid.DbType;
+import com.alibaba.druid.sql.SQLUtils;
+import com.alibaba.druid.sql.ast.SQLStatement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.*;
 
 import java.io.IOException;
-import java.util.*;
-
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.alibaba.druid.DbType;
-import com.alibaba.druid.sql.SQLUtils;
-import com.alibaba.druid.sql.ast.SQLStatement;
-import com.alibaba.druid.sql.ast.statement.SQLSetStatement;
-import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
-import io.github.alphahinex.druid.sql.dialect.h2.visitor.H2OutputVisitor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DruidConverterTest {
 
@@ -82,59 +81,9 @@ public class DruidConverterTest {
         }
 
         List<SQLStatement> statementList = SQLUtils.parseStatements(scripts.toString(), DbType.mysql);
-        StringBuilder out = new StringBuilder();
-        SQLASTOutputVisitor visitor = new H2OutputVisitor(out);
-        SQLUtils.FormatOption option = SQLUtils.DEFAULT_FORMAT_OPTION;
 
-        visitor.setUppCase(option.isUppCase());
-        visitor.setPrettyFormat(option.isPrettyFormat());
-        visitor.setParameterized(option.isParameterized());
-
-        for (int i = 0, size = statementList.size(); i < size; i++) {
-            SQLStatement stmt = statementList.get(i);
-
-            if (i > 0) {
-                SQLStatement preStmt = statementList.get(i - 1);
-                if (!preStmt.isAfterSemi()) {
-                    visitor.print(";");
-                }
-
-                List<String> comments = preStmt.getAfterCommentsDirect();
-                if (comments != null){
-                    for (int j = 0; j < comments.size(); ++j) {
-                        String comment = comments.get(j);
-                        if (j != 0) {
-                            visitor.println();
-                        }
-                        visitor.printComment(comment);
-                    }
-                }
-
-                visitor.println();
-
-                if (!(stmt instanceof SQLSetStatement)) {
-                    visitor.println();
-                }
-            }
-
-            stmt.accept(visitor);
-
-            if (i == size - 1) {
-                List<String> comments = stmt.getAfterCommentsDirect();
-                if (comments != null){
-                    for (int j = 0; j < comments.size(); ++j) {
-                        String comment = comments.get(j);
-                        if (j != 0) {
-                            visitor.println();
-                        }
-                        visitor.printComment(comment);
-                    }
-                }
-            }
-        }
-
-        LOGGER.info(out.toString());
-        executeUpdate(out.toString());
+        String h2Scripts = SQLUtils.toSQLString(statementList, DbType.h2);
+        executeUpdate(h2Scripts);
     }
 
     @Test
