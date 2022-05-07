@@ -27,14 +27,14 @@ private static void convertAndCreate(Statement stmt, String sqlDump) throws SQLE
 }
 ```
 
-On the command line:
+On the command line, after `mvn package` of course:
 
 ``` bash
-java -jar lib/mysql2h2.jar demos/disconf-mysql.sql
+$ java -jar converter/target/mysql2h2-converter-tool-0.2.2.jar demos/disconf-mysql.sql > disconf-h2.sql
 ```
 
 ## Building
-`mvn install` will generate the SQL parser and build an executable JAR.
+`mvn clean package` will generate the SQL parser and build an executable JAR.
 
 enhance branch
 ==============
