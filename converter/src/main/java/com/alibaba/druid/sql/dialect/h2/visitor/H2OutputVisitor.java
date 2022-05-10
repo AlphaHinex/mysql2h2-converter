@@ -22,6 +22,7 @@ import com.alibaba.druid.sql.ast.expr.SQLHexExpr;
 import com.alibaba.druid.sql.ast.expr.SQLMethodInvokeExpr;
 import com.alibaba.druid.sql.ast.expr.SQLQueryExpr;
 import com.alibaba.druid.sql.ast.statement.*;
+import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlAlterTableModifyColumn;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -254,6 +255,61 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
             text = "0001-01-01 00:00:00";
         }
         super.printChars(text);
+    }
+
+    @Override
+    public boolean visit(SQLAlterTableStatement x) {
+
+        /*
+        https://h2database.com/html/commands.html#alter_table_alter_column
+        ALTER TABLE [ IF EXISTS ] [schemaName.]tableName
+        ALTER COLUMN [ IF EXISTS ] columnName
+        { { columnDefinition }
+        | { RENAME TO name }
+        | SET GENERATED { ALWAYS | BY DEFAULT } [ alterIdentityColumnOption [...] ]
+        | alterIdentityColumnOption [...]
+        | DROP IDENTITY
+        | { SELECTIVITY int }
+        | { SET DEFAULT expression }
+        | { DROP DEFAULT }
+        | DROP EXPRESSION
+        | { SET ON UPDATE expression }
+        | { DROP ON UPDATE }
+        | { SET DEFAULT ON NULL }
+        | { DROP DEFAULT ON NULL }
+        | { SET NOT NULL }
+        | { DROP NOT NULL } | { SET NULL }
+        | { SET DATA TYPE dataTypeOrDomain [ USING newValueExpression ] }
+        | { SET { VISIBLE | INVISIBLE } } }
+         */
+
+        for (int i = 0; i < x.getItems().size(); ++i) {
+            print0(ucase ? "ALTER TABLE " : "alter table ");
+
+            if (x.isIfExists()) {
+                print0(ucase ? "IF EXISTS " : "if exists ");
+            }
+
+            printTableSourceExpr(x.getName());
+
+            SQLAlterTableItem item = x.getItems().get(i);
+            accept(item);
+            if (i != x.getItems().size() - 1) {
+                print(';');
+            }
+        }
+
+        return false;
+    }
+
+    private void accept(SQLAlterTableItem item) {
+        if (item instanceof MySqlAlterTableModifyColumn) {
+            MySqlAlterTableModifyColumn x = (MySqlAlterTableModifyColumn) item;
+            printUcase("ALTER COLUMN ");
+            x.getNewColumnDefinition().accept(this);
+        } else {
+            item.accept(this);
+        }
     }
 
 }
