@@ -17,17 +17,21 @@ package com.alibaba.druid.sql.dialect.h2.visitor;
 
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.ast.SQLExpr;
-import com.alibaba.druid.sql.ast.SQLObject;
 import com.alibaba.druid.sql.ast.expr.SQLBinaryExpr;
 import com.alibaba.druid.sql.ast.expr.SQLHexExpr;
 import com.alibaba.druid.sql.ast.expr.SQLMethodInvokeExpr;
 import com.alibaba.druid.sql.ast.expr.SQLQueryExpr;
 import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor {
+
+    private static final Logger LOGGER = LogManager.getLogger(H2OutputVisitor.class);
+
     public H2OutputVisitor(Appendable appender) {
         super(appender, DbType.h2);
     }
@@ -240,6 +244,16 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
     public boolean visit(SQLBinaryExpr x) {
         print0(x.getText());
         return false;
+    }
+
+    @Override
+    protected void printChars(String text) {
+        if ("0000-00-00 00:00:00".equals(text)) {
+            // TODO: this is not correct because '0000-00-00 00:00:00' could be a real string value
+            LOGGER.warn("Replacing '0000-00-00 00:00:00' with valid H2 datetime (unsafe replacement)");
+            text = "0001-01-01 00:00:00";
+        }
+        super.printChars(text);
     }
 
 }
