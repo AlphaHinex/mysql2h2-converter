@@ -18,6 +18,7 @@ package com.alibaba.druid.sql.dialect.h2.visitor;
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.ast.SQLExpr;
 import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.expr.SQLBinaryExpr;
 import com.alibaba.druid.sql.ast.expr.SQLHexExpr;
 import com.alibaba.druid.sql.ast.expr.SQLMethodInvokeExpr;
 import com.alibaba.druid.sql.ast.expr.SQLQueryExpr;
@@ -232,6 +233,12 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
         print0("X'");
         print0(x.getHex());
         print0("'");
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLBinaryExpr x) {
+        print0(x.getText());
         return false;
     }
 

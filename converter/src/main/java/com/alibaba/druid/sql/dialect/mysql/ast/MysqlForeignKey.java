@@ -17,6 +17,7 @@ package com.alibaba.druid.sql.dialect.mysql.ast;
 
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.ast.SQLName;
+import com.alibaba.druid.sql.ast.statement.SQLAlterTableAddConstraint;
 import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
 import com.alibaba.druid.sql.dialect.h2.visitor.H2ASTVisitor;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlASTVisitor;
@@ -56,7 +57,7 @@ public class MysqlForeignKey extends SQLForeignKeyImpl {
     protected void accept0(SQLASTVisitor visitor) {
         if (visitor instanceof MySqlASTVisitor) {
             accept0((MySqlASTVisitor) visitor);
-        } else if (visitor instanceof H2ASTVisitor) {
+        } else if (visitor instanceof H2ASTVisitor && this.getParent() instanceof SQLAlterTableAddConstraint) {
             super.accept0(visitor);
         }
     }
