@@ -48,13 +48,13 @@ public class ConverterTest {
 
     private void executeUpdate(String sql) throws SQLException {
         try (Statement sqlStat = connection.createStatement()) {
-            sqlStat.executeUpdate(sql.toString());
+            sqlStat.executeUpdate(sql);
         }
     }
 
     private List<Map<String, Object>> executeSelect(String sql) throws SQLException {
         try (Statement sqlStat = connection.createStatement()) {
-            sqlStat.execute(sql.toString());
+            sqlStat.execute(sql);
             try (ResultSet rs = sqlStat.getResultSet()) {
                 ResultSetMetaData metaData = rs.getMetaData();
 

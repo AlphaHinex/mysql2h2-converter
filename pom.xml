@@ -41,7 +41,6 @@
   </properties>
 
   <modules>
-    <module>parser</module>
     <module>converter</module>
   </modules>
 
