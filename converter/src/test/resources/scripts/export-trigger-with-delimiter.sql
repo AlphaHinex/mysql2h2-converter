@@ -60,7 +60,7 @@ UNLOCK TABLES;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
+-- DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER sample BEFORE INSERT ON sample
 FOR EACH ROW
 BEGIN
@@ -68,7 +68,7 @@ BEGIN
     SET NEW.version = NEW.version + 10000;
   END IF;
 END */;;
-DELIMITER ;
+-- DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
