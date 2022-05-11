@@ -3,14 +3,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.github.alphahinex.mysql2h2-converter</groupId>
-  <artifactId>mysql2h2-parent</artifactId>
-  <version>0.2.2</version>
-  <packaging>pom</packaging>
-    
+  <groupId>com.github.alphahinex</groupId>
+  <artifactId>mysql2h2-converter</artifactId>
+  <version>0.3.0</version>
+
   <name>MySQL to H2 Converter</name>
   <description>A library to convert MySQL statements to H2-compatible statements</description>
-  <url>https://github.com/andrewparmet/mysql2h2-converter</url>
+  <url>https://github.com/alphahinex/mysql2h2-converter</url>
     
   <licenses>
     <license>
@@ -20,19 +19,8 @@
   </licenses>
 
   <scm>
-    <url>https://github.com/andrewparmet/mysql2h2-converter.git</url>
+    <url>https://github.com/alphahinex/mysql2h2-converter.git</url>
   </scm>
-
-  <developers>
-    <developer>
-      <name>Boris Granveaud</name>
-        <email>boris@granveaud.com</email>
-      </developer>
-    <developer>
-      <name>Andrew Parmet</name>
-        <email>andrew@parmet.com</email>
-    </developer>
-  </developers>    
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,15 +28,23 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
-  <modules>
-    <module>converter</module>
-  </modules>
-
   <dependencies>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>2.8.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.2.8</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.193</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -58,44 +54,8 @@
     </dependency>
   </dependencies>
   
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-  
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.7</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-gpg-plugin</artifactId>-->
-<!--        <version>1.5</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>sign-artifacts</id>-->
-<!--            <phase>verify</phase>-->
-<!--            <goals>-->
-<!--              <goal>sign</goal>-->
-<!--            </goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -113,14 +73,36 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9.1</version>
-        <configuration>
-          <excludePackageNames>com.granveaud.mysql2h2converter.parser</excludePackageNames>
-        </configuration>
         <executions>
           <execution>
             <id>attach-javadocs</id>
             <goals>
               <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <finalName>mysql2h2-converter-tool-${project.version}</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>com.granveaud.mysql2h2converter.converter.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
             </goals>
           </execution>
         </executions>
