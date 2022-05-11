@@ -1,22 +1,24 @@
 package com.granveaud.mysql2h2converter.converter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.*;
-
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.sql.*;
-
+import com.alibaba.druid.DbType;
+import com.alibaba.druid.sql.SQLUtils;
+import com.alibaba.druid.sql.ast.SQLStatement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.*;
 
-import com.granveaud.mysql2h2converter.SQLParserManager;
-import com.granveaud.mysql2h2converter.parser.ParseException;
-import com.granveaud.mysql2h2converter.sql.SqlStatement;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConverterTest {
 
@@ -69,15 +71,19 @@ public class ConverterTest {
         }
     }
 
-    private void executeScript(Reader reader) throws SQLException, ParseException {
-        Iterator<SqlStatement> sourceIterator = SQLParserManager.parseScript(reader);
-
-        // conversion and execution
-        Iterator<SqlStatement> it = H2Converter.convertScript(sourceIterator);
-        while (it.hasNext()) {
-            SqlStatement st = it.next();
-            executeUpdate(st.toString());
+    private void executeScript(Reader reader) throws IOException, SQLException {
+        char[] buffer = new char[1024];
+        int l = reader.read(buffer);
+        StringBuilder scripts = new StringBuilder();
+        while (l > 0) {
+            scripts.append(buffer, 0, l);
+            l = reader.read(buffer);
         }
+
+        List<SQLStatement> statementList = SQLUtils.parseStatements(scripts.toString(), DbType.mysql);
+
+        String h2Scripts = SQLUtils.toSQLString(statementList, DbType.h2);
+        executeUpdate(h2Scripts);
     }
 
     @Test
@@ -139,6 +145,7 @@ public class ConverterTest {
     @Test
     public void testScriptCreateTableWithKey() throws Exception {
         loadScript("create-table-with-key.sql");
+
     }
 
     @Test
