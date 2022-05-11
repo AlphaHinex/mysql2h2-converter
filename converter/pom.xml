@@ -14,9 +14,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.github.alphahinex.mysql2h2-converter</groupId>
-      <artifactId>mysql2h2-parser</artifactId>
-      <version>${project.version}</version>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.2.8</version>
     </dependency>
 
     <dependency>
@@ -24,12 +24,6 @@
       <artifactId>h2</artifactId>
       <version>1.4.193</version>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid</artifactId>
-      <version>1.2.8</version>
     </dependency>
   </dependencies>
   
