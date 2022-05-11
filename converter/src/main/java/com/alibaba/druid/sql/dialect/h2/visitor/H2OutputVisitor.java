@@ -312,4 +312,21 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
         }
     }
 
+    public boolean visit(SQLAlterTableAddConstraint x) {
+        if (x.isWithNoCheck()) {
+            this.print0(this.ucase ? "WITH NOCHECK " : "with nocheck ");
+        }
+
+        this.print0(this.ucase ? "ADD " : "add ");
+
+        if (x.getConstraint().getParent() instanceof SQLAlterTableAddConstraint && x.getConstraint() instanceof SQLForeignKeyImpl) {
+            this.visit((SQLForeignKeyImpl) x.getConstraint());
+        } else {
+            x.getConstraint().accept(this);
+        }
+
+        return false;
+    }
+
 }
+
