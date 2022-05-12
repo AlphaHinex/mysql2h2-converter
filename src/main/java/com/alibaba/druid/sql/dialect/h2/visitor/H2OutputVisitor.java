@@ -26,14 +26,14 @@ import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlAlterTableModifyColumn;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlTableIndex;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.alibaba.druid.support.logging.Log;
+import com.alibaba.druid.support.logging.LogFactory;
 
 import java.util.List;
 
 public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor {
 
-    private static final Logger LOGGER = LogManager.getLogger(H2OutputVisitor.class);
+    private final static Log LOG = LogFactory.getLog(H2OutputVisitor.class);
 
     public H2OutputVisitor(Appendable appender) {
         super(appender, DbType.h2);
@@ -283,7 +283,7 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
     protected void printChars(String text) {
         if ("0000-00-00 00:00:00".equals(text)) {
             // TODO: this is not correct because '0000-00-00 00:00:00' could be a real string value
-            LOGGER.warn("Replacing '0000-00-00 00:00:00' with valid H2 datetime (unsafe replacement)");
+            LOG.warn("Replacing '0000-00-00 00:00:00' with valid H2 datetime (unsafe replacement)");
             text = "0001-01-01 00:00:00";
         }
         super.printChars(text);
@@ -380,4 +380,3 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
     }
 
 }
-
