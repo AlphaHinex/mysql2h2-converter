@@ -87,7 +87,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <finalName>mysql2h2-converter-tool-${project.version}</finalName>
-<!--          <appendAssemblyId>false</appendAssemblyId>-->
+          <appendAssemblyId>false</appendAssemblyId>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>

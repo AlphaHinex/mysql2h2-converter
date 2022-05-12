@@ -145,7 +145,6 @@ public class ConverterTest {
     @Test
     public void testScriptCreateTableWithKey() throws Exception {
         loadScript("create-table-with-key.sql");
-
     }
 
     @Test
