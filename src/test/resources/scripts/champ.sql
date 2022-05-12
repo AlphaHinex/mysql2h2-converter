@@ -4,7 +4,8 @@ CREATE TABLE `champ_app_mgr_d`  (
     `LABEL_KEY`  varchar(32) NULL,
     `LABEL_VALUE`  varchar(32) NULL,
     `LABEL_SORT`  varchar(32) NULL,
-    PRIMARY KEY (`RID`) USING BTREE
+    PRIMARY KEY (`RID`) USING BTREE,
+    INDEX `idx_wokb_tmpl_detl_d_1`(`LABEL_KEY`, `LABEL_VALUE`, `LABEL_SORT`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 ALTER TABLE `champ_app_mgr_d`
