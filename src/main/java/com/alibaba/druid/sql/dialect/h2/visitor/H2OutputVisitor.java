@@ -291,6 +291,7 @@ public class H2OutputVisitor extends SQLASTOutputVisitor implements H2ASTVisitor
             }
 
             printTableSourceExpr(x.getName());
+            print(' ');
 
             SQLAlterTableItem item = x.getItems().get(i);
             accept(item);
