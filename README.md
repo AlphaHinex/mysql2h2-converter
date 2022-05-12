@@ -30,7 +30,7 @@ private static void convertAndCreate(Statement stmt, String sqlDump) throws SQLE
 On the command line, after `mvn package` of course:
 
 ``` bash
-$ java -jar converter/target/mysql2h2-converter-tool-0.2.2.jar demos/disconf-mysql.sql > disconf-h2.sql
+$ java -jar target/mysql2h2-converter-tool-0.3.0.jar demos/disconf-mysql.sql > disconf-h2.sql
 ```
 
 ## Building
@@ -62,8 +62,7 @@ allprojects {
 Step 2. Add the dependency:
 ```gradle
 dependencies {
-    implementation 'com.github.alphahinex.mysql2h2-converter:mysql2h2-converter:0.2.2'
-    implementation 'com.github.alphahinex.mysql2h2-converter:mysql2h2-parser:0.2.2'
+    implementation 'com.github.alphahinex:mysql2h2-converter:0.3.0'
 }
 ```
 
