@@ -14,25 +14,6 @@ Other ideas:
 - look at jOOQ http://www.jooq.org/ to see if it can be used to model the DML statements and Liquibase http://www.liquibase.org/
   for the DDL part
 
-## Usage
-
-As a library:
-``` java
-private static void convertAndCreate(Statement stmt, String sqlDump) throws SQLException, ParseException {
-    Iterator<SqlStatement> sourceIterator = SQLParserManager.parseScript(new StringReader(sqlDump));
-    Iterator<SqlStatement> converted = H2Converter.convertScript(sourceIterator);
-    while (converted.hasNext()) {
-        stmt.execute(converted.next().toString());
-    }
-}
-```
-
-On the command line, after `mvn package` of course:
-
-``` bash
-$ java -jar target/mysql2h2-converter-tool-0.3.0.jar demos/disconf-mysql.sql > disconf-h2.sql
-```
-
 ## Building
 `mvn clean package` will generate the SQL parser and build an executable JAR.
 
@@ -62,8 +43,26 @@ allprojects {
 Step 2. Add the dependency:
 ```gradle
 dependencies {
-    implementation 'com.github.alphahinex:mysql2h2-converter:0.3.0'
+    implementation 'com.github.alphahinex:mysql2h2-converter:0.3.1'
 }
+```
+
+## Usage
+
+As a library:
+``` java
+private static void convertAndCreate(Statement stmt, String sqlDump) throws SQLException, ParseException {
+    List<SQLStatement> stmts = SQLUtils.parseStatements(sqlDump, DbType.mysql, SQLParserFeature.MySQLSupportStandardComment);
+    for (SQLStatement st : stmts) {
+        stmt.execute(st.toString());
+    }
+}
+```
+
+On the command line, after `mvn package` of course:
+
+``` bash
+$ java -jar target/mysql2h2-converter-tool-0.3.1.jar demos/disconf-mysql.sql > disconf-h2.sql
 ```
 
 License

@@ -5,7 +5,7 @@
 
   <groupId>com.github.alphahinex</groupId>
   <artifactId>mysql2h2-converter</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
 
   <name>MySQL to H2 Converter</name>
   <description>A library to convert MySQL statements to H2-compatible statements</description>
@@ -37,7 +37,7 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
-      <version>1.2.8</version>
+      <version>1.2.20</version>
     </dependency>
 
     <dependency>

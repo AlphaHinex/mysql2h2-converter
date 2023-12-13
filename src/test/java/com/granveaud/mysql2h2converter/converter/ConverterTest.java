@@ -3,6 +3,7 @@ package com.granveaud.mysql2h2converter.converter;
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
+import com.alibaba.druid.sql.parser.SQLParserFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.*;
@@ -80,7 +81,7 @@ public class ConverterTest {
             l = reader.read(buffer);
         }
 
-        List<SQLStatement> statementList = SQLUtils.parseStatements(scripts.toString(), DbType.mysql);
+        List<SQLStatement> statementList = SQLUtils.parseStatements(scripts.toString(), DbType.mysql, SQLParserFeature.MySQLSupportStandardComment);
 
         String h2Scripts = SQLUtils.toSQLString(statementList, DbType.h2);
         executeUpdate(h2Scripts);
