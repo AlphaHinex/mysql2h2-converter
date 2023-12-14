@@ -53,9 +53,8 @@ As a library:
 ``` java
 private static void convertAndCreate(Statement stmt, String sqlDump) throws SQLException, ParseException {
     List<SQLStatement> stmts = SQLUtils.parseStatements(sqlDump, DbType.mysql, SQLParserFeature.MySQLSupportStandardComment);
-    for (SQLStatement st : stmts) {
-        stmt.execute(st.toString());
-    }
+    
+    stmt.execute(SQLUtils.toSQLString(stmts, DbType.h2));
 }
 ```
 
