@@ -46,7 +46,8 @@ public class ConverterTest {
 
     private void executeUpdate(String sql) throws SQLException {
         try (Statement sqlStat = connection.createStatement()) {
-            sqlStat.executeUpdate(sql.toString());
+            LOGGER.info("Executing sql: " + sql);
+            sqlStat.executeUpdate(sql);
         }
     }
 
@@ -144,6 +145,11 @@ public class ConverterTest {
     @Test
     public void testChampScripts() throws Exception {
         loadScript("champ.sql");
+    }
+
+    @Test
+    public void testMultiAddColumn() throws Exception {
+        loadScript("multi-add-column.sql");
     }
 
     private void loadScript(String s) throws Exception {
