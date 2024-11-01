@@ -224,6 +224,19 @@ public class H2Converter {
                     LOGGER.warn("Dropping update value in column definition {}", def);
                     def.setUpdateValue(null);
                 }
+                if ("enum".equals(def.getColumnType().getName())) {
+                    LOGGER.warn("Change enum type to varchar in column definition {}", def);
+                    def.getColumnType().setName("varchar");
+                    ValueList valueList = def.getColumnType().getValueList();
+                    int length = 0;
+                    int maxLength = 0;
+                    for (Value value : valueList.getValues()) {
+                        length = ((StringValue) value).getValue().length();
+                        maxLength = Math.max(length, maxLength);
+                    }
+                    def.getColumnType().setValueList(null);
+                    def.getColumnType().setLength(new IntegerValue(maxLength + ""));
+                }
             }
         }
 

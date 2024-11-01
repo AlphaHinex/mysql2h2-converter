@@ -73,6 +73,7 @@ TOKEN:
 |   <TIMESTAMP: "TIMESTAMP">
 |   <CHAR: "CHAR">
 |   <BINARY: "BINARY">
+|   <VARBINARY: "VARBINARY">
 |   <ASCII: "ASCII">
 |   <UNICODE: "UNICODE">
 |   <VARCHAR: "VARCHAR">
@@ -672,6 +673,8 @@ List<ColumnName> ColumnNames():
   | DATETIME
   | CHAR(length) [BINARY | ASCII | UNICODE]
   | VARCHAR(length) [BINARY]
+  | BINARY(length)
+  | VARBINARY(length)
   | TINYBLOB
   | BLOB
   | MEDIUMBLOB
@@ -713,6 +716,8 @@ ColumnType ColumnType():
       | tk = <DATETIME> ["(" length = IntValue() ")"]
       | tk = <CHAR> "(" length = IntValue() ")" [tk4 = <BINARY>] [tk5 = <ASCII>] [tk6 = <UNICODE>] [<CHARACTER> <SET> charsetName = Identifier()] [<COLLATE> collationName = Identifier()]
       | tk = <VARCHAR> "(" length = IntValue() ")" [tk4 = <BINARY>] [<CHARACTER> <SET> charsetName = Identifier()] [<COLLATE> collationName = Identifier()]
+      | tk = <BINARY> "(" length = IntValue() ")"
+      | tk = <VARBINARY> "(" length = IntValue() ")"
       | tk = <TINYBLOB>
       | tk = <BLOB>
       | tk = <MEDIUMBLOB>

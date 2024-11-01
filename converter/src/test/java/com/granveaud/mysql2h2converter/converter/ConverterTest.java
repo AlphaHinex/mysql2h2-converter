@@ -46,7 +46,7 @@ public class ConverterTest {
 
     private void executeUpdate(String sql) throws SQLException {
         try (Statement sqlStat = connection.createStatement()) {
-            LOGGER.info("Executing sql: " + sql);
+            LOGGER.debug("Executing sql: " + sql);
             sqlStat.executeUpdate(sql);
         }
     }
@@ -150,6 +150,11 @@ public class ConverterTest {
     @Test
     public void testMultiAddColumn() throws Exception {
         loadScript("multi-add-column.sql");
+    }
+
+    @Test
+    public void testEnumAndVarbinary() throws Exception {
+        loadScript("enum-and-varbinary.sql");
     }
 
     private void loadScript(String s) throws Exception {

@@ -163,4 +163,10 @@ public class BasicTest {
         assertStatementEquals(str);
     }
 
+    @Test
+    public void testVarbinary() throws ParseException {
+        String str = "CREATE TABLE test (`role` varbinary(64) DEFAULT NULL COMMENT '消息主题角色user或者assistant')";
+        assertStatementEquals(str);
+    }
+
 }

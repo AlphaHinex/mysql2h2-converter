@@ -18,6 +18,8 @@ TINYINT[(length)] [UNSIGNED] [ZEROFILL]
   | DATETIME
   | CHAR(length) [BINARY | ASCII | UNICODE]
   | VARCHAR(length) [BINARY]
+  | BINARY(length)
+  | VARBINARY(length)
   | TINYBLOB
   | BLOB
   | MEDIUMBLOB
@@ -71,6 +73,22 @@ public class ColumnType {
 
     public void setLength(IntegerValue length) {
         this.length = length;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ValueList getValueList() {
+        return valueList;
+    }
+
+    public void setValueList(ValueList valueList) {
+        this.valueList = valueList;
     }
 
     @Override
